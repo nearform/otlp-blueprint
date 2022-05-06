@@ -12,7 +12,7 @@ variable "environment_name" {
 
   validation {
     condition     = length(var.environment_name) < 23
-    error_message = "Due the this variable is used for concatenation of names of other resources, the value must have less than 23 characters."
+    error_message = "Because this variable is used for concatenation of names of other resources, the value must have fewer than 23 characters."
   }
 }
 
@@ -25,13 +25,13 @@ variable "port_app_server" {
 variable "buildspec_path" {
   description = "The location of the buildspec file."
   type        = string
-  default     = "./samples/3-tier/Infrastructure/Templates/buildspec.yml"
+  default     = "./infrastructure/Templates/buildspec.yml"
 }
 
 variable "folder_path_server" {
   description = "The location of the server files"
   type        = string
-  default     = "./samples/3-tier/Code/server/."
+  default     = "./pkg-svcs/backend/."
 }
 
 variable "container_name" {

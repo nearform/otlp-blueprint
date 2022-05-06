@@ -19,8 +19,8 @@ remote_state {
 
   config = {
     encrypt             = true
-    bucket              = "3-tier-tf-state"
-    dynamodb_table      = "3-tier-tf"
+    bucket              = "otlp-blueprint-tf-state"
+    dynamodb_table      = "otlp-blueprint-tf"
     key                 = local.key_name
     region              = local.aws_region
   }

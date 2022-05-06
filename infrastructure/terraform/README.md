@@ -48,10 +48,10 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | The AWS Region in which you want to deploy the resources | `string` | n/a | yes |
-| <a name="input_buildspec_path"></a> [buildspec\_path](#input\_buildspec\_path) | The location of the buildspec file. | `string` | `"./samples/3-tier/Infrastructure/Templates/buildspec.yml"` | no |
+| <a name="input_buildspec_path"></a> [buildspec\_path](#input\_buildspec\_path) | The location of the buildspec file. | `string` | `"./infrastructure/Templates/buildspec.yml"` | no |
 | <a name="input_container_name"></a> [container\_name](#input\_container\_name) | The name of the container of each ECS service | `map(string)` | <pre>{<br>  "server": "Container-server"<br>}</pre> | no |
 | <a name="input_environment_name"></a> [environment\_name](#input\_environment\_name) | The name of your environment | `string` | n/a | yes |
-| <a name="input_folder_path_server"></a> [folder\_path\_server](#input\_folder\_path\_server) | The location of the server files | `string` | `"./samples/3-tier/Code/server/."` | no |
+| <a name="input_folder_path_server"></a> [folder\_path\_server](#input\_folder\_path\_server) | The location of the server files | `string` | `"./pkg-svcs/backend/."` | no |
 | <a name="input_iam_role_name"></a> [iam\_role\_name](#input\_iam\_role\_name) | The name of the IAM Role for each service | `map(string)` | <pre>{<br>  "codedeploy": "CodeDeploy-Role",<br>  "devops": "DevOps-Role",<br>  "ecs": "ECS-task-execution-Role",<br>  "ecs_task_role": "ECS-task-Role"<br>}</pre> | no |
 | <a name="input_port_app_server"></a> [port\_app\_server](#input\_port\_app\_server) | The port used by your server application | `number` | `3000` | no |
 | <a name="input_port_rds"></a> [port\_rds](#input\_port\_rds) | n/a | `string` | `"5432"` | no |
