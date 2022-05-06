@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "test": "tap --reporter=list",
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "fastify": "^3.27.2"
+  },
+  "devDependencies": {
+    "pino-pretty": "^7.5.3",
+    "tap": "^16.0.0"
+  }
+}
