@@ -8,7 +8,7 @@ const server = build({
   }
 })
 
-server.listen(3000, '0.0.0.0', (err, address) => {
+server.listen(3000, '0.0.0.0', err => {
   if (err) {
     server.log.error(err)
     process.exit(1)
