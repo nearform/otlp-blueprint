@@ -4,6 +4,7 @@
     "start": "node server.mjs"
   },
   "dependencies": {
+    "@fastify/cors": "^7.0.0",
     "fastify": "^3.27.2"
   },
   "devDependencies": {

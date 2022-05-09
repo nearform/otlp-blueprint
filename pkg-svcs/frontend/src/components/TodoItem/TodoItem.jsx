@@ -10,14 +10,14 @@ const TodoItem = ({ item, onDone }) => (
       className="TodoItem-checkbox"
       onClick={() => onDone(item.id)}
     />
-    <span>{item.description}</span>
+    <span>{item.title}</span>
   </div>
 )
 
 TodoItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number,
-    description: PropTypes.string
+    title: PropTypes.string
   }),
   onDone: PropTypes.func
 }

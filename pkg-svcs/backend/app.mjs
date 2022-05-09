@@ -1,8 +1,14 @@
 // ESM
 import Fastify from 'fastify'
+import fastifyCors from '@fastify/cors'
 
 function build(opts = {}) {
   const app = Fastify(opts)
+
+  app.register(fastifyCors, {
+    origin: '*',
+    methods: ['POST']
+  })
 
   let todos = []
 

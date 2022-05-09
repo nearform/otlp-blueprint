@@ -1,19 +1,55 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NewItem from '../NewItem'
 import TodoList from '../TodoList'
+
+const API_BASE_URL = 'http://0.0.0.0:3000'
+
+const preparePostRequest = data => ({
+  method: 'POST',
+  body: JSON.stringify(data),
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
 
 const TodoApp = () => {
   const [todos, setTodos] = useState([])
 
-  const handleNewItem = thing =>
-    setTodos([...todos, { id: todos.length + 1, description: thing }])
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/todo`)
+      .then(response => response.json())
+      .then(initialState => {
+        setTodos(initialState)
+      })
+  }, [])
 
-  const handleRemoveItem = id => setTodos(todos.filter(item => item.id !== id))
+  const handleNewItem = async title => {
+    const response = await fetch(
+      `${API_BASE_URL}/todo`,
+      preparePostRequest({ title })
+    )
+
+    const updatedState = await response.json()
+    setTodos(updatedState)
+  }
+
+  const handleRemoveItem = async id => {
+    const response = await fetch(
+      `${API_BASE_URL}/todo/${id}`,
+      preparePostRequest({ is_done: true })
+    )
+
+    const updatedState = await response.json()
+    setTodos(updatedState)
+  }
 
   return (
     <div>
       <NewItem onAdd={handleNewItem} />
-      <TodoList items={todos} onDone={handleRemoveItem} />
+      <TodoList
+        items={todos.filter(todo => !todo.is_done)}
+        onDone={handleRemoveItem}
+      />
     </div>
   )
 }
