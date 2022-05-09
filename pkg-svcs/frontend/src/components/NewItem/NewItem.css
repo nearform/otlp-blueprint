@@ -1,0 +1,28 @@
+.NewItem {
+  margin-bottom: 1rem;
+}
+
+.NewItem-input {
+  width: 100%;
+  padding: 0.5rem;
+  height: 36px;
+  background: #434C5E;
+  border: 1px dashed #81A1C1;
+  color: #fff;
+}
+
+.NewItem-input:focus {
+  outline: 0;
+}
+
+::-webkit-input-placeholder { /* Edge */
+  color: rgba(255, 255, 255, 0.4);
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: rgba(255, 255, 255, 0.4);
+}
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}

@@ -1,0 +1,14 @@
+.TodoItem {
+  background: #434C5E;
+  color: #fff;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.TodoItem-checkbox {
+  width: 16px;
+  margin-right: 12px;
+}
