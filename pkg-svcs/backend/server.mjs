@@ -1,4 +1,6 @@
 'use strict'
+import 'dotenv/config'
+
 import { build } from './app.mjs'
 
 const server = build({

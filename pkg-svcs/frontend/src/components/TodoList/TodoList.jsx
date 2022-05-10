@@ -7,7 +7,7 @@ import './TodoList.css'
 const TodoList = ({ items, onDone }) => (
   <div className="TodoList">
     {items.map(item => (
-      <TodoItem item={item} key={`todo-item-${item.id}`} onDone={onDone} />
+      <TodoItem item={item} key={`todo-item-${item.todo_id}`} onDone={onDone} />
     ))}
   </div>
 )

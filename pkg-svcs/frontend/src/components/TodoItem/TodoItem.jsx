@@ -8,7 +8,7 @@ const TodoItem = ({ item, onDone }) => (
     <input
       type="checkbox"
       className="TodoItem-checkbox"
-      onClick={() => onDone(item.id)}
+      onClick={() => onDone(item.todo_id)}
     />
     <span>{item.title}</span>
   </div>
@@ -16,7 +16,7 @@ const TodoItem = ({ item, onDone }) => (
 
 TodoItem.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.number,
+    todo_id: PropTypes.number,
     title: PropTypes.string
   }),
   onDone: PropTypes.func

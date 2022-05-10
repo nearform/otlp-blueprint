@@ -5,7 +5,9 @@
   },
   "dependencies": {
     "@fastify/cors": "^7.0.0",
-    "fastify": "^3.27.2"
+    "dotenv": "^16.0.0",
+    "fastify": "^3.27.2",
+    "pg": "^8.7.3"
   },
   "devDependencies": {
     "pino-pretty": "^7.5.3",
