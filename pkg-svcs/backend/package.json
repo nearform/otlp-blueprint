@@ -3,9 +3,6 @@
   "main": "index.js",
   "scripts": {
     "create:env": "node -r fs -e \"fs.copyFileSync('.env.sample', '.env', fs.constants.COPYFILE_EXCL)\"",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "lint:staged": "lint-staged",
     "start": "nodemon --config .nodemonrc .",
     "test": "jest",
     "test:watch": "jest --watch --verbose",
@@ -31,6 +28,7 @@
   },
   "devDependencies": {
     "faker": "^6.6.6",
+    "jest": "^28.1.0",
     "pino-pretty": "^7.5.3",
     "tap": "^16.0.0"
   }
