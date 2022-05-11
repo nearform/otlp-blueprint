@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import NewItem from '../NewItem'
 import TodoList from '../TodoList'
 
-const API_BASE_URL = 'http://0.0.0.0:3000'
+const API_BASE_URL = 'http://127.0.0.1:5000'
 
 const preparePostRequest = data => ({
   method: 'POST',
