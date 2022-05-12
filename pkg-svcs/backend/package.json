@@ -1,7 +1,8 @@
 {
   "scripts": {
     "test": "tap --reporter=list",
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "startcontainer": "rm -rf node_modules && npm install && node /app/backend/server.mjs"
   },
   "dependencies": {
     "fastify": "^3.27.2"
