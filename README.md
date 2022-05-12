@@ -89,11 +89,13 @@ There are three services defined in the docker compose
 - This is node backend and uses `node:14-alpine` official image.
 - Exposes the service in port 3000
 - The backend directory is mounted as volume in the container so any changes made to the source is persisted and nodemon should pick up the changes.
+- **IMPORTANT** At container start the `.sample.env` file is copied to .env file so any new addition to env variables should go into sample file first.
 
 ### frontend service
 - This is node based frontend which runs vite dev server and uses the official image `node:lts-alpine`.
 - For development purpose the service used vite dev server and in prod config this will be servered as static site behind the nginx server.
 - The frontend directory is monted as volume in the container so any changes made to the source is persisted and vite server should hot reload the changes.
+- **IMPORTANT** At container start the `.sample.env` file is copied to .env file so any new addition to env variables should go into sample file first.
 
 ### Jaeger service
 - The servcice used `jaegertracing/all-in-one:latest` image which is a all in one image which is suitable for local development. 
