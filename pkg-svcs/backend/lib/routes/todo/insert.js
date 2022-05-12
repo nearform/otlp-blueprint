@@ -13,7 +13,7 @@ async function insert(server) {
       },
       tags: ['todo'],
       response: {
-        200: {
+        201: {
           description: 'Successful response',
           type: 'array'
         }
