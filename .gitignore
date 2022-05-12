@@ -5,5 +5,5 @@ node_modules
 .idea
 # Visual Studio Code
 .vscode
-postgresql/*
+**/postgresql/data/
 .DS_Store
