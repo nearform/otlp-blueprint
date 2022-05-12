@@ -3,13 +3,12 @@ services:
   postgresql:
     container_name: oltp_db
     image: postgres:14.2-alpine
-    user: titus
     environment:
       - POSTGRES_USER=titus
       - POSTGRES_PASSWORD=titus
       - POSTGRES_DB=titus
     healthcheck:
-      test: ["CMD-SHELL","pg_isready"]
+      test: ["CMD-SHELL","pg_isready -U titus" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -54,6 +53,11 @@ services:
       - ./pkg-svcs/frontend:/app/frontend
     command: "npm run startcontainer"
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
 volumes:
   postgresql:
     external: false
