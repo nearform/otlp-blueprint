@@ -3,20 +3,20 @@ FROM node:lts-alpine as base
 RUN apk update && apk upgrade && apk add -q vim git
 
 FROM base as source
-RUN mkdir -p /app
+RUN mkdir -p /app/frontend
 WORKDIR /app
 
 COPY ./package.json .
 RUN npm install
-RUN ls -lrt /app/
+
+COPY pkg-svcs/frontend/package.json /app/frontend/
+WORKDIR /app/frontend
+RUN npm install
 COPY pkg-svcs/frontend/ /app/frontend/
-RUN cat /app/frontend/package.json
-WORKDIR /app/frontend 
 
 FROM source as builder
 WORKDIR /app/frontend 
 
-RUN npm install
 RUN npm run build
 
 FROM nginx:stable-alpine as production

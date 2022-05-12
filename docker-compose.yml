@@ -2,11 +2,12 @@ version: '3.9'
 services:
   postgresql:
     container_name: oltp_db
-    image: postgres:10.16-alpine
+    image: postgres:14.2-alpine
+    user: titus
     environment:
-      - POSTGRES_USER=oltp_username
-      - POSTGRES_PASSWORD=Strong123Password
-      - POSTGRES_DB=dbname
+      - POSTGRES_USER=titus
+      - POSTGRES_PASSWORD=titus
+      - POSTGRES_DB=titus
     healthcheck:
       test: ["CMD-SHELL","pg_isready"]
       interval: 10s
@@ -16,6 +17,7 @@ services:
       - 5432:5432
     volumes:
       - ./postgresql/data:/var/lib/postgresql/data
+      - ./postgresql/docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
 
   backend:
     container_name: backend
@@ -23,11 +25,9 @@ services:
       context: ./
       dockerfile: Backend.dockerfile
       target: source
-    env_file:
-      - ./pkg-svcs/backend/.env
+    # env_file:
+    #   - ./pkg-svcs/backend/.env
     environment:
-      - API_HOST=0.0.0.0
-      - PG_HOST=postgresql
       - APP_VERSION=1.0.0
     ports:
       - "3000:3000"
@@ -43,8 +43,8 @@ services:
       context: ./
       dockerfile: Frontend.dockerfile
       target: source
-    env_file:
-      - ./pkg-svcs/frontend/.env
+    # env_file:
+    #   - ./pkg-svcs/frontend/.env
     ports:
       - "8080:8080"
     depends_on:

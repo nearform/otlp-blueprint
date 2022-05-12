@@ -4,28 +4,29 @@ RUN apk update && apk upgrade && apk add -q vim && apk add bash
 
 FROM base as source
 
-RUN mkdir -p /app/frontend
+RUN mkdir -p /app/backend
 WORKDIR /app/
 COPY package.json ./
 RUN npm install
-RUN ls -lrt /app/
-
-COPY pkg-svcs/backend/ ./backend
+COPY pkg-svcs/backend/package.json /app/backend/
 RUN cat /app/backend/package.json
 WORKDIR /app/backend
+RUN npm install
+EXPOSE 3000
+
+COPY pkg-svcs/backend/ /app/backend/
 
 FROM source as builder
 
-RUN cd /app/backend && npm install
-
 FROM node:14-alpine as production
-WORKDIR /app/backend
-COPY --from=builder /app/ ./
+
+COPY --from=builder /app/ /app/
 ARG APP_VERSION
 ENV APP_VERSION=$APP_VERSION
 
 RUN chown -R 1000:1000 /app/
-
+WORKDIR /app/backend
 USER node
+EXPOSE 3000
 
-CMD ["node", "/app/backend/server.mjs"]
+CMD ["npm", "run","start"]
