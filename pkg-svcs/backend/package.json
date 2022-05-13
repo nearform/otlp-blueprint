@@ -5,7 +5,7 @@
     "start:container": "npm install && npm run create:env && npm run start",
     "create:env": "rm -rf .env && node -r fs -e \"fs.copyFileSync('.env.sample', '.env', fs.constants.COPYFILE_EXCL)\"",
     "lint": "eslint .",
-    "start": "npm run create:env && nodemon --config .nodemonrc .",
+    "start": "nodemon --config .nodemonrc .",
     "test": "jest",
     "test:watch": "jest --watch --verbose",
     "test:related": "jest --onlyChanged"
