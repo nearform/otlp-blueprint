@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:container" : "vite --host",
+    "create:env": "rm -rf .env && node -r fs -e \"fs.copyFileSync('.env.sample', '.env', fs.constants.COPYFILE_EXCL)\""
   },
   "dependencies": {
     "dotenv": "^16.0.1",

@@ -75,7 +75,44 @@ The container exposes the following ports:
 |14250   |	HTTP   | collector  | accept model.proto
 |9411	 |  HTTP   | collector  | Zipkin compatible endpoint (optional)
 
+# Running the application locally using docker compose
+At the root of the project a docker compose file is defined all the containers needed to run the app locally for development and test.
 
+Before running the docker compose setup run below command to generate `.env` file from sample from the root of both backend and frontend service. This is a one time setup. If the `.env` already exists and you wanted to get it from template again then delete the `.env` file before running below command.
+
+    npm run create:env
+
+There are four services defined in the docker compose
+### postgres service
+- This service is based on the official postgres docker image `postgres:14.2-alpine` from dockerhub. 
+- It creates a db and users as defined in the environment varible defined in the docker compose file. 
+- The postgres init script is available under `/postgresql/docker_postgres_init.sql` which creates the database needed and seed sample data as a starter. 
+- The folder `postgresql/data` is mounted as a volume in the container where the db files are persisted for subsequent restarts of the container.
+
+### backend service
+- This is node backend and uses `node:14-alpine` official image.
+- Exposes the service in port 3000
+- The backend directory is mounted as volume in the container so any changes made to the source is persisted and nodemon should pick up the changes.
+- **IMPORTANT** At container start the `.sample.env` file is copied to .env file so any new addition to env variables should go into sample file first.
+
+### frontend service
+- This is node based frontend which runs vite dev server and uses the official image `node:lts-alpine`.
+- For development purpose the service used vite dev server and in prod config this will be servered as static site behind the nginx server.
+- The frontend directory is monted as volume in the container so any changes made to the source is persisted and vite server should hot reload the changes.
+- **IMPORTANT** At container start the `.sample.env` file is copied to .env file so any new addition to env variables should go into sample file first.
+
+### Jaeger service
+- The servcice used `jaegertracing/all-in-one:latest` image which is a all in one image which is suitable for local development. 
+
+
+## Run app in docker compose
+Run below command from CLI from the root of the project directory to run the build the container and run the app.
+
+    docker-compose --verbose up --build
+                or
+    docker-compose up -d
+
+The application will be available at http://localhost:3000 , the backend is on http://localhost:3000 and the database can be reached at localhost:5432.
 
 # Features borrowed from the NearForm Bench Template
 A feature-packed template to start a new repository on the bench, including:

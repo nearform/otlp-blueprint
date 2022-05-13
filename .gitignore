@@ -6,3 +6,6 @@ node_modules
 .idea
 # Visual Studio Code
 .vscode
+**/postgresql/data/
+.DS_Store
+**/.env

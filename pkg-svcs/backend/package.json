@@ -2,7 +2,8 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "create:env": "node -r fs -e \"fs.copyFileSync('.env.sample', '.env', fs.constants.COPYFILE_EXCL)\"",
+    "start:container": "npm install && npm run create:env && npm run start",
+    "create:env": "rm -rf .env && node -r fs -e \"fs.copyFileSync('.env.sample', '.env', fs.constants.COPYFILE_EXCL)\"",
     "lint": "eslint .",
     "start": "nodemon --config .nodemonrc .",
     "test": "jest",
