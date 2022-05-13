@@ -12,7 +12,7 @@ RUN npm install
 COPY pkg-svcs/frontend/package.json /app/frontend/
 WORKDIR /app/frontend
 RUN npm install
-COPY pkg-svcs/frontend/ /app/frontend/
+COPY ./pkg-svcs/frontend/ /app/frontend/
 
 FROM source as builder
 WORKDIR /app/frontend 
