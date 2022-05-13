@@ -76,9 +76,13 @@ The container exposes the following ports:
 |9411	 |  HTTP   | collector  | Zipkin compatible endpoint (optional)
 
 # Running the application locally using docker compose
-At the root of the project a docker compose file is defined all the containers needed to run the app locally and test.
+At the root of the project a docker compose file is defined all the containers needed to run the app locally for development and test.
 
-There are three services defined in the docker compose
+Before running the docker compose setup run below command to generate `.env` file from sample from the root of both backend and frontend service. This is a one time setup. If the `.env` already exists and you wanted to get it from template again then delete the `.env` file before running below command.
+
+    npm run create:env
+
+There are four services defined in the docker compose
 ### postgres service
 - This service is based on the official postgres docker image `postgres:14.2-alpine` from dockerhub. 
 - It creates a db and users as defined in the environment varible defined in the docker compose file. 

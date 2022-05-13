@@ -4,11 +4,11 @@ services:
     container_name: oltp_db
     image: postgres:14.2-alpine
     environment:
-      - POSTGRES_USER=titus
-      - POSTGRES_PASSWORD=titus
-      - POSTGRES_DB=titus
+      - POSTGRES_USER=otlpuser
+      - POSTGRES_PASSWORD=otlppassword
+      - POSTGRES_DB=tododb
     healthcheck:
-      test: ["CMD-SHELL","pg_isready -U titus" ]
+      test: ["CMD-SHELL","pg_isready -U otlpuser" ]
       interval: 10s
       timeout: 5s
       retries: 5

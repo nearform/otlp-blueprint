@@ -1,7 +1,7 @@
--- CREATE USER titus;
--- CREATE DATABASE titus;
--- GRANT ALL PRIVILEGES ON DATABASE titus TO titus;
-\c titus
+-- CREATE USER otlpuser;
+-- CREATE DATABASE tododb;
+-- GRANT ALL PRIVILEGES ON DATABASE tododb TO otlpuser;
+\c tododb
 CREATE TABLE IF NOT EXISTS todo (
     todo_id SERIAL PRIMARY KEY NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
