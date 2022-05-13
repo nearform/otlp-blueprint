@@ -34,7 +34,7 @@ services:
       - postgresql
     volumes:
       - ./pkg-svcs/backend:/app/backend
-    command: "npm run startcontainer"
+    command: "npm run start:container"
   
   frontend:
     container_name: frontend
@@ -51,7 +51,7 @@ services:
       - postgresql
     volumes:
       - ./pkg-svcs/frontend:/app/frontend
-    command: "npm run startcontainer"
+    command: "npm run start:container"
 
   jaeger:
     image: jaegertracing/all-in-one:latest

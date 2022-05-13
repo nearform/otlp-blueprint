@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "startcontainer" : "npm run create:env && vite --host",
+    "start:container" : "npm run create:env && vite --host",
     "create:env": "rm -rf .env && node -r fs -e \"fs.copyFileSync('.env.sample', '.env', fs.constants.COPYFILE_EXCL)\""
   },
   "dependencies": {
