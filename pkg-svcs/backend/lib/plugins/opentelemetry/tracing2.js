@@ -27,7 +27,11 @@ const hostName = process.env.OTEL_TRACE_HOST || '0.0.0.0'
 
 const options = {
   tags: [],
-  endpoint: `http://${hostName}:14268/api/traces`
+  // Use host name as `jaeger` in case of running locally using docker-compose. We need a better way of configuring this from  a config file.  
+  endpoint: `http://jaeger:14268/api/traces`
+  // Uncomment below setting for UDP setup
+  // host: '0.0.0.0', 
+  // port: 6831
 }
 
 const init = (serviceName, environment) => {

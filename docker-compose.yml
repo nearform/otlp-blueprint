@@ -7,6 +7,8 @@ services:
       - POSTGRES_USER=otlpuser
       - POSTGRES_PASSWORD=otlppassword
       - POSTGRES_DB=tododb
+    networks:
+      - jaeger-network
     healthcheck:
       test: ["CMD-SHELL","pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
@@ -30,8 +32,11 @@ services:
       - APP_VERSION=1.0.0
     ports:
       - "3000:3000"
+    networks:
+      - jaeger-network
     depends_on:
       - postgresql
+      - jaeger
     volumes:
       - ./pkg-svcs/backend:/app/backend
     command: "npm run start:container"
@@ -46,9 +51,12 @@ services:
     #   - ./pkg-svcs/frontend/.env
     ports:
       - "8080:8080"
+    networks:
+      - jaeger-network
     depends_on:
       - backend
       - postgresql
+      - jaeger
     volumes:
       - ./pkg-svcs/frontend:/app/frontend
     command: "npm run start:container"
@@ -65,6 +73,10 @@ services:
       - "14268:14268"
       - "14269:14269"
       - "9411:9411"
+    networks:
+      - jaeger-network
 volumes:
   postgresql:
     external: false
+networks:
+      jaeger-network:
