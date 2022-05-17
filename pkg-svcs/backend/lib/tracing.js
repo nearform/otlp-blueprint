@@ -31,9 +31,6 @@ const enableTracing = options => {
   const exporter = new JaegerExporter({
     tags: [],
     endpoint: options.jaegerEndpoint
-    // Uncomment below setting for UDP setup
-    // host: '0.0.0.0',
-    // port: 6831
   })
 
   const provider = new NodeTracerProvider({
