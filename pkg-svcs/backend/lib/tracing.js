@@ -21,31 +21,36 @@ const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node')
 const { OTTracePropagator } = require('@opentelemetry/propagator-ot-trace')
 
 const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api')
-diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG)
 
-const hostName = process.env.OTEL_TRACE_HOST || '0.0.0.0'
+const enableTracing = options => {
+  diag.setLogger(
+    new DiagConsoleLogger(),
+    options.debug ? DiagLogLevel.DEBUG : DiagLogLevel.INFO
+  )
 
-const options = {
-  tags: [],
-  // Use host name as `jaeger` in case of running locally using docker-compose. We need a better way of configuring this from  a config file.  
-  endpoint: `http://jaeger:14268/api/traces`
-  // Uncomment below setting for UDP setup
-  // host: '0.0.0.0', 
-  // port: 6831
-}
-
-const init = (serviceName, environment) => {
-  const exporter = new JaegerExporter(options)
+  const exporter = new JaegerExporter({
+    tags: [],
+    endpoint: options.jaegerEndpoint
+    // Uncomment below setting for UDP setup
+    // host: '0.0.0.0',
+    // port: 6831
+  })
 
   const provider = new NodeTracerProvider({
     resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
-      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: environment
+      [SemanticResourceAttributes.SERVICE_NAME]: options.serviceName,
+      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: options.environment
     })
   })
 
   provider.addSpanProcessor(new BatchSpanProcessor(exporter))
-  provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()))
+
+  if (options.enableConsoleLog) {
+    provider.addSpanProcessor(
+      new SimpleSpanProcessor(new ConsoleSpanExporter())
+    )
+  }
+
   provider.register({ propagator: new OTTracePropagator() })
 
   registerInstrumentations({
@@ -55,10 +60,10 @@ const init = (serviceName, environment) => {
     ]
   })
 
-  const tracer = provider.getTracer(serviceName)
+  const tracer = provider.getTracer(options.serviceName)
   return { tracer }
 }
 
 module.exports = {
-  init: init
+  enableTracing
 }

@@ -4,11 +4,12 @@ const path = require('path')
 
 const autoload = require('@fastify/autoload')
 const fp = require('fastify-plugin')
-// Need to initialise the tracer before starting the app.
-const tracer = require('./plugins/opentelemetry/tracing2')
-tracer.init('OLTP','Dev')
+
+const tracer = require('./tracing')
 
 async function plugin(server, config) {
+  tracer.enableTracing(config.otlp)
+
   server
     .register(require('@fastify/cors'), config.cors)
     .register(autoload, {

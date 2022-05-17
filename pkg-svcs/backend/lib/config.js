@@ -14,6 +14,11 @@ const config = envSchema({
     .prop('PG_USER', S.string().required())
     .prop('SECRETS_STRATEGY', S.string())
     .prop('SECRETS_PG_PASS', S.string().required())
+    .prop('OTLP_DEBUG', S.string())
+    .prop('OTLP_SERVICE_NAME', S.string())
+    .prop('OTLP_ENVIRONMENT', S.string())
+    .prop('OLTP_ENABLE_CONSOLE_LOG', S.string())
+    .prop('OLTP_JAEGER_ENDPOINT', S.string())
 })
 
 module.exports = {
@@ -39,5 +44,12 @@ module.exports = {
     secrets: {
       dbPassword: config.SECRETS_PG_PASS
     }
+  },
+  otlp: {
+    debug: config.OTLP_DEBUG,
+    serviceName: config.OTLP_SERVICE_NAME,
+    environment: config.OTLP_ENVIRONMENT,
+    enableConsoleLog: config.OLTP_ENABLE_CONSOLE_LOG,
+    jaegerEndpoint: config.OLTP_JAEGER_ENDPOINT
   }
 }
