@@ -12,11 +12,16 @@ const {
 const {
   FastifyInstrumentation
 } = require('@opentelemetry/instrumentation-fastify')
-const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http')
 const { registerInstrumentations } = require('@opentelemetry/instrumentation')
+const {
+  getNodeAutoInstrumentations
+} = require('@opentelemetry/auto-instrumentations-node')
 const { JaegerExporter } = require('@opentelemetry/exporter-jaeger')
 const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node')
 const { OTTracePropagator } = require('@opentelemetry/propagator-ot-trace')
+
+const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api')
+diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG)
 
 const hostName = process.env.OTEL_TRACE_HOST || '0.0.0.0'
 
@@ -40,7 +45,10 @@ const init = (serviceName, environment) => {
   provider.register({ propagator: new OTTracePropagator() })
 
   registerInstrumentations({
-    instrumentations: [new FastifyInstrumentation(), new HttpInstrumentation()]
+    instrumentations: [
+      getNodeAutoInstrumentations(),
+      new FastifyInstrumentation()
+    ]
   })
 
   const tracer = provider.getTracer(serviceName)
