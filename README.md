@@ -123,3 +123,8 @@ A feature-packed template to start a new repository on the bench, including:
 - notifications about commits waiting to be released thanks to ["notify release" GitHub action](https://github.com/nearform/github-action-notify-release)
 - PRs' linked issues check with ["check linked issues" GitHub action](https://github.com/nearform/github-action-check-linked-issues)
 - Continuous Integration GitHub workflow
+
+
+# Infrastructure
+
+ Refer the dedicated readme on this [here](./infrastructure/README.md)
