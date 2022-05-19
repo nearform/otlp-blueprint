@@ -1,4 +1,4 @@
-FROM node:14-alpine as base
+FROM node:lts-alpine as base
 
 RUN apk update && apk upgrade && apk add -q vim && apk add bash
 
@@ -18,7 +18,7 @@ COPY pkg-svcs/backend/ /app/backend/
 
 FROM source as builder
 
-FROM node:14-alpine as production
+FROM node:lts-alpine as production
 
 COPY --from=builder /app/ /app/
 ARG APP_VERSION
