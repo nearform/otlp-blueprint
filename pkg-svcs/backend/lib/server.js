@@ -5,7 +5,11 @@ const path = require('path')
 const autoload = require('@fastify/autoload')
 const fp = require('fastify-plugin')
 
+const tracer = require('./tracing')
+
 async function plugin(server, config) {
+  tracer.enableTracing(config.otlp)
+
   server
     .register(require('@fastify/cors'), config.cors)
     .register(autoload, {

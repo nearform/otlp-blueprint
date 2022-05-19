@@ -7,6 +7,8 @@ services:
       - POSTGRES_USER=otlpuser
       - POSTGRES_PASSWORD=otlppassword
       - POSTGRES_DB=tododb
+    networks:
+      - jaeger-network
     healthcheck:
       test: ["CMD-SHELL","pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
@@ -30,8 +32,11 @@ services:
       - APP_VERSION=1.0.0
     ports:
       - "3000:3000"
+    networks:
+      - jaeger-network
     depends_on:
       - postgresql
+      - jaeger
     volumes:
       - ./pkg-svcs/backend:/app/backend
     command: "npm run start:container"
@@ -46,9 +51,12 @@ services:
     #   - ./pkg-svcs/frontend/.env
     ports:
       - "8080:8080"
+    networks:
+      - jaeger-network
     depends_on:
       - backend
       - postgresql
+      - jaeger
     volumes:
       - ./pkg-svcs/frontend:/app/frontend
     command: "npm run start:container"
@@ -56,8 +64,33 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
+      - "5775:5775/udp"
       - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
       - "16686:16686"
+      - "14250:14250"
+      - "14268:14268"
+      - "14269:14269"
+      - "9411:9411"
+    networks:
+      - jaeger-network
+  
+  collector:
+    image: otel/opentelemetry-collector:latest
+    command: ["--config=/conf/collector-config.yaml", "--log-level=DEBUG"]
+    volumes:
+      - ./collector-config.yaml:/conf/collector-config.yaml
+    ports:
+      - "9464:9464"
+      - "55680:55680"
+      - "55681:55681"
+    depends_on:
+      - jaeger
+    networks:
+      - jaeger-network
 volumes:
   postgresql:
     external: false
+networks:
+      jaeger-network:
