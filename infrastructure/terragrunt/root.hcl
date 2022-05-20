@@ -36,7 +36,6 @@ inputs = {
   deployment_env           = local.deployment_env
   deployment_parent_dir    = local.deployment_parent_dir
   deployment_region        = local.deployment_region
-  deployment_stack         = local.deployment_stack
   deployment_stack_service = local.deployment_stack_service
   backend_tfstate_key_name = local.backend_tfstate_key_name
   tags                     = merge(local.default_tags, local.environment_config.locals.region_tags)
