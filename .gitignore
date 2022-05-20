@@ -9,3 +9,8 @@ node_modules
 **/postgresql/data/
 .DS_Store
 **/.env
+
+.terragrunt-cache*
+
+**/.terragrunt-cache*
+**/.terraform.lock.hcl
