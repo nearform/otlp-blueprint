@@ -1,0 +1,68 @@
+include "root" {
+  path = find_in_parent_folders("root.hcl")
+}
+
+include "environment" {
+  path = find_in_parent_folders("environment.hcl")
+}
+
+
+# Dependencies 
+dependency "networking" {
+  config_path = "../../common/networking"
+
+  # Mock outputs for plan to work
+  mock_outputs = {
+    vpc_id             = "sfasdfasdfasdfas"
+    public_subnet_ids  = toset(["Asdfasdfasdfasd", "Asdfasdfasdfasdf"])
+    private_subnet_ids = toset(["asdfasdfasdfasdfsf", "Asdfasdfasdasdfsad"])
+  }
+}
+
+dependency "iam-roles" {
+  config_path = "../../common/iam"
+
+  # Mock outputs for plan to work
+  mock_outputs = {
+    ecs_task_execution_role_arn = "asdfasdfasfasdfsadfadsasdfasfasd"
+  }
+}
+dependency "sg" {
+  config_path = "../../common/sg"
+
+  mock_outputs = {
+    sg_ecs_id = "3223423423fsadfsdfasd"
+    sg_alb_id = "sasdfs232342342"
+  }
+}
+
+dependency "ecs_cluster" {
+  config_path = "../../common/ecs"
+
+  # Mock outputs for plan to work
+  mock_outputs = {
+    ecs_cluster_id = "fasdfasfasdfasdfasdf"
+  }
+}
+
+dependency "alb" {
+  config_path = "../../common/alb"
+
+  # Mock outputs for plan to work
+  mock_outputs = {
+    alb_id                      = "asdfasdfsafasdf"
+    aws_alb_target_group_app_id = "asdfasdfasf"
+  }
+}
+
+inputs = {
+  vpc_id                      = dependency.networking.outputs.vpc_id
+  public_subnet_ids           = dependency.networking.outputs.public_subnet_ids
+  private_subnet_ids          = dependency.networking.outputs.private_subnet_ids
+  sg_ecs_id                   = dependency.sg.outputs.sg_ecs_id
+  sg_alb_id                   = dependency.sg.outputs.sg_alb_id
+  ecs_cluster_id              = dependency.ecs_cluster.outputs.ecs_cluster_id
+  alb_id                      = dependency.alb.outputs.alb_id
+  aws_alb_target_group_app_id = dependency.alb.outputs.aws_alb_target_group_app_id
+
+}

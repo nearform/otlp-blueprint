@@ -41,6 +41,13 @@ inputs = {
   deployment_app_name      = local.deployment_app_name
   deployment_stack         = local.deployment_stack
   deployment_stack_service = local.deployment_stack_service
+
+  # Netorwking related inputs
+  vpc_cidr_block = "25.0.0.0/16"
+  az_count       = 2
+
+  # Application Load balancer
+  app_health_check_path = "/" # used in target group with nginx backend.
 }
 
 # Default the stack each deployment deploys based on its directory structure

@@ -6,6 +6,12 @@ resource "aws_security_group" "sg_lb" {
 
   ingress {
     protocol    = "tcp"
+    from_port   = 8081
+    to_port     = 8081
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    protocol    = "tcp"
     from_port   = 80
     to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
@@ -24,13 +30,20 @@ resource "aws_security_group" "sg_ecs_tasks" {
   description = "allow inbound access from the ALB only"
 
   tags = var.tags 
-  
+
   ingress {
     protocol        = "tcp"
-    from_port       = 4000
-    to_port         = 4000
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port       = 16686
+    to_port         = 16686
     security_groups = [aws_security_group.sg_lb.id]
+    self        = false
+  }
+  ingress {
+    protocol        = "tcp"
+    from_port       = 80
+    to_port         = 80
+    security_groups = [aws_security_group.sg_lb.id]
+    self        = false
   }
 
   egress {
