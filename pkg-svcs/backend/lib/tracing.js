@@ -9,9 +9,6 @@ const { Resource } = require('@opentelemetry/resources')
 const {
   SemanticResourceAttributes
 } = require('@opentelemetry/semantic-conventions')
-const {
-  FastifyInstrumentation
-} = require('@opentelemetry/instrumentation-fastify')
 const { registerInstrumentations } = require('@opentelemetry/instrumentation')
 const {
   getNodeAutoInstrumentations
@@ -51,10 +48,7 @@ const enableTracing = options => {
   provider.register({ propagator: new OTTracePropagator() })
 
   registerInstrumentations({
-    instrumentations: [
-      getNodeAutoInstrumentations(),
-      new FastifyInstrumentation()
-    ]
+    instrumentations: [getNodeAutoInstrumentations()]
   })
 
   const tracer = provider.getTracer(options.serviceName)

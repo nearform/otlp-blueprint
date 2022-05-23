@@ -21,7 +21,6 @@
     "@opentelemetry/exporter-zipkin": "^1.0.0",
     "@opentelemetry/auto-instrumentations-node": "^0.28.0",
     "@opentelemetry/instrumentation": "^0.27.0",
-    "@opentelemetry/instrumentation-fastify": "^0.25.0",
     "@opentelemetry/semantic-conventions": "^1.0.0",
     "@opentelemetry/resources": "^1.0.0",
     "@opentelemetry/tracing": "^0.24.0",

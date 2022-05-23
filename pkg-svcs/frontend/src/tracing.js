@@ -27,7 +27,8 @@ const enableTracing = options => {
 
   const provider = new WebTracerProvider({
     resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: options.serviceName
+      [SemanticResourceAttributes.SERVICE_NAME]: options.serviceName,
+      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: options.environment
     })
   })
 
