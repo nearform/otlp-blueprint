@@ -36,13 +36,13 @@ variable "otlp_collector_app_target_group_id" {}
 
 variable "app_image" {
     description = "The container image to use"
-    default = "nginx:latest"
+    default = "jaegertracing/all-in-one:latest"
 }
 
 # Below need to be fed from terragrunt config later.
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
-  default     = 80
+  default     = 16686
 }
 variable "app_count" {
   description = "Number of docker containers to run"

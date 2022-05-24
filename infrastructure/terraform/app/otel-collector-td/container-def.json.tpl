@@ -1,6 +1,6 @@
 [
   {
-    "name": "cb-app",
+    "name": "otel-collector-app",
     "image": "${app_image}",
     "cpu": ${fargate_cpu},
     "memory": ${fargate_memory},
@@ -8,9 +8,9 @@
     "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cb-app",
+          "awslogs-group": "${otlp_log_group_name}",
           "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "ecs"
+          "awslogs-stream-prefix": "otlp"
         }
     },
     "portMappings": [

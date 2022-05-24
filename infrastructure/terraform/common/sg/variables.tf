@@ -8,3 +8,4 @@ variable "deployment_env" {}
 
 variable "deployment_app_name" {}
 
+variable "vpc_id" {}

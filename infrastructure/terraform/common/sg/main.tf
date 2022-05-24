@@ -1,6 +1,7 @@
 resource "aws_security_group" "sg_lb" {
   name        = "${var.deployment_env}-${var.deployment_app_name}-lb-sg"
   description = "controls access to the Application Load Balancer (ALB)"
+  vpc_id      = var.vpc_id
 
   tags = var.tags 
 
@@ -16,6 +17,24 @@ resource "aws_security_group" "sg_lb" {
     to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    protocol    = "tcp"
+    from_port   = 8080
+    to_port     = 8080
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    protocol    = "tcp"
+    from_port   = 8082
+    to_port     = 8082
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    protocol    = "tcp"
+    from_port   = 8083
+    to_port     = 8083
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     protocol    = "-1"
@@ -28,6 +47,8 @@ resource "aws_security_group" "sg_lb" {
 resource "aws_security_group" "sg_ecs_tasks" {
   name        = "${var.deployment_env}-${var.deployment_app_name}-ecs-tasks-sg"
   description = "allow inbound access from the ALB only"
+  vpc_id      = var.vpc_id
+
 
   tags = var.tags 
 

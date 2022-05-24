@@ -77,6 +77,7 @@ generate "provider" {
             source = "hashicorp/aws"
             version = "4.14.0"
           }
+          
         }
       }
       EOF
