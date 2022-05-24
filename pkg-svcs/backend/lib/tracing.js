@@ -9,14 +9,11 @@ const { Resource } = require('@opentelemetry/resources')
 const {
   SemanticResourceAttributes
 } = require('@opentelemetry/semantic-conventions')
-const {
-  FastifyInstrumentation
-} = require('@opentelemetry/instrumentation-fastify')
 const { registerInstrumentations } = require('@opentelemetry/instrumentation')
 const {
   getNodeAutoInstrumentations
 } = require('@opentelemetry/auto-instrumentations-node')
-const { JaegerExporter } = require('@opentelemetry/exporter-jaeger')
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-http')
 const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node')
 const { OTTracePropagator } = require('@opentelemetry/propagator-ot-trace')
 
@@ -28,9 +25,10 @@ const enableTracing = options => {
     options.debug ? DiagLogLevel.DEBUG : DiagLogLevel.INFO
   )
 
-  const exporter = new JaegerExporter({
-    tags: [],
-    endpoint: options.jaegerEndpoint
+  const exporter = new OTLPTraceExporter({
+    url: options.collectorUrl,
+    serviceName: options.serviceName,
+    concurrencyLimit: 10
   })
 
   const provider = new NodeTracerProvider({
@@ -51,14 +49,11 @@ const enableTracing = options => {
   provider.register({ propagator: new OTTracePropagator() })
 
   registerInstrumentations({
-    instrumentations: [
-      getNodeAutoInstrumentations(),
-      new FastifyInstrumentation()
-    ]
+    instrumentations: [getNodeAutoInstrumentations()]
   })
 
   const tracer = provider.getTracer(options.serviceName)
-  return { tracer }
+  return tracer
 }
 
 module.exports = {
