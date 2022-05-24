@@ -74,6 +74,9 @@ The container exposes the following ports:
 |14268   |	HTTP   | collector  | accept jaeger.thrift directly from clients
 |14250   |	HTTP   | collector  | accept model.proto
 |9411	 |  HTTP   | collector  | Zipkin compatible endpoint (optional)
+|14269	 |  HTTP   | health endpoint  | admin port: health check at / and metrics at /metrics
+
+Use postman to hit the health endpoint above to check the health status.
 
 # Running the application locally using docker compose
 At the root of the project a docker compose file is defined all the containers needed to run the app locally for development and test.
@@ -123,3 +126,8 @@ A feature-packed template to start a new repository on the bench, including:
 - notifications about commits waiting to be released thanks to ["notify release" GitHub action](https://github.com/nearform/github-action-notify-release)
 - PRs' linked issues check with ["check linked issues" GitHub action](https://github.com/nearform/github-action-check-linked-issues)
 - Continuous Integration GitHub workflow
+
+
+# Infrastructure
+
+ Refer the dedicated readme on this [here](./infrastructure/README.md)
