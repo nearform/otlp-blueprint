@@ -13,7 +13,6 @@ const { registerInstrumentations } = require('@opentelemetry/instrumentation')
 const {
   getNodeAutoInstrumentations
 } = require('@opentelemetry/auto-instrumentations-node')
-// const { JaegerExporter } = require('@opentelemetry/exporter-jaeger')
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-http')
 const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node')
 const { OTTracePropagator } = require('@opentelemetry/propagator-ot-trace')
@@ -26,13 +25,8 @@ const enableTracing = options => {
     options.debug ? DiagLogLevel.DEBUG : DiagLogLevel.INFO
   )
 
-  // const exporter = new JaegerExporter({
-  //   tags: [],
-  //   endpoint: options.jaegerEndpoint
-  // })
-
   const exporter = new OTLPTraceExporter({
-    url: 'http://localhost:55681/v1/traces',
+    url: options.collectorUrl,
     serviceName: options.serviceName,
     concurrencyLimit: 10
   })

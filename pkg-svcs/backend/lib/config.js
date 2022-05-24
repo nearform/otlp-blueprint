@@ -18,7 +18,7 @@ const config = envSchema({
     .prop('OTLP_SERVICE_NAME', S.string())
     .prop('OTLP_ENVIRONMENT', S.string())
     .prop('OLTP_ENABLE_CONSOLE_LOG', S.string())
-    .prop('OLTP_JAEGER_ENDPOINT', S.string())
+    .prop('OLTP_COLLECTOR_URL', S.string())
 })
 
 module.exports = {
@@ -50,6 +50,6 @@ module.exports = {
     serviceName: config.OTLP_SERVICE_NAME,
     environment: config.OTLP_ENVIRONMENT,
     enableConsoleLog: config.OLTP_ENABLE_CONSOLE_LOG,
-    jaegerEndpoint: config.OLTP_JAEGER_ENDPOINT
+    collectorUrl: config.OLTP_COLLECTOR_URL
   }
 }
