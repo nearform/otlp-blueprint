@@ -53,7 +53,7 @@ const enableTracing = options => {
   })
 
   const tracer = provider.getTracer(options.serviceName)
-  return { tracer }
+  return tracer
 }
 
 module.exports = {

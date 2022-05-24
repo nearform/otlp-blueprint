@@ -57,7 +57,7 @@ const enableTracing = options => {
     tracerProvider: provider
   })
 
-  const tracer = provider.getTracer('example-document-load')
+  const tracer = provider.getTracer(options.serviceName)
   return tracer
 }
 
