@@ -10,14 +10,12 @@
     "create:env": "rm -rf .env && node -r fs -e \"fs.copyFileSync('.env.sample', '.env', fs.constants.COPYFILE_EXCL)\""
   },
   "dependencies": {
+    "@opentelemetry/auto-instrumentations-web": "^0.27.2",
     "@opentelemetry/context-zone": "^1.2.0",
     "@opentelemetry/core": "^1.2.0",
     "@opentelemetry/exporter-otlp-http": "^0.26.0",
     "@opentelemetry/exporter-trace-otlp-http": "^0.28.0",
     "@opentelemetry/instrumentation": "^0.28.0",
-    "@opentelemetry/instrumentation-document-load": "^0.27.1",
-    "@opentelemetry/instrumentation-user-interaction": "^0.28.1",
-    "@opentelemetry/instrumentation-xml-http-request": "^0.28.0",
     "@opentelemetry/propagator-b3": "^1.2.0",
     "@opentelemetry/resources": "^1.2.0",
     "@opentelemetry/sdk-trace-base": "^1.2.0",
