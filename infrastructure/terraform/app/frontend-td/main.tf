@@ -1,5 +1,5 @@
 locals {
-  ecs_service_template_file = templatefile("container-def.json.tpl", { 
+  ecs_service_template_file = templatefile("otfp-fe.json.tpl", { 
     app_image      = var.app_image
     app_port       = var.app_port
     fargate_cpu    = var.fargate_cpu
@@ -9,8 +9,8 @@ locals {
   })
 }
 
-resource "aws_ecs_task_definition" "otlp_collelctor_app" {
-  family                   = "otlp-collector-app-task"
+resource "aws_ecs_task_definition" "app" {
+  family                   = "otlp-fe-app-task"
   execution_role_arn       = var.ecs_task_execution_role_arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -20,9 +20,9 @@ resource "aws_ecs_task_definition" "otlp_collelctor_app" {
 }
 
 resource "aws_ecs_service" "main" {
-  name            = "otlp-collector-service"
+  name            = "otlp-fe-service"
   cluster         = var.ecs_cluster_id
-  task_definition = aws_ecs_task_definition.otlp_collelctor_app.arn
+  task_definition = aws_ecs_task_definition.app.arn
   desired_count   = var.app_count
   launch_type     = "FARGATE"
 
@@ -33,8 +33,8 @@ resource "aws_ecs_service" "main" {
   }
 
   load_balancer {
-    target_group_arn = var.otlp_collector_app_target_group_id
-    container_name   = "otel-collector-app" #TODO: this should come from the container def template.
+    target_group_arn = var.otlp_fe_app_target_group_id
+    container_name   = "otfp-fe-app"
     container_port   = var.app_port
   }
 }

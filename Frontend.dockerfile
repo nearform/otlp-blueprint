@@ -16,6 +16,7 @@ COPY ./pkg-svcs/frontend/ /app/frontend/
 
 FROM source as builder
 WORKDIR /app/frontend 
+RUN mv .env.registry .env
 
 RUN npm run build
 

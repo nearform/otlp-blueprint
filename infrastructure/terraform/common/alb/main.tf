@@ -143,12 +143,13 @@ resource "aws_alb_target_group" "otlp_collector" {
   target_type = "ip"
 
   health_check {
+    port = 13133
     healthy_threshold   = "3"
     interval            = "30"
     protocol            = "HTTP"
     matcher             = "200"
     timeout             = "3"
-    path                = var.app_health_check_path
+    path                = "/"
     unhealthy_threshold = "2"
   }
 }
@@ -164,3 +165,4 @@ resource "aws_alb_listener" "otlp_collector_app_lblistner" {
     type             = "forward"
   }
 }
+

@@ -22,5 +22,5 @@ dependency "networking" {
   }
 }
 inputs = {
-  vpc_id             = dependency.networking.outputs.vpc_id
+  vpc_id = dependency.networking.outputs.vpc_id
 }

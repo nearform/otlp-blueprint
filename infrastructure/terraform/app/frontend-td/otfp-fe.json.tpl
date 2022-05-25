@@ -1,6 +1,6 @@
 [
   {
-    "name": "otel-collector-app",
+    "name": "otfp-fe-app",
     "image": "${app_image}",
     "cpu": ${fargate_cpu},
     "memory": ${fargate_memory},
@@ -17,10 +17,6 @@
       {
         "containerPort": ${app_port},
         "hostPort": ${app_port}
-      },
-      {
-        "containerPort": 13133,
-        "hostPort": 13133
       }
     ]
   }
