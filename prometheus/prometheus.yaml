@@ -7,3 +7,5 @@ scrape_configs:
     # scheme defaults to 'http'.
     static_configs:
       - targets: ['collector:9464']
+
+      
