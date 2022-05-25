@@ -26,7 +26,7 @@ const enableTracing = options => {
   )
 
   const exporter = new OTLPTraceExporter({
-    url: options.collectorUrl,
+    url: options.collectorTracesUrl,
     serviceName: options.serviceName,
     concurrencyLimit: 10
   })

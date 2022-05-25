@@ -18,7 +18,8 @@ const config = envSchema({
     .prop('OTLP_SERVICE_NAME', S.string())
     .prop('OTLP_ENVIRONMENT', S.string())
     .prop('OLTP_ENABLE_CONSOLE_LOG', S.string())
-    .prop('OLTP_COLLECTOR_URL', S.string())
+    .prop('OLTP_COLLECTOR_TRACES_URL', S.string())
+    .prop('OLTP_COLLECTOR_METRICS_URL', S.string())
 })
 
 module.exports = {
@@ -46,10 +47,11 @@ module.exports = {
     }
   },
   otlp: {
-    debug: config.OTLP_DEBUG,
+    debug: config.OTLP_DEBUG === 'true',
     serviceName: config.OTLP_SERVICE_NAME,
     environment: config.OTLP_ENVIRONMENT,
-    enableConsoleLog: config.OLTP_ENABLE_CONSOLE_LOG,
-    collectorUrl: config.OLTP_COLLECTOR_URL
+    enableConsoleLog: config.OLTP_ENABLE_CONSOLE_LOG === 'true',
+    collectorTracesUrl: config.OLTP_COLLECTOR_TRACES_URL,
+    collectorMetricsUrl: config.OLTP_COLLECTOR_METRICS_URL
   }
 }

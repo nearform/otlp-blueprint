@@ -7,9 +7,9 @@ import enableTracing from './tracing'
 import './index.css'
 
 const tracer = enableTracing({
-  collectorUrl: import.meta.env.VITE_OTLP_COLLECTOR_URL,
+  collectorUrl: import.meta.env.VITE_OTLP_COLLECTOR_TRACES_URL,
   serviceName: import.meta.env.VITE_OTLP_SERVICE_NAME,
-  enableConsoleLog: import.meta.env.VITE_OTLP_ENABLE_CONSOLE_LOG,
+  enableConsoleLog: import.meta.env.VITE_OTLP_ENABLE_CONSOLE_LOG === 'true',
   environment: import.meta.env.VITE_OTLP_ENVIRONMENT
 })
 

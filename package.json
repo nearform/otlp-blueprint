@@ -33,5 +33,9 @@
   },
   "lint-staged": {
     "*.{js,jsx}": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.28.0",
+    "@opentelemetry/sdk-metrics-base": "^0.28.0"
   }
 }

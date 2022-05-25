@@ -1,5 +1,10 @@
 'use strict'
 
+const createTodoCounter = require('../../todos-counter')
+const counter = createTodoCounter({
+  collectorMetricsUrl: process.env.OLTP_COLLECTOR_METRICS_URL
+})
+
 async function insert(server) {
   server.route({
     method: 'POST',
@@ -27,6 +32,9 @@ async function insert(server) {
       ])
       const { rows } = await postgresClient.query('SELECT * FROM todo')
       reply.code(200).header('Content-Type', 'application/json; charset=utf-8')
+
+      counter.add(1, { pid: process.pid })
+
       return rows
     }
   })
