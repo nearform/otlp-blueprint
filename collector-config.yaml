@@ -11,6 +11,8 @@ exporters:
   jaeger:
     endpoint: jaeger:14250
     insecure: true
+  prometheus:
+    endpoint: "0.0.0.0:9464"
     
 processors:
   batch:
@@ -21,4 +23,7 @@ service:
       receivers: [otlp]
       exporters: [jaeger]
       processors: [batch]
-
+    metrics:
+      receivers: [otlp]
+      exporters: [prometheus]
+      processors: [batch]
