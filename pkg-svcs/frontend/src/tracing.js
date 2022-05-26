@@ -1,27 +1,22 @@
-import {
-  ConsoleSpanExporter,
-  SimpleSpanProcessor,
-  BatchSpanProcessor
-} from '@opentelemetry/sdk-trace-base'
+import {  ConsoleSpanExporter,  SimpleSpanProcessor,  BatchSpanProcessor} from '@opentelemetry/sdk-trace-base'
 import { WebTracerProvider } from '@opentelemetry/sdk-trace-web'
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web'
 import { ZoneContextManager } from '@opentelemetry/context-zone'
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http'
-import { B3Propagator } from '@opentelemetry/propagator-b3'
-import {
-  CompositePropagator,
-  W3CTraceContextPropagator
-} from '@opentelemetry/core'
+import { OTLPTraceExporter } from '@opentelemetry/exporter-otlp-http'
+
 import { registerInstrumentations } from '@opentelemetry/instrumentation'
 import { Resource } from '@opentelemetry/resources'
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
 
+
 const enableTracing = options => {
-  const exporter = new OTLPTraceExporter({
+  const collectorOptions = {
     url: options.collectorUrl,
     serviceName: options.serviceName,
     concurrencyLimit: 10
-  })
+  };
+  
+  const exporter = new OTLPTraceExporter(collectorOptions)
 
   const provider = new WebTracerProvider({
     resource: new Resource({
@@ -45,18 +40,15 @@ const enableTracing = options => {
     })
   )
 
-  provider.register({
-    contextManager: new ZoneContextManager(),
-    propagator: new CompositePropagator({
-      propagators: [new B3Propagator(), new W3CTraceContextPropagator()]
-    })
-  })
 
   registerInstrumentations({
     instrumentations: [getWebAutoInstrumentations()],
     tracerProvider: provider
   })
 
+  provider.register({
+    contextManager: new ZoneContextManager()
+  });
   const tracer = provider.getTracer(options.serviceName)
   return tracer
 }
