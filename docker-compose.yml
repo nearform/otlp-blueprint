@@ -1,66 +1,66 @@
 version: '3.9'
 services:
-  # postgresql:
-  #   container_name: oltp_db
-  #   image: postgres:14.2-alpine
-  #   environment:
-  #     - POSTGRES_USER=otlpuser
-  #     - POSTGRES_PASSWORD=otlppassword
-  #     - POSTGRES_DB=tododb
-  #   networks:
-  #     - otlp-network
-  #   healthcheck:
-  #     test: ["CMD-SHELL","pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - ./postgresql/data:/var/lib/postgresql/data
-  #     - ./postgresql/docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+  postgresql:
+    container_name: oltp_db
+    image: postgres:14.2-alpine
+    environment:
+      - POSTGRES_USER=otlpuser
+      - POSTGRES_PASSWORD=otlppassword
+      - POSTGRES_DB=tododb
+    networks:
+      - otlp-network
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+      - ./postgresql/docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
 
-  # backend:
-  #   container_name: backend
-  #   build:
-  #     context: ./
-  #     dockerfile: Backend.dockerfile
-  #     target: source
-  #   # env_file:
-  #   #   - ./pkg-svcs/backend/.env
-  #   environment:
-  #     - APP_VERSION=1.0.0
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - otlp-network
-  #   depends_on:
-  #     - postgresql
-  #     - jaeger
-  #     - collector
-  #   volumes:
-  #     - ./pkg-svcs/backend:/app/backend
-  #   command: "npm run start:container"
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: Backend.dockerfile
+      target: source
+    # env_file:
+    #   - ./pkg-svcs/backend/.env
+    environment:
+      - APP_VERSION=1.0.0
+    ports:
+      - "3000:3000"
+    networks:
+      - otlp-network
+    depends_on:
+      - postgresql
+      - jaeger
+      - collector
+    volumes:
+      - ./pkg-svcs/backend:/app/backend
+    command: "npm run start:container"
   
-  # frontend:
-  #   container_name: frontend
-  #   build:
-  #     context: ./
-  #     dockerfile: Frontend.dockerfile
-  #     target: source
-  #   # env_file:
-  #   #   - ./pkg-svcs/frontend/.env
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - otlp-network
-  #   depends_on:
-  #     - backend
-  #     - postgresql
-  #     - jaeger      
-  #   volumes:
-  #     - ./pkg-svcs/frontend:/app/frontend
-  #   command: "npm run start:container"
+  frontend:
+    container_name: frontend
+    build:
+      context: ./
+      dockerfile: Frontend.dockerfile
+      target: source
+    # env_file:
+    #   - ./pkg-svcs/frontend/.env
+    ports:
+      - "8080:8080"
+    networks:
+      - otlp-network
+    depends_on:
+      - backend
+      - postgresql
+      - jaeger      
+    volumes:
+      - ./pkg-svcs/frontend:/app/frontend
+    command: "npm run start:container"
 
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -95,15 +95,15 @@ services:
     networks:
       - otlp-network
   # Prometheus
-  # prometheus:
-  #   container_name: prometheus
-  #   image: prom/prometheus:latest
-  #   volumes:
-  #     - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
-  #   ports:
-  #     - "9090:9090"
-  #   networks:
-  #     - otlp-network
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - otlp-network
 volumes:
   postgresql:
     external: false
