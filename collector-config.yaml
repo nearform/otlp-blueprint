@@ -3,19 +3,21 @@ receivers:
     protocols:
       grpc:
       http:
-        cors_allowed_origins:
-        - http://*
-        - https://*
+        cors:
+          allowed_origins:
+          - http://*
+          - https://*
+
+processors:
+  batch:
 
 exporters:
   jaeger:
     endpoint: jaeger:14250
-    insecure: true
+    tls:
+      insecure: true
   prometheus:
     endpoint: "0.0.0.0:9464"
-    
-processors:
-  batch:
 
 service:
   pipelines:

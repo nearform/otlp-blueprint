@@ -7,7 +7,7 @@ const createLogoClickCounter = options => {
     concurrencyLimit: 1
   }
   const exporter = new OTLPMetricExporter(collectorOptions)
-
+  console.log(options.collectorMetricsUrl)
   const meter = new MeterProvider({
     exporter,
     interval: 60000

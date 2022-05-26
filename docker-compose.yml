@@ -73,18 +73,22 @@ services:
       - "14268:14268"
       - "14269:14269"
       - "9411:9411"
+      - "8888:8888"   # Prometheus metrics exposed by the collector
+      - "8889:8889"   # Prometheus exporter metrics
     networks:
       - otlp-network
   
   collector:
-    image: otel/opentelemetry-collector:latest
-    command: ["--config=/conf/collector-config.yaml", "--log-level=DEBUG"]
+    image: otel/opentelemetry-collector:0.52.0
+    command: ["--config=/conf/collector-config.yaml"]
     volumes:
       - ./collector-config.yaml:/conf/collector-config.yaml
     ports:
       - "9464:9464"
       - "55680:55680" # for traces
       - "55681:55681" # for metrices
+      - "4317:4317"   # gRpc
+      - "4318:4318"  # http
     depends_on:
       - jaeger
     networks:
