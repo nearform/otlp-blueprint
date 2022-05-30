@@ -8,10 +8,16 @@ A 3-tier application showcasing [Open Telemetry](https://opentelemetry.io/docs/i
 - fastify back end
 - terraform and terragrunt for the infra (based on the [3-tier architecture recipe](https://github.com/nearform/devops-recipes/tree/main/samples/3-tier))
 
+# Features
+
+The project implements traces. It does not implement logs and metrics as those features are still in developement (check [opentelemetry-js feature status page](https://github.com/open-telemetry/opentelemetry-js#feature-status) for more details).
+
+The work to send metrics has been started in branch [feature/add.metrics](https://github.com/nearform/otlp-blueprint/tree/feature/add.metrics).
+
 # Resources
  - [Inspired by this ticket](https://github.com/nearform/bench-draft-issues/issues/81)
  - NearForm's [Open Telemetry Guide](https://github.com/nearform/open-telemetry-guide)
- -  Slack channel: #proj-otlp-blueprint
+ - Slack channel: #proj-otlp-blueprint
 
 # Running the application locally
 
@@ -21,6 +27,7 @@ A 3-tier application showcasing [Open Telemetry](https://opentelemetry.io/docs/i
 - Pull the source code to a local development machine and run `npm install` from the root of the projct directory
 - Change directory to /pkg-svcs/frontend/ and run `npm install`
 - Change directory to /pkg-svcs/backend/ and run `npm install`
+
 ## Run frontend app
 - From directory /pkg-svcs/frontend/ and run `npm run dev`
 
