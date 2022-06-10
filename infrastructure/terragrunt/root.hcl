@@ -43,7 +43,7 @@ inputs = {
   deployment_stack_service = local.deployment_stack_service
 
   # Netorwking related inputs
-  vpc_cidr_block = "25.0.0.0/16"
+  vpc_cidr_block = "192.168.0.0/16"
   az_count       = 2
 
   # Application Load balancer
