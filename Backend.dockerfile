@@ -17,6 +17,8 @@ EXPOSE 3000
 COPY pkg-svcs/backend/ /app/backend/
 
 FROM source as builder
+WORKDIR /app/backend
+RUN mv .env.registry .env
 
 FROM node:lts-alpine as production
 
