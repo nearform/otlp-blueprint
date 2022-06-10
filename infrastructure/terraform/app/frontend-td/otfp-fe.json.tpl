@@ -8,9 +8,9 @@
     "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "${otlp_log_group_name}",
+          "awslogs-group": "${deployment_env}_${otlp_log_group_name}",
           "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "otlp"
+          "awslogs-stream-prefix": "${deployment_env}_otlp"
         }
     },
     "portMappings": [

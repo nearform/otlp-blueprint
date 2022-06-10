@@ -6,11 +6,12 @@ locals {
     fargate_memory = var.fargate_memory
     aws_region     = var.deployment_region
     otlp_log_group_name = var.otlp_log_group_name
+    deployment_env = var.deployment_env
   })
 }
 
 resource "aws_ecs_task_definition" "app" {
-  family                   = "otlp-fe-app-task"
+  family                   = "${var.deployment_env}-otlp-fe-app"
   execution_role_arn       = var.ecs_task_execution_role_arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -20,7 +21,7 @@ resource "aws_ecs_task_definition" "app" {
 }
 
 resource "aws_ecs_service" "main" {
-  name            = "otlp-fe-service"
+  name            = "${var.deployment_env}-otlp-fe"
   cluster         = var.ecs_cluster_id
   task_definition = aws_ecs_task_definition.app.arn
   desired_count   = var.app_count
