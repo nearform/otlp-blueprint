@@ -11,6 +11,7 @@ node_modules
 **/.env
 
 .terragrunt-cache*
+.terraform
 
 **/.terragrunt-cache*
 **/.terraform.lock.hcl
