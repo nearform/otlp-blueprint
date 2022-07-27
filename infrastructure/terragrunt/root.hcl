@@ -2,7 +2,7 @@
 locals {
 
   # AWS setting
-  aws_profile = "otlp_dev"
+  aws_profile = get_env("AWS_PROFILE","otlp_dev")
 
   # Load environment config.
   environment_config = read_terragrunt_config(find_in_parent_folders("environment.hcl"))
@@ -43,7 +43,7 @@ inputs = {
   deployment_stack_service = local.deployment_stack_service
 
   # Netorwking related inputs
-  vpc_cidr_block = "192.168.0.0/16"
+  vpc_cidr_block = "172.16.0.0/16"
   az_count       = 2
 
   # Application Load balancer
@@ -65,7 +65,7 @@ generate "provider" {
       provider "aws" {
         # Configuration options
         region = "${local.deployment_region}"
-        profile = "${local.aws_profile}" 
+        profile = "${local.aws_profile}"
       }
       terraform {
         required_providers {
@@ -93,7 +93,7 @@ remote_state {
 
   config = {
     encrypt = true
-    bucket  = "otlp-blueprint-tf-state"
+    bucket  = "otlp-blueprint-tf-state-${local.deployment_region}-${local.deployment_env}"
     key     = local.backend_tfstate_key_name
     region  = "us-east-1"
   }
