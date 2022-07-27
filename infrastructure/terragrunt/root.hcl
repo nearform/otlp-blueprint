@@ -1,9 +1,6 @@
 # Root terragrunt config used for remote backend setup, and provider generator, etc.
 locals {
 
-  # AWS setting
-  aws_profile = get_env("AWS_PROFILE","otlp_dev")
-
   # Load environment config.
   environment_config = read_terragrunt_config(find_in_parent_folders("environment.hcl"))
 
@@ -65,7 +62,6 @@ generate "provider" {
       provider "aws" {
         # Configuration options
         region = "${local.deployment_region}"
-        profile = "${local.aws_profile}"
       }
       terraform {
         required_providers {
