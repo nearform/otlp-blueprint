@@ -18,9 +18,10 @@ dependency "networking" {
   mock_outputs = {
     vpc_id             = "sfasdfasdfasdfas"
     public_subnet_ids  = toset(["Asdfasdfasdfasd", "Asdfasdfasdfasdf"])
-    private_subnet_ids = toset(["asdfasdfasdfasdfsf", "Asdfasdfasdasdfsad"])
+    private_subnet_ids = tolist(["asdfasdfasdfasdfsf", "Asdfasdfasdasdfsad"])
   }
 }
 inputs = {
   vpc_id = dependency.networking.outputs.vpc_id
+  private_subnet_ids = dependency.networking.outputs.private_subnet_ids
 }
