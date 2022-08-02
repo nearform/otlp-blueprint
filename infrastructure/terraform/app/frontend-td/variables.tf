@@ -36,7 +36,7 @@ variable "otlp_collector_app_target_group_id" {}
 
 variable "app_image" {
     description = "The container image to use"
-    default = "759812819291.dkr.ecr.us-east-1.amazonaws.com/dev-otlp-fe-img-repo:latest"
+    # default = "759812819291.dkr.ecr.us-east-1.amazonaws.com/dev-otlp-fe-img-repo:latest"
 }
 
 # Below need to be fed from terragrunt config later.

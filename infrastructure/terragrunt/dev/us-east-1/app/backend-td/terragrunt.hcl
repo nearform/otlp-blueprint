@@ -56,6 +56,16 @@ dependency "ecs_cluster" {
   }
 }
 
+dependency "ecr_repo" {
+  config_path = "../../common/ecr"
+
+  # Mock outputs for plan to work
+  mock_outputs = {
+    fe_repo_url = "fasdfasfasdfasdfasdf"
+    be_repo_url = "fasdfasfasdfasdfasdf"
+  }
+}
+
 dependency "alb" {
   config_path = "../../common/alb"
 
@@ -99,6 +109,7 @@ inputs = {
   otlp_log_group_name                = dependency.cloudwatch.outputs.otlp_log_group_name
   database_password                  = dependency.rds.outputs.db_password
   secrets_arn                        = dependency.rds.outputs.secrets_arn
+  app_image                          = dependency.ecr_repo.outputs.be_repo_url
 
 }
 
