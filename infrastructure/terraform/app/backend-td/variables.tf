@@ -34,10 +34,6 @@ variable "otlp_be_app_target_group_id" {}
 
 variable "otlp_collector_app_target_group_id" {}
 
-variable "database_password" {
-  sensitive = true
-}
-
 variable "secrets_arn" {
   sensitive = true
 }

@@ -24,7 +24,6 @@ dependency "rds" {
 
   # Mock outputs for plan to work
   mock_outputs = {
-    db_password = "sfasdfasdfasdfas"
     secrets_arn  = "sfasdfasdfasdfas"
     
   }
@@ -107,7 +106,6 @@ inputs = {
   otlp_collector_app_target_group_id = dependency.alb.outputs.otlp_collector_app_target_group_id
   ecs_task_execution_role_arn        = dependency.iam-roles.outputs.ecs_task_execution_role_arn
   otlp_log_group_name                = dependency.cloudwatch.outputs.otlp_log_group_name
-  database_password                  = dependency.rds.outputs.db_password
   secrets_arn                        = dependency.rds.outputs.secrets_arn
   app_image                          = dependency.ecr_repo.outputs.be_repo_url
 

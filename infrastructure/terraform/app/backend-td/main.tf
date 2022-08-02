@@ -7,7 +7,7 @@ locals {
     aws_region     = var.deployment_region
     otlp_log_group_name = var.otlp_log_group_name
     deployment_env = var.deployment_env
-    database_password = var.database_password
+    database_secret_arn = var.secrets_arn
   })
 }
 

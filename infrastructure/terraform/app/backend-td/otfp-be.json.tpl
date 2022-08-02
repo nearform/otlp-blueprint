@@ -16,9 +16,9 @@
     "secrets": [
       {
         "name": "DB_PASSWORD",
-        "valueFrom": "${database_password}"
+        "valueFrom": "${database_secret_arn}"
       }
-    ]
+    ],
     "portMappings": [
       {
         "containerPort": ${app_port},

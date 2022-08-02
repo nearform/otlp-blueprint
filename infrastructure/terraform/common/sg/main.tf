@@ -89,11 +89,6 @@ resource "aws_security_group" "sg_ecs_tasks" {
   }
 }
 
-data "aws_subnet" "private_subnets" {
-  count    = var.private_subnet_ids
-  id       = element(var.private_subnet_ids, count.index)
-}
-
 resource "aws_security_group" "rds_sg" {
   name        = "${var.deployment_env}-${var.deployment_app_name}-postgres-sg"
   description = "controls access to the rds postgres database"
@@ -105,7 +100,7 @@ resource "aws_security_group" "rds_sg" {
     protocol    = "tcp"
     from_port   = 5432
     to_port     = 5432
-    cidr_blocks = [for s in data.aws_subnet.private_subnets : s.cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   
   egress {
