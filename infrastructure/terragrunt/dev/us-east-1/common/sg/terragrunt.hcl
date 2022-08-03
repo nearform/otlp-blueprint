@@ -23,4 +23,5 @@ dependency "networking" {
 }
 inputs = {
   vpc_id = dependency.networking.outputs.vpc_id
+  private_subnet_ids = dependency.networking.outputs.private_subnet_ids
 }

@@ -23,6 +23,7 @@ variable "sg_alb_id" {}
 variable "sg_ecs_id" {}
 
 variable "ecs_task_execution_role_arn" {}
+variable "ecs_task_execution_role_id" {}
 
 variable "sample_nginx_app_target_group_id" {}
 
@@ -34,15 +35,18 @@ variable "otlp_be_app_target_group_id" {}
 
 variable "otlp_collector_app_target_group_id" {}
 
+variable "secrets_arn" {
+  sensitive = true
+}
+
 variable "app_image" {
     description = "The container image to use"
-    # default = "759812819291.dkr.ecr.us-east-1.amazonaws.com/dev-otlp-fe-img-repo:latest"
 }
 
 # Below need to be fed from terragrunt config later.
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
-  default     = 80
+  default     = 3000
 }
 variable "app_count" {
   description = "Number of docker containers to run"

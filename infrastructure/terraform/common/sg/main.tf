@@ -88,3 +88,25 @@ resource "aws_security_group" "sg_ecs_tasks" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "rds_sg" {
+  name        = "${var.deployment_env}-${var.deployment_app_name}-postgres-sg"
+  description = "controls access to the rds postgres database"
+  vpc_id      = var.vpc_id
+
+  tags = var.tags 
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 5432
+    to_port     = 5432
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  egress {
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
