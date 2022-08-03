@@ -23,6 +23,7 @@ variable "sg_alb_id" {}
 variable "sg_ecs_id" {}
 
 variable "ecs_task_execution_role_arn" {}
+variable "ecs_task_execution_role_id" {}
 
 variable "sample_nginx_app_target_group_id" {}
 

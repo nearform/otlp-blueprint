@@ -13,7 +13,7 @@ locals {
 
 resource "aws_iam_role_policy" "password_db_policy" {
   name = "${var.deployment_env}-otlp-be-db-access"
-  role = var.ecs_task_execution_role_arn
+  role = var.ecs_task_execution_role_id
 
   policy = <<-EOF
   {
