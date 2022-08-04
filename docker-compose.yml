@@ -17,7 +17,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./postgresql/data:/var/lib/postgresql/data
+      # - ./postgresql/data:/var/lib/postgresql/data
       - ./postgresql/docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
 
   backend:
@@ -78,7 +78,7 @@ services:
   
   collector:
     image: otel/opentelemetry-collector:latest
-    command: ["--config=/conf/collector-config.yaml", "--log-level=DEBUG"]
+    command: ["--config=/conf/collector-config.yaml"]
     volumes:
       - ./collector-config.yaml:/conf/collector-config.yaml
     ports:
