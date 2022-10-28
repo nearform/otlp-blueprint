@@ -122,7 +122,7 @@ Run below command from CLI from the root of the project directory to run the bui
                 or
     docker-compose up -d
 
-The application will be available at http://localhost:3000 , the backend is on http://localhost:3000 and the database can be reached at localhost:5432.
+The application will be available at http://localhost:8080 , the backend is on http://localhost:3000 and the database can be reached at localhost:5432.
 
 # Features borrowed from the NearForm Bench Template
 A feature-packed template to start a new repository on the bench, including:
