@@ -12,7 +12,7 @@ A 3-tier application showcasing [Open Telemetry](https://opentelemetry.io/docs/i
 - Frontend and backend with otlp sdk installed sending traces to the collector
 - Collector receives, process and exports traces to Jaeger
 - Jaeger for visualization of the traces
-(./flow_diagram.png)
+![Flow Diagram](./flow_diagram.png)
 
 # Features
 
