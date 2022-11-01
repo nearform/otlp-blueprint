@@ -15,7 +15,7 @@ Notes:
    - Run from terragrunt directory `terragrunt run-all plan ` to provision the infrastructure.
    - Before running terragrunt plan/apply set the aws profile. You can set the profile using the env variable AWS_PROFILE.
 
-# Terrform
+# Terraform
 
 [Tree Design](https://tree.nathanfriend.io/?s=(%27options!(%27fancy!true~fullPath.~trailingSlash.~rootDot.)~6(%276%274aform*app2*common2-ecr-vpc*storage-postgres*0%7BTf%200if%20w3us3on3and%20used%20within5form%20not%20for5agrunt%7D7%27)~version!%271%27)*7%20%20-*%20.!false0modules%202-alb-ecs3e5terr5%2046source!7%5Cn%017654320.-*)
 
