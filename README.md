@@ -44,7 +44,7 @@ The work to send metrics has been started in branch [feature/add.metrics](https:
 Note that at this point in time we dont have db connectivity from the backend.
 
 ## Run postgres database in a docker container 
-- Download the latest image of PostgreSQL by running `docker pull postgres`
+- Download the specific image of PostgreSQL by running `docker pull postgres:14.2-alpine`
 - Run below docker command to spin up a local postgres db instance
 ```
     docker run /
@@ -54,12 +54,12 @@ Note that at this point in time we dont have db connectivity from the backend.
         -e POSTGRES_PASSWORD=<postgres_user_password> /
         -e POSTGRES_DB=<db_name> /
         -d /
-        postgres /
+        postgres:14.2-alpine /
 ```
 
 ## Run jaeger all-in-one docker container 
 
-- Download the latest image of Jaegar by running `docker pull jaegertracing/all-in-one`
+- Download the specific image of Jaegar by running `docker pull jaegertracing/all-in-one:1.38.1`
 - Run below docker command to spin up a local Jaegar instance
 ```
 docker run -d --name jaeger \
@@ -92,6 +92,34 @@ The container exposes the following ports:
 
 Use postman to hit the health endpoint above to check the health status.
 
+## Run open telemetry collector docker container
+
+- Download the specific image of open telemetry collector by running `docker pull otel/opentelemetry-collector:0.56.0`
+- Run below docker command to spin up a local open telemetry collector instance
+```
+docker run -v $(pwd)/collector-config.yaml:/etc/otelcol/collector-config.yaml \
+  -p "1888:1888" \
+  -p "8888:8888" \
+  -p "8889:8889" \
+  -p "13133:13133" \
+  -p "4317:4317" \
+  -p "4318:4318" \
+  -p "55679:55679" \
+  otel/opentelemetry-collector:0.56.0
+```
+You can validate the container logs to see if the collector is running correctly
+The container exposes the following ports:
+
+|Port  | Protocol |Function|
+| :---:|:---:     | :---:   |
+|1888  | HTTP     | pprof extension
+|8888  | HTTP     | Prometheus metrics exposed by the collector
+|8889  | HTTP     | Prometheus exporter metrics
+|13133 | HTTP     | health_check extension
+|4317  | HTTP     | OTLP gRPC receiver
+|4318  | HTTP     | OTLP http receiver
+|55679 | HTTP     | zpages extension
+
 # Running the application locally using docker compose
 At the root of the project a docker compose file is defined all the containers needed to run the app locally for development and test.
 
@@ -118,8 +146,10 @@ There are four services defined in the docker compose
 - The frontend directory is monted as volume in the container so any changes made to the source is persisted and vite server should hot reload the changes.
 - **IMPORTANT** At container start the `.sample.env` file is copied to .env file so any new addition to env variables should go into sample file first.
 
-### Jaeger service
-- The servcice used `jaegertracing/all-in-one:latest` image which is a all in one image which is suitable for local development. 
+### open telemetry collector service
+- EXPLAIN
+### jaeger service
+- The servcice used `jaegertracing/all-in-one:1.38.1` image which is a all in one image which is suitable for local development. 
 
 
 ## Run app in docker compose
