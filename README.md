@@ -8,6 +8,12 @@ A 3-tier application showcasing [Open Telemetry](https://opentelemetry.io/docs/i
 - fastify back end
 - terraform and terragrunt for the infra (based on the [3-tier architecture recipe](https://github.com/nearform/devops-recipes/tree/main/samples/3-tier))
 
+# Flow Diagram
+- Frontend and backend with otlp sdk installed sending traces to the collector
+- Collector receives, process and exports traces to Jaeger
+- Jaeger for visualization of the traces
+(./flow_diagram.png)
+
 # Features
 
 The project implements traces. It does not implement logs and metrics as those features are still in developement (check [opentelemetry-js feature status page](https://github.com/open-telemetry/opentelemetry-js#feature-status) for more details).
