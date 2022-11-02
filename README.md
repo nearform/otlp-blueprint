@@ -126,7 +126,7 @@ Before running the docker compose setup run below command to generate `.env` fil
 
     npm run create:env
 
-There are four services defined in the docker compose
+There are five services defined in the docker compose
 ### postgres service
 - This service is based on the official postgres docker image `postgres:14.2-alpine` from dockerhub. 
 - It creates a db and users as defined in the environment varible defined in the docker compose file. 
