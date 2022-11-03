@@ -62,12 +62,13 @@ services:
     command: "npm run start:container"
 
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/all-in-one:1.38.1
     ports:
       - "5775:5775/udp"
       - "6831:6831/udp"
       - "6832:6832/udp"
       - "5778:5778"
+      - "16685:16685"
       - "16686:16686"
       - "14250:14250"
       - "14268:14268"
@@ -77,7 +78,7 @@ services:
       - jaeger-network
   
   collector:
-    image: otel/opentelemetry-collector:latest
+    image: otel/opentelemetry-collector:0.56.0
     command: ["--config=/conf/collector-config.yaml"]
     volumes:
       - ./collector-config.yaml:/conf/collector-config.yaml
@@ -86,6 +87,8 @@ services:
       - "55680:55680"
       - "55681:55681"
       - "13133:13133"
+      - "4317:4317"
+      - "4318:4318"
     depends_on:
       - jaeger
     networks:

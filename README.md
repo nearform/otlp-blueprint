@@ -8,6 +8,13 @@ A 3-tier application showcasing [Open Telemetry](https://opentelemetry.io/docs/i
 - fastify back end
 - terraform and terragrunt for the infra (based on the [3-tier architecture recipe](https://github.com/nearform/devops-recipes/tree/main/samples/3-tier))
 
+# Trace Flow Diagram
+- Frontend and backend with otlp sdk installed sending traces to the collector
+- Collector receives, process and exports traces to Jaeger
+- Jaeger for visualization of the traces
+
+![Flow Diagram](./flow_diagram.png)
+
 # Features
 
 The project implements traces. It does not implement logs and metrics as those features are still in developement (check [opentelemetry-js feature status page](https://github.com/open-telemetry/opentelemetry-js#feature-status) for more details).
@@ -37,7 +44,7 @@ The work to send metrics has been started in branch [feature/add.metrics](https:
 Note that at this point in time we dont have db connectivity from the backend.
 
 ## Run postgres database in a docker container 
-- Download the latest image of PostgreSQL by running `docker pull postgres`
+- Download the specific image of PostgreSQL by running `docker pull postgres:14.2-alpine`
 - Run below docker command to spin up a local postgres db instance
 ```
     docker run /
@@ -47,12 +54,39 @@ Note that at this point in time we dont have db connectivity from the backend.
         -e POSTGRES_PASSWORD=<postgres_user_password> /
         -e POSTGRES_DB=<db_name> /
         -d /
-        postgres /
+        postgres:14.2-alpine /
 ```
+## Run open telemetry collector docker container
+
+- Download the specific image of open telemetry collector by running `docker pull otel/opentelemetry-collector:0.56.0`
+- Run below docker command to spin up a local open telemetry collector instance
+```
+docker run -v $(pwd)/collector-config.yaml:/etc/otelcol/collector-config.yaml \
+  -p "1888:1888" \
+  -p "8888:8888" \
+  -p "8889:8889" \
+  -p "13133:13133" \
+  -p "4317:4317" \
+  -p "4318:4318" \
+  -p "55679:55679" \
+  otel/opentelemetry-collector:0.56.0
+```
+You can validate the container logs to see if the collector is running correctly
+The container exposes the following ports:
+
+|Port  | Protocol |Function|
+| :---:|:---:     | :---:   |
+|1888  | HTTP     | pprof extension
+|8888  | HTTP     | Prometheus metrics exposed by the collector
+|8889  | HTTP     | Prometheus exporter metrics
+|13133 | HTTP     | health_check extension
+|4317  | HTTP     | OTLP gRPC receiver
+|4318  | HTTP     | OTLP http receiver
+|55679 | HTTP     | zpages extension
 
 ## Run jaeger all-in-one docker container 
 
-- Download the latest image of Jaegar by running `docker pull jaegertracing/all-in-one`
+- Download the specific image of Jaegar by running `docker pull jaegertracing/all-in-one:1.38.1`
 - Run below docker command to spin up a local Jaegar instance
 ```
 docker run -d --name jaeger \
@@ -92,7 +126,7 @@ Before running the docker compose setup run below command to generate `.env` fil
 
     npm run create:env
 
-There are four services defined in the docker compose
+There are five services defined in the docker compose
 ### postgres service
 - This service is based on the official postgres docker image `postgres:14.2-alpine` from dockerhub. 
 - It creates a db and users as defined in the environment varible defined in the docker compose file. 
@@ -107,14 +141,18 @@ There are four services defined in the docker compose
 
 ### frontend service
 - This is node based frontend which runs vite dev server and uses the official image `node:lts-alpine`.
+- Exposes the service in port 8080
 - For development purpose the service used vite dev server and in prod config this will be servered as static site behind the nginx server.
 - The frontend directory is monted as volume in the container so any changes made to the source is persisted and vite server should hot reload the changes.
 - **IMPORTANT** At container start the `.sample.env` file is copied to .env file so any new addition to env variables should go into sample file first.
 
-### Jaeger service
-- The servcice used `jaegertracing/all-in-one:latest` image which is a all in one image which is suitable for local development. 
+### open telemetry collector service
+- This service is based on the official open telemetry collector docker image `opentelemetry-collector:0.56.0` from dockerhub.
+- The file `collector-config.yaml` that has all the configurations regarding receivers, processors, and exporters is mounted as a volume inside of the container.
 
-
+### jaeger service
+- The servcice used `jaegertracing/all-in-one:1.38.1` image which is a all in one image which is suitable for local development.
+- Exposes the UI for visualization in port 16686.
 ## Run app in docker compose
 Run below command from CLI from the root of the project directory to run the build the container and run the app.
 
@@ -122,7 +160,7 @@ Run below command from CLI from the root of the project directory to run the bui
                 or
     docker-compose up -d
 
-The application will be available at http://localhost:3000 , the backend is on http://localhost:3000 and the database can be reached at localhost:5432.
+The application will be available at http://localhost:8080 , the backend is on http://localhost:3000 and the database can be reached at localhost:5432.
 
 # Features borrowed from the NearForm Bench Template
 A feature-packed template to start a new repository on the bench, including:
