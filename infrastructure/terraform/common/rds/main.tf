@@ -3,8 +3,12 @@ resource "random_password" "db_password" {
   special          = false
 }
 
+resource "random_pet" "db_secret_name" {
+
+}
+
 resource "aws_secretsmanager_secret" "database_secrets_manager" {
-  name = "${var.deployment_env}/rds/postgres_db"
+  name = "${var.deployment_env}/rds/postgres_db-${random_pet.db_secret_name.id}"
 }
 
 resource "aws_secretsmanager_secret_version" "secret_version" {
