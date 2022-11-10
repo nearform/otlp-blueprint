@@ -1,0 +1,66 @@
+name: Deploy Backend App on ECS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - pkg-svcs/backend/**
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_ACCOUNT_ID: 101259067028
+  AWS_REGION: us-east-1
+  ENVIRONMENT : dev
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.ENVIRONMENT }}-otlp-github-actions-role
+          role-session-name: github-ci
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: latest
+        run: |
+          # Build a docker container and
+          # push it to ECR so that it can
+          # be deployed to ECS.
+          docker build -f Backend.dockerfile . -t $ECR_REGISTRY/${{ env.ENVIRONMENT }}-otlp-be-img-repo:$IMAGE_TAG
+          docker push $ECR_REGISTRY/${{ env.ENVIRONMENT }}-otlp-be-img-repo:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/${{ env.ENVIRONMENT }}-otlp-be-img-repo:$IMAGE_TAG"
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: .aws/${{ env.ENVIRONMENT }}-otlp-be-task-definition.json
+          container-name: otfp-be-app
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ENVIRONMENT }}-otlp-be
+          cluster: ${{ env.ENVIRONMENT }}-otlp-cluster
+          wait-for-service-stability: true
