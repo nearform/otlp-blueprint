@@ -31,6 +31,15 @@ resource "aws_iam_role_policy" "password_db_policy" {
         "Resource": [
           "${var.secrets_arn}"
         ]
+      },
+      {
+        "Action": [
+          "ssm:GetParameters"
+        ],
+        "Effect": "Allow",
+        "Resource": [
+          "arn:aws:ssm:us-east-1:101259067028:parameter/*"
+        ]
       }
     ]
   }
