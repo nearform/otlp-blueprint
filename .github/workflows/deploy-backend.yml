@@ -2,10 +2,10 @@ name: Deploy Backend App on ECS
 
 on:
   push:
-    branches: [main]
+    branches: [feat/github-backend-workflow]
     paths:
       - pkg-svcs/backend/**
-  workflow_dispatch:
+  # workflow_dispatch:
 
 permissions:
   id-token: write
