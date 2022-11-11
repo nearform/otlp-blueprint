@@ -32,7 +32,7 @@
       },
       {
         "name": "PG_DB",
-        "valueFrom": "${db_port}"
+        "valueFrom": "${db_name}"
       }
     ],
     "portMappings": [
