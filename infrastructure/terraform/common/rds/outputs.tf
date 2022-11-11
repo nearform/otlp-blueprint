@@ -3,7 +3,7 @@ output "db_host" {
 }
 
 output "db_port" {
-    value = aws_db_instance.database.db_instance_port
+    value = aws_db_instance.database.port
 }
 
 output "db_name" {
@@ -11,7 +11,7 @@ output "db_name" {
 }
 
 output "db_username" {
-    value = aws_db_instance.database.master_username
+    value = aws_db_instance.database.username
 }
 
 output "secrets_arn" {

@@ -109,6 +109,7 @@ inputs = {
   ecs_task_execution_role_id         = dependency.iam-roles.outputs.ecs_task_execution_role_id
   otlp_log_group_name                = dependency.cloudwatch.outputs.otlp_log_group_name
   db_host                            = dependency.rds.outputs.db_host
+  db_port                            = dependency.rds.outputs.db_port
   db_name                            = dependency.rds.outputs.db_name
   db_username                        = dependency.rds.outputs.db_username
   secrets_arn                        = dependency.rds.outputs.secrets_arn
