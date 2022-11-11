@@ -13,26 +13,28 @@
           "awslogs-stream-prefix": "${deployment_env}_otlp"
         }
     },
+    "environment": [
+      {
+        "name": "PG_HOST",
+        "value": "${db_host}"
+      },
+      {
+        "name": "PG_USER",
+        "value": "${db_username}"
+      },
+      {
+        "name": "PG_PORT",
+        "value": "${db_port}"
+      },
+      {
+        "name": "PG_DB",
+        "value": "${db_name}"
+      }
+    ],
     "secrets": [
       {
         "name": "DB_PASSWORD",
         "valueFrom": "${database_secret_arn}"
-      },
-      {
-        "name": "PG_HOST",
-        "valueFrom": "${db_host}"
-      },
-      {
-        "name": "PG_USER",
-        "valueFrom": "${db_username}"
-      },
-      {
-        "name": "PG_PORT",
-        "valueFrom": "${db_port}"
-      },
-      {
-        "name": "PG_DB",
-        "valueFrom": "${db_name}"
       }
     ],
     "portMappings": [
