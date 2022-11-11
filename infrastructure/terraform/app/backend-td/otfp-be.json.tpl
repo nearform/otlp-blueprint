@@ -17,6 +17,22 @@
       {
         "name": "DB_PASSWORD",
         "valueFrom": "${database_secret_arn}"
+      },
+      {
+        "name": "PG_HOST",
+        "valueFrom": "${db_host}"
+      },
+      {
+        "name": "PG_USER",
+        "valueFrom": "${db_username}"
+      },
+      {
+        "name": "PG_PORT",
+        "valueFrom": "${db_port}"
+      },
+      {
+        "name": "PG_DB",
+        "valueFrom": "${db_port}"
       }
     ],
     "portMappings": [

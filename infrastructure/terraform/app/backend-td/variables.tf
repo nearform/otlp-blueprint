@@ -2,7 +2,7 @@ variable "tags" {
     type = map
 }
 
-variable "deployment_region" {} 
+variable "deployment_region" {}
 
 variable "deployment_env" {}
 
@@ -30,7 +30,7 @@ variable "sample_nginx_app_target_group_id" {}
 variable "jaeger_app_target_group_id" {}
 
 variable "otlp_fe_app_target_group_id" {}
-    
+
 variable "otlp_be_app_target_group_id" {}
 
 variable "otlp_collector_app_target_group_id" {}
@@ -38,6 +38,14 @@ variable "otlp_collector_app_target_group_id" {}
 variable "secrets_arn" {
   sensitive = true
 }
+
+variable "db_host" {}
+
+variable "db_port" {}
+
+variable "db_name" {}
+
+variable "db_username" {}
 
 variable "app_image" {
     description = "The container image to use"

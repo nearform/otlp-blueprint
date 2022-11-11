@@ -1,5 +1,5 @@
 locals {
-  ecs_service_template_file = templatefile("otfp-be.json.tpl", { 
+  ecs_service_template_file = templatefile("otfp-be.json.tpl", {
     app_image      = var.app_image
     app_port       = var.app_port
     fargate_cpu    = var.fargate_cpu
@@ -7,6 +7,10 @@ locals {
     aws_region     = var.deployment_region
     otlp_log_group_name = var.otlp_log_group_name
     deployment_env = var.deployment_env
+    db_host        = var.db_host
+    db_port        = var.db_port
+    db_name        = var.db_name
+    db_username    = var.db_username
     database_secret_arn = var.secrets_arn
   })
 }
