@@ -31,3 +31,26 @@ resource "aws_db_instance" "database" {
   multi_az               = true
   vpc_security_group_ids = [var.rds_sg_id]
 }
+
+resource "null_resource" "database_setup" {
+  triggers = {
+    setup_script_sha1 = filesha1("${var.deployment_parent_dir}/../../postgresql/docker_postgres_init.sql")
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOF
+			while read line; do
+				echo "$line"
+				aws rds-data execute-statement --resource-arn "$DB_ARN" --database  "$DB_NAME" --secret-arn "$SECRET_ARN" --sql "$line"
+			done  < <(awk 'BEGIN{RS=";\n"}{gsub(/\n/,""); if(NF>0) {print $0";"}}' ${var.deployment_parent_dir}/../../postgresql/docker_postgres_init.sql)
+			EOF
+    environment = {
+      DB_ARN     = aws_db_instance.database.arn
+      DB_NAME    = aws_db_instance.database.db_name
+      SECRET_ARN = aws_secretsmanager_secret.database_secrets_manager.arn
+    }
+    interpreter = ["bash", "-c"]
+  }
+
+  depends_on = [aws_db_instance.database]
+}

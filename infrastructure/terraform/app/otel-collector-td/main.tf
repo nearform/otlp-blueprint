@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "otlp_collelctor_app" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
-  container_definitions    =  local.ecs_service_template_file
+  container_definitions    = local.ecs_service_template_file
 }
 
 resource "aws_ecs_service" "main" {
@@ -34,7 +34,7 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
     target_group_arn = var.otlp_collector_app_target_group_id
-    container_name   = "otel-collector-app" #TODO: this should come from the container def template.
+    container_name   = jsondecode(local.ecs_service_template_file)[0].name
     container_port   = var.app_port
   }
 }
