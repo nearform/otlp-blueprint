@@ -15,7 +15,7 @@
     },
     "secrets": [
       {
-        "name": "DB_PASSWORD",
+        "name": "SECRETS_PG_INFO",
         "valueFrom": "${database_secret_arn}"
       }
     ],

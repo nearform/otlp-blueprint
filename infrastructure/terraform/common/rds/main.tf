@@ -9,8 +9,16 @@ resource "random_password" "db_password" {
   special          = false
 }
 
+resource "random_string" "db_secret_random_string" {
+  length           = 10
+  special          = false
+  keepers          = {
+    db_name = local.db_name
+  }
+}
+
 resource "aws_secretsmanager_secret" "database_secrets_manager" {
-  name = "${var.deployment_app_name}-${var.deployment_env}/rds/postgres_db"
+  name = "${var.deployment_app_name}-${var.deployment_env}-postgres-db-info-${random_string.db_secret_random_string.result}"
 }
 
 resource "aws_secretsmanager_secret_version" "secret_version" {
@@ -18,12 +26,10 @@ resource "aws_secretsmanager_secret_version" "secret_version" {
   secret_string = <<EOF
   {
     "database": "${aws_db_instance.database.db_name}",
-    "username": "${local.db_username}",
+    "username": "${aws_db_instance.database.username}",
     "password": "${random_password.db_password.result}",
-    "engine": "${local.db_engine}",
-    "host": "${aws_db_instance.database.endpoint}",
-    "port": ${aws_db_instance.database.port},
-    "identifier": "${aws_db_instance.database.identifier}"
+    "host": "${split(":", aws_db_instance.database.endpoint)[0]}",
+    "port": ${aws_db_instance.database.port}
   }
   EOF
 }

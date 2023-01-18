@@ -8,12 +8,8 @@ const config = envSchema({
     .prop('API_HOST', S.string().required())
     .prop('API_PORT', S.string().required())
     .prop('CORS_ORIGIN', S.string())
-    .prop('PG_HOST', S.string().required())
-    .prop('PG_PORT', S.string().required())
-    .prop('PG_DB', S.string().required())
-    .prop('PG_USER', S.string().required())
     .prop('SECRETS_STRATEGY', S.string())
-    .prop('SECRETS_PG_PASS', S.string().required())
+    .prop('SECRETS_PG_INFO', S.string().required())
     .prop('OTLP_DEBUG', S.string())
     .prop('OTLP_SERVICE_NAME', S.string())
     .prop('OTLP_ENVIRONMENT', S.string())
@@ -31,10 +27,6 @@ module.exports = {
     logger: true
   },
   pgPlugin: {
-    host: config.PG_HOST,
-    port: config.PG_PORT,
-    database: config.PG_DB,
-    user: config.PG_USER,
     poolSize: 10,
     idleTimeoutMillis: 30000
   },
@@ -42,7 +34,7 @@ module.exports = {
   secretsManager: {
     strategy: config.SECRETS_STRATEGY,
     secrets: {
-      dbPassword: config.SECRETS_PG_PASS
+      dbInfo: config.SECRETS_PG_INFO
     }
   },
   otlp: {
