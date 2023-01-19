@@ -6,7 +6,6 @@ locals {
 
 resource "aws_ecr_repository" "otlp-fe-image-repo" {
   name                 = local.fe_image_repo_name
-  image_tag_mutability = "IMMUTABLE"
 }
 
 resource "aws_ecr_repository_policy" "fe-image-repo-policy" {
