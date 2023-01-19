@@ -13,7 +13,7 @@ async function health(server) {
       }
     },
     handler: async () => {
-      return "OK"
+      return 'OK'
     }
   })
 }

@@ -1,8 +1,8 @@
 variable "tags" {
-    type = map
+  type = map(any)
 }
 
-variable "deployment_region" {} 
+variable "deployment_region" {}
 
 variable "deployment_env" {}
 
@@ -11,11 +11,11 @@ variable "deployment_app_name" {}
 variable "vpc_id" {}
 
 variable "public_subnet_ids" {
-    type = set(string)
+  type = set(string)
 }
 
 variable "private_subnet_ids" {
-    type = set(string)
+  type = set(string)
 }
 
 variable "sg_alb_id" {}
@@ -29,20 +29,20 @@ variable "sample_nginx_app_target_group_id" {}
 variable "jaeger_app_target_group_id" {}
 
 variable "otlp_fe_app_target_group_id" {}
-    
+
 variable "otlp_be_app_target_group_id" {}
 
 variable "otlp_collector_app_target_group_id" {}
 
 variable "app_image" {
-    description = "The container image to use"
-    default = "otel/opentelemetry-collector:latest"
+  description = "The container image to use"
+  default     = "otel/opentelemetry-collector:latest"
 }
 
 # Below need to be fed from terragrunt config later.
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
-  default     = 55681
+  default     = 4318
 }
 variable "app_count" {
   description = "Number of docker containers to run"

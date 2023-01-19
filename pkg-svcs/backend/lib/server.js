@@ -26,6 +26,10 @@ async function plugin(server, config) {
       dir: path.join(__dirname, 'routes'),
       options: config
     })
+
+  server.get('/', () => {
+    return 'OK'
+  })
 }
 
 module.exports = fp(plugin)
