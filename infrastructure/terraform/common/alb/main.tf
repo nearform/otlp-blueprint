@@ -46,7 +46,7 @@ resource "aws_alb_target_group" "jaeger_all_in_one_app" {
   target_type = "ip"
 
   health_check {
-    port         = 16686
+    port                = 16686
     healthy_threshold   = "3"
     interval            = "30"
     protocol            = "HTTP"
@@ -137,13 +137,13 @@ resource "aws_alb_listener" "otlp_backend_lblistner" {
 
 resource "aws_alb_target_group" "otlp_collector" {
   name        = "otlp-collector-target-group"
-  port        = 55681
+  port        = 4318
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
 
   health_check {
-    port = 13133
+    port                = 13133
     healthy_threshold   = "3"
     interval            = "30"
     protocol            = "HTTP"

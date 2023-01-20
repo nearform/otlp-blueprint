@@ -11,7 +11,7 @@ receivers:
 
 exporters:
   jaeger:
-    endpoint: jaeger:14250
+    endpoint: http://dev-otlp-lb-1255345766.us-east-1.elb.amazonaws.com:8082
     tls:
       insecure: true
 processors:
