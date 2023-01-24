@@ -2,8 +2,6 @@
 
 const path = require('path')
 
-const { migrateFunction } = require('../migrate')
-
 const autoload = require('@fastify/autoload')
 const fp = require('fastify-plugin')
 
@@ -28,15 +26,6 @@ async function plugin(server, config) {
       dir: path.join(__dirname, 'routes'),
       options: config
     })
-
-  await server.ready()
-
-  try {
-    await migrateFunction(server.pg, JSON.parse(server.secrets.dbInfo))
-  } catch (error) {
-    console.log('Error when applying migrations: ', error)
-    process.exit(1)
-  }
 
   server.get('/', () => {
     return 'OK'

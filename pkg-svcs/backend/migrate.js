@@ -5,14 +5,14 @@
 const path = require('path')
 const Postgrator = require('postgrator')
 
-async function migrateFunction(client, dbInfo) {
+async function migrateFunction(server) {
   const postgrator = new Postgrator({
     migrationPattern: path.join(__dirname, '/migrations/*'),
     driver: 'pg',
-    database: dbInfo.database,
+    database: server.secrets.dbInfo.database,
     schemaTable: 'migrations',
     currentSchema: 'public',
-    execQuery: (query) => client.query(query),
+    execQuery: (query) => server.pg.query(query),
   });
 
   const result = await postgrator.migrate()
