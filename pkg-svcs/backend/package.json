@@ -35,7 +35,8 @@
     "fluent-json-schema": "^3.1.0",
     "nodemon": "^2.0.20",
     "pg": "^8.7.3",
-    "pg-range": "^1.1.1"
+    "pg-range": "^1.1.1",
+    "postgrator": "^5.0.1"
   },
   "devDependencies": {
     "jest": "^28.1.0",
