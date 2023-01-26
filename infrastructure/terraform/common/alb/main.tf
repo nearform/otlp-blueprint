@@ -73,7 +73,7 @@ resource "aws_alb_listener" "jaeger_lblistner" {
 
 resource "aws_alb_target_group" "otlp_frontend_app" {
   name        = "otlp-fe-target-group"
-  port        = 80
+  port        = 8080
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"

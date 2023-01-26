@@ -23,8 +23,8 @@ RUN npm run build
 FROM nginx:stable-alpine as production
 
 WORKDIR /app/frontend
-COPY --from=builder /app/frontend/dist/ /var/www/
-COPY --from=builder /app/frontend/docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder --chown=101:0 /app/frontend/dist/ /var/www/
+COPY --from=builder --chown=101:0 /app/frontend/docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # run NGINX as an unprivileged user
 RUN sed -i -e '/user/!b' -e '/nginx/!b' -e '/nginx/d' /etc/nginx/nginx.conf \

@@ -82,6 +82,13 @@ resource "aws_security_group" "sg_ecs_tasks" {
   }
   ingress {
     protocol        = "tcp"
+    from_port       = 8080
+    to_port         = 8080
+    security_groups = [aws_security_group.sg_lb.id]
+    self            = false
+  }
+  ingress {
+    protocol        = "tcp"
     from_port       = 3000
     to_port         = 3000
     security_groups = [aws_security_group.sg_lb.id]
