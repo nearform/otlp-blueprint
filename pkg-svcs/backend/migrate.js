@@ -12,7 +12,7 @@ async function migrateFunction(server) {
     database: server.secrets.dbInfo.database,
     schemaTable: 'migrations',
     currentSchema: 'public',
-    execQuery: query => server.pg.query(query),
+    execQuery: query => server.pg.query(query)
   })
 
   const result = await postgrator.migrate()
