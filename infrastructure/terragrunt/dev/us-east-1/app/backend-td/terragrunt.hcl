@@ -63,6 +63,7 @@ dependency "ecr_repo" {
   mock_outputs = {
     fe_repo_url = "fasdfasfasdfasdfasdf"
     be_repo_url = "fasdfasfasdfasdfasdf"
+    collector_repo_url = "fasdfasfasdfasdfasdf"
   }
 }
 

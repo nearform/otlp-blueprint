@@ -4,9 +4,15 @@ require('pg-range').install(require('pg'))
 const fp = require('fastify-plugin')
 
 async function plugin(server, options) {
+  const dbInfo = JSON.parse(server.secrets.dbInfo)
+
   server.register(require('@fastify/postgres'), {
     ...options.pgPlugin,
-    password: server.secrets.dbPassword
+    host: dbInfo.host,
+    port: dbInfo.port,
+    database: dbInfo.database,
+    user: dbInfo.username,
+    password: dbInfo.password
   })
 }
 

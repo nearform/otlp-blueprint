@@ -10,10 +10,11 @@ We assumed below folder structure for our terragrunt configuration which will gu
 Notes:
    - `terragrunt.hcl` file drive the execution of terraform source config files. 
    - The name of the `terragrunt.hcl` file should not be changed in the folder where the terraform source exist. The same file can have different name in the parent folders. 
-   - We have `environment.hcl` file under `/dev` folder which should carry any environmen related variables and inputs.
+   - We have `environment.hcl` file under `/dev` folder which should carry any environment related variables and inputs.
    - We have a terragrunt config file at the root of project named `root.hcl` which need to be explicitly included in the child terragrunt config files. All globale variables and inputs will be manage here.
    - Run from terragrunt directory `terragrunt run-all plan ` to provision the infrastructure.
    - Before running terragrunt plan/apply set the aws profile. You can set the profile using the env variable AWS_PROFILE.
+   - Make sure to build and push the container images for the backend, frontend and the collector in order for the application to run in ECS.
 
 # Terraform
 

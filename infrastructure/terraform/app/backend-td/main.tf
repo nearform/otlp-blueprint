@@ -1,12 +1,12 @@
 locals {
-  ecs_service_template_file = templatefile("otfp-be.json.tpl", { 
-    app_image      = var.app_image
-    app_port       = var.app_port
-    fargate_cpu    = var.fargate_cpu
-    fargate_memory = var.fargate_memory
-    aws_region     = var.deployment_region
+  ecs_service_template_file = templatefile("otfp-be.json.tpl", {
+    app_image           = var.app_image
+    app_port            = var.app_port
+    fargate_cpu         = var.fargate_cpu
+    fargate_memory      = var.fargate_memory
+    aws_region          = var.deployment_region
     otlp_log_group_name = var.otlp_log_group_name
-    deployment_env = var.deployment_env
+    deployment_env      = var.deployment_env
     database_secret_arn = var.secrets_arn
   })
 }
@@ -35,12 +35,13 @@ resource "aws_iam_role_policy" "password_db_policy" {
 
 resource "aws_ecs_task_definition" "app" {
   family                   = "${var.deployment_env}-otlp-be-app"
+  task_role_arn            = var.ecs_task_execution_role_arn
   execution_role_arn       = var.ecs_task_execution_role_arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
-  container_definitions    =  local.ecs_service_template_file
+  container_definitions    = local.ecs_service_template_file
 }
 
 resource "aws_ecs_service" "main" {

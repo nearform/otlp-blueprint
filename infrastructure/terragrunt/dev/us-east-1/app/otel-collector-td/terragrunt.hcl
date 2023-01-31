@@ -69,6 +69,16 @@ dependency "cloudwatch" {
   }
 }
 
+dependency "ecr_repo" {
+  config_path = "../../common/ecr"
+
+  # Mock outputs for plan to work
+  mock_outputs = {
+    fe_repo_url = "fasdfasfasdfasdfasdf"
+    be_repo_url = "fasdfasfasdfasdfasdf"
+    collector_repo_url = "fasdfasfasdfasdfasdf"
+  }
+}
 
 inputs = {
   vpc_id             = dependency.networking.outputs.vpc_id
@@ -86,6 +96,7 @@ inputs = {
   otlp_collector_app_target_group_id = dependency.alb.outputs.otlp_collector_app_target_group_id
   ecs_task_execution_role_arn        = dependency.iam-roles.outputs.ecs_task_execution_role_arn
   otlp_log_group_name                = dependency.cloudwatch.outputs.otlp_log_group_name
+  app_image                          = dependency.ecr_repo.outputs.collector_repo_url
 
 }
 

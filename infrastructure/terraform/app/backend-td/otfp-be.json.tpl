@@ -13,10 +13,10 @@
           "awslogs-stream-prefix": "${deployment_env}_otlp"
         }
     },
-    "secrets": [
+    "environment": [
       {
-        "name": "DB_PASSWORD",
-        "valueFrom": "${database_secret_arn}"
+        "name": "SECRETS_PG_INFO",
+        "value": "${database_secret_arn}"
       }
     ],
     "portMappings": [
