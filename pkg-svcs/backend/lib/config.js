@@ -38,10 +38,10 @@ module.exports = {
     }
   },
   otlp: {
-    debug: config.OTLP_DEBUG,
+    debug: config.OTLP_DEBUG ?? false,
     serviceName: config.OTLP_SERVICE_NAME,
     environment: config.OTLP_ENVIRONMENT,
-    enableConsoleLog: config.OLTP_ENABLE_CONSOLE_LOG,
+    enableConsoleLog: config.OLTP_ENABLE_CONSOLE_LOG ?? false,
     collectorUrl: config.OLTP_COLLECTOR_URL
   }
 }

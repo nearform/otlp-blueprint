@@ -66,3 +66,5 @@ variable "fargate_memory" {
 variable "ecs_cluster_id" {}
 
 variable "otlp_log_group_name" {}
+
+variable "ecs_service_discovery_namespace_id" {}
