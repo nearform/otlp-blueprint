@@ -4,8 +4,8 @@ locals {
     app_port            = var.app_port
     frontend_app_port   = var.frontend_app_port
     grpc_app_port       = var.grpc_app_port
+    grpc_otlp_app_port  = var.grpc_otlp_app_port
     http_otlp_app_port  = var.http_otlp_app_port
-    jaeger_app_port     = var.jaeger_app_port
     fargate_cpu         = var.fargate_cpu
     fargate_memory      = var.fargate_memory
     aws_region          = var.deployment_region

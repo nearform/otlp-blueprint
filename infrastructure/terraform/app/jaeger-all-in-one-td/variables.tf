@@ -36,13 +36,13 @@ variable "otlp_collector_app_target_group_id" {}
 
 variable "app_image" {
   description = "The container image to use"
-  default     = "jaegertracing/all-in-one:latest"
+  default     = "jaegertracing/all-in-one:1.38.1"
 }
 
 # Below need to be fed from terragrunt config later.
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
-  default     = 4317
+  default     = 14250
 }
 variable "frontend_app_port" {
   description = "Port exposed by the docker image to redirect traffic to the frontend"
@@ -52,13 +52,13 @@ variable "grpc_app_port" {
   description = "Port exposed by the docker image to redirect gRPC traffic to the container"
   default     = 16685
 }
-variable "http_otlp_app_port" {
-  description = "Port exposed by the docker image to redirect HTTP traffic to the container"
-  default     = 4318
+variable "grpc_otlp_app_port" {
+  description = "Port exposed by the docker image to redirect gRPG traffic to the container"
+  default     = 4317
 }
-variable "jaeger_app_port" {
+variable "http_otlp_app_port" {
   description = "Port exposed by the docker image to redirect Jaeger traffic to the container"
-  default     = 14250
+  default     = 4318
 }
 variable "app_count" {
   description = "Number of docker containers to run"

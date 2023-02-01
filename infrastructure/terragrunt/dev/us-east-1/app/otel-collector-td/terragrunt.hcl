@@ -25,6 +25,7 @@ dependency "iam-roles" {
   # Mock outputs for plan to work
   mock_outputs = {
     ecs_task_execution_role_arn = "arn:aws:sdfasdf:us-east-1:759812819291:sdfsd/sdfsd/ae3f54373866d182"
+    ecs_task_role_arn = "arn:aws:sdfasdf:us-east-1:759812819291:sdfsd/sdfsd/ae3f54373866d182"
   }
 }
 dependency "sg" {
@@ -94,6 +95,7 @@ inputs = {
   otlp_fe_app_target_group_id          = dependency.alb.outputs.otlp_fe_app_target_group_id
   otlp_be_app_target_group_id          = dependency.alb.outputs.otlp_be_app_target_group_id
   otlp_collector_app_target_group_id   = dependency.alb.outputs.otlp_collector_app_target_group_id
+  ecs_task_role_arn                    = dependency.iam-roles.outputs.ecs_task_role_arn
   ecs_task_execution_role_arn          = dependency.iam-roles.outputs.ecs_task_execution_role_arn
   otlp_log_group_name                  = dependency.cloudwatch.outputs.otlp_log_group_name
   app_image                            = dependency.ecr_repo.outputs.collector_repo_url
