@@ -86,7 +86,7 @@ The container exposes the following ports:
 
 ## Run jaeger all-in-one docker container 
 
-- Download the specific image of Jaegar by running `docker pull jaegertracing/all-in-one:1.38.1`
+- Download the specific image of Jaeger by running `docker pull jaegertracing/all-in-one:1.38.1`
 - Run below docker command to spin up a local Jaegar instance
 ```
 docker run -d --name jaeger \

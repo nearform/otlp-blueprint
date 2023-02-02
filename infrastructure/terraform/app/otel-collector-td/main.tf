@@ -11,22 +11,22 @@ locals {
 
 resource "aws_ecs_task_definition" "otlp_collelctor_app" {
   family                   = "otlp-collector-app-task"
-  task_role_arn            = var.ecs_task_role_arn
   execution_role_arn       = var.ecs_task_execution_role_arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
   container_definitions    = local.ecs_service_template_file
+  // task_role_arn         = var.ecs_task_role_arn
 }
 
 resource "aws_ecs_service" "main" {
-  name                   = "otlp-collector-service"
-  cluster                = var.ecs_cluster_id
-  task_definition        = aws_ecs_task_definition.otlp_collelctor_app.arn
-  desired_count          = var.app_count
-  launch_type            = "FARGATE"
-  enable_execute_command = true
+  name            = "otlp-collector-service"
+  cluster         = var.ecs_cluster_id
+  task_definition = aws_ecs_task_definition.otlp_collelctor_app.arn
+  desired_count   = var.app_count
+  launch_type     = "FARGATE"
+  // enable_execute_command = true
 
   service_registries {
     registry_arn = aws_service_discovery_service.main.arn
