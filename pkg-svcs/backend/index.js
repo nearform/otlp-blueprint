@@ -21,8 +21,6 @@ const startServer = require('./lib/server')
 
 const { migrateFunction } = require('./migrate')
 
-const { migrateFunction } = require('./migrate')
-
 // Crash on unhandledRejection
 process.on('unhandledRejection', err => {
   console.error(err)
