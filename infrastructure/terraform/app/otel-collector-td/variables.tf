@@ -22,6 +22,8 @@ variable "sg_alb_id" {}
 
 variable "sg_ecs_id" {}
 
+variable "ecs_task_role_arn" {}
+
 variable "ecs_task_execution_role_arn" {}
 
 variable "sample_nginx_app_target_group_id" {}
@@ -36,7 +38,7 @@ variable "otlp_collector_app_target_group_id" {}
 
 variable "app_image" {
   description = "The container image to use"
-  default     = "otel/opentelemetry-collector:latest"
+  default     = "otel/opentelemetry-collector:0.56.0"
 }
 
 # Below need to be fed from terragrunt config later.
@@ -46,7 +48,7 @@ variable "app_port" {
 }
 variable "app_count" {
   description = "Number of docker containers to run"
-  default     = 2
+  default     = 1
 }
 
 variable "fargate_cpu" {
@@ -62,3 +64,5 @@ variable "fargate_memory" {
 variable "ecs_cluster_id" {}
 
 variable "otlp_log_group_name" {}
+
+variable "ecs_service_discovery_namespace_id" {}

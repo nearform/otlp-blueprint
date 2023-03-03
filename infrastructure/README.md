@@ -15,6 +15,9 @@ Notes:
    - Run from terragrunt directory `terragrunt run-all plan ` to provision the infrastructure.
    - Before running terragrunt plan/apply set the aws profile. You can set the profile using the env variable AWS_PROFILE.
    - Make sure to build and push the container images for the backend, frontend and the collector in order for the application to run in ECS.
+      - `docker buildx build --platform=linux/amd64 --build-arg APP_VERSION=1.0.0 -t <AWS account ID>.dkr.ecr.us-east-1.amazonaws.com/dev-otlp-be-img-repo:latest -f Backend.dockerfile .`
+      - `aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS account ID>.dkr.ecr.us-east-1.amazonaws.com && docker push <AWS account ID>.dkr.ecr.us-east-1.amazonaws.com/dev-otlp-be-img-repo:latest`
+      - Remember to pass the build args correctly, such as `APP_VERSION` for the backend, and `API_URL` and `OTLP_COLLECTOR_URL` to the frontend, so they get replaced in `.env.registry`
 
 # Terraform
 

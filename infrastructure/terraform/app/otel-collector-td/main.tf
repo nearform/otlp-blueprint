@@ -1,10 +1,10 @@
 locals {
-  ecs_service_template_file = templatefile("container-def.json.tpl", { 
-    app_image      = var.app_image
-    app_port       = var.app_port
-    fargate_cpu    = var.fargate_cpu
-    fargate_memory = var.fargate_memory
-    aws_region     = var.deployment_region
+  ecs_service_template_file = templatefile("container-def.json.tpl", {
+    app_image           = var.app_image
+    app_port            = var.app_port
+    fargate_cpu         = var.fargate_cpu
+    fargate_memory      = var.fargate_memory
+    aws_region          = var.deployment_region
     otlp_log_group_name = var.otlp_log_group_name
   })
 }
@@ -17,6 +17,7 @@ resource "aws_ecs_task_definition" "otlp_collelctor_app" {
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
   container_definitions    = local.ecs_service_template_file
+  // task_role_arn         = var.ecs_task_role_arn
 }
 
 resource "aws_ecs_service" "main" {
@@ -25,6 +26,11 @@ resource "aws_ecs_service" "main" {
   task_definition = aws_ecs_task_definition.otlp_collelctor_app.arn
   desired_count   = var.app_count
   launch_type     = "FARGATE"
+  // enable_execute_command = true
+
+  service_registries {
+    registry_arn = aws_service_discovery_service.main.arn
+  }
 
   network_configuration {
     security_groups  = [var.sg_ecs_id]
@@ -36,5 +42,20 @@ resource "aws_ecs_service" "main" {
     target_group_arn = var.otlp_collector_app_target_group_id
     container_name   = jsondecode(local.ecs_service_template_file)[0].name
     container_port   = var.app_port
+  }
+}
+
+resource "aws_service_discovery_service" "main" {
+  name = "otlp-collector-service"
+  dns_config {
+    namespace_id = var.ecs_service_discovery_namespace_id
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
   }
 }

@@ -8,12 +8,14 @@ receivers:
           allowed_origins:
             - http://*
             - https://*
+            - "*"
 
 exporters:
   jaeger:
-    endpoint: http://dev-otlp-lb-1255345766.us-east-1.elb.amazonaws.com:8082
+    endpoint: "jaeger-service.otlp-blueprint.local:14250"
     tls:
       insecure: true
+
 processors:
   batch:
 
@@ -22,8 +24,8 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [jaeger]
       processors: [batch]
+      exporters: [jaeger]
 
 extensions:
   health_check:

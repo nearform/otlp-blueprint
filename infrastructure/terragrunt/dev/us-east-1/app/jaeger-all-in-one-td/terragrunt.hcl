@@ -79,13 +79,12 @@ inputs = {
   ecs_cluster_id     = dependency.ecs_cluster.outputs.ecs_cluster_id
   alb_id             = dependency.alb.outputs.alb_id
 
-  sample_nginx_app_target_group_id   = dependency.alb.outputs.sample_nginx_app_target_group_id
-  jaeger_app_target_group_id         = dependency.alb.outputs.jaeger_app_target_group_id
-  otlp_fe_app_target_group_id        = dependency.alb.outputs.otlp_fe_app_target_group_id
-  otlp_be_app_target_group_id        = dependency.alb.outputs.otlp_be_app_target_group_id
-  otlp_collector_app_target_group_id = dependency.alb.outputs.otlp_collector_app_target_group_id
-  ecs_task_execution_role_arn        = dependency.iam-roles.outputs.ecs_task_execution_role_arn
-  otlp_log_group_name                = dependency.cloudwatch.outputs.otlp_log_group_name
-
+  sample_nginx_app_target_group_id     = dependency.alb.outputs.sample_nginx_app_target_group_id
+  jaeger_app_target_group_id           = dependency.alb.outputs.jaeger_app_target_group_id
+  otlp_fe_app_target_group_id          = dependency.alb.outputs.otlp_fe_app_target_group_id
+  otlp_be_app_target_group_id          = dependency.alb.outputs.otlp_be_app_target_group_id
+  otlp_collector_app_target_group_id   = dependency.alb.outputs.otlp_collector_app_target_group_id
+  ecs_task_execution_role_arn          = dependency.iam-roles.outputs.ecs_task_execution_role_arn
+  otlp_log_group_name                  = dependency.cloudwatch.outputs.otlp_log_group_name
+  ecs_service_discovery_namespace_id = dependency.ecs_cluster.outputs.ecs_service_discovery_namespace_id
 }
-

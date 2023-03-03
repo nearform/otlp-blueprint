@@ -54,10 +54,55 @@ resource "aws_security_group" "sg_ecs_tasks" {
 
   ingress {
     protocol        = "tcp"
+    from_port       = 14250
+    to_port         = 14250
+    security_groups = [aws_security_group.sg_lb.id]
+    self            = false
+  }
+  ingress {
+    protocol  = "tcp"
+    from_port = 14250
+    to_port   = 14250
+    self      = true
+  }
+  ingress {
+    protocol        = "tcp"
+    from_port       = 16685
+    to_port         = 16685
+    security_groups = [aws_security_group.sg_lb.id]
+    self            = false
+  }
+  ingress {
+    protocol  = "tcp"
+    from_port = 16685
+    to_port   = 16685
+    self      = true
+  }
+  ingress {
+    protocol        = "tcp"
     from_port       = 16686
     to_port         = 16686
     security_groups = [aws_security_group.sg_lb.id]
     self            = false
+  }
+  ingress {
+    protocol  = "tcp"
+    from_port = 16686
+    to_port   = 16686
+    self      = true
+  }
+  ingress {
+    protocol        = "tcp"
+    from_port       = 4317
+    to_port         = 4317
+    security_groups = [aws_security_group.sg_lb.id]
+    self            = false
+  }
+  ingress {
+    protocol  = "tcp"
+    from_port = 4317
+    to_port   = 4317
+    self      = true
   }
   ingress {
     protocol        = "tcp"
@@ -67,11 +112,23 @@ resource "aws_security_group" "sg_ecs_tasks" {
     self            = false
   }
   ingress {
+    protocol  = "tcp"
+    from_port = 4318
+    to_port   = 4318
+    self      = true
+  }
+  ingress {
     protocol        = "tcp"
     from_port       = 13133
     to_port         = 13133
     security_groups = [aws_security_group.sg_lb.id]
     self            = false
+  }
+  ingress {
+    protocol  = "tcp"
+    from_port = 13133
+    to_port   = 13133
+    self      = true
   }
   ingress {
     protocol        = "tcp"
@@ -81,6 +138,12 @@ resource "aws_security_group" "sg_ecs_tasks" {
     self            = false
   }
   ingress {
+    protocol  = "tcp"
+    from_port = 80
+    to_port   = 80
+    self      = true
+  }
+  ingress {
     protocol        = "tcp"
     from_port       = 8080
     to_port         = 8080
@@ -88,11 +151,23 @@ resource "aws_security_group" "sg_ecs_tasks" {
     self            = false
   }
   ingress {
+    protocol  = "tcp"
+    from_port = 8080
+    to_port   = 8080
+    self      = true
+  }
+  ingress {
     protocol        = "tcp"
     from_port       = 3000
     to_port         = 3000
     security_groups = [aws_security_group.sg_lb.id]
     self            = false
+  }
+  ingress {
+    protocol  = "tcp"
+    from_port = 3000
+    to_port   = 3000
+    self      = true
   }
 
   egress {
