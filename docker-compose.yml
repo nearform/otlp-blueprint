@@ -3,6 +3,7 @@ services:
   postgresql:
     container_name: oltp_db
     image: postgres:14.2-alpine
+    hostname: postgresql.otlp-blueprint.local
     environment:
       - POSTGRES_USER=otlpuser
       - POSTGRES_PASSWORD=otlppassword
@@ -22,6 +23,7 @@ services:
 
   backend:
     container_name: backend
+    hostname: backend.otlp-blueprint.local
     build:
       context: ./
       dockerfile: Backend.dockerfile
@@ -43,6 +45,7 @@ services:
   
   frontend:
     container_name: frontend
+    hostname: frontend.otlp-blueprint.local
     build:
       context: ./
       dockerfile: Frontend.dockerfile
@@ -63,6 +66,7 @@ services:
 
   jaeger:
     image: jaegertracing/all-in-one:1.38.1
+    hostname: jaeger-service.otlp-blueprint.local
     ports:
       - "5775:5775/udp"
       - "6831:6831/udp"
@@ -79,6 +83,7 @@ services:
   
   collector:
     image: otel/opentelemetry-collector:0.56.0
+    hostname: collector.otlp-blueprint.local
     command: ["--config=/conf/collector-config.yaml"]
     volumes:
       - ./collector-config.yaml:/conf/collector-config.yaml
