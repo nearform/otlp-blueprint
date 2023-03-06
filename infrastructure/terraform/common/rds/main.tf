@@ -17,10 +17,6 @@ resource "random_string" "db_secret_random_string" {
   }
 }
 
-resource "random_pet" "db_secret_name" {
-
-}
-
 resource "aws_secretsmanager_secret" "database_secrets_manager" {
   name = "${var.deployment_app_name}-${var.deployment_env}-postgres-db-info-${random_string.db_secret_random_string.result}"
 }
