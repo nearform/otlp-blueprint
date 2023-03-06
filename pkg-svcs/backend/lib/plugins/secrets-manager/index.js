@@ -29,8 +29,8 @@ async function secretsManager(server, options) {
   if (options.secretsManager.strategy === 'azure') {
     // add required options
     const [vaultName, secretName] =
-      options.secretsManager.secrets.dbPassword.split('|')
-    options.secretsManager.secrets.dbPassword = secretName
+      options.secretsManager.secrets.dbInfo.split('|')
+    options.secretsManager.secrets.dbInfo = secretName
     options.secretsManager.clientOptions = { vaultName }
   }
   server.register(plugin, options.secretsManager)

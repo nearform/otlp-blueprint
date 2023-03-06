@@ -25,7 +25,6 @@ dependency "rds" {
   # Mock outputs for plan to work
   mock_outputs = {
     secrets_arn  = "sfasdfasdfasdfas"
-
   }
 }
 
@@ -61,8 +60,9 @@ dependency "ecr_repo" {
 
   # Mock outputs for plan to work
   mock_outputs = {
-    fe_repo_url = "fasdfasfasdfasdfasdf"
-    be_repo_url = "fasdfasfasdfasdfasdf"
+    fe_repo_url        = "fasdfasfasdfasdfasdf"
+    be_repo_url        = "fasdfasfasdfasdfasdf"
+    collector_repo_url = "fasdfasfasdfasdfasdf"
   }
 }
 
@@ -114,6 +114,5 @@ inputs = {
   db_username                        = dependency.rds.outputs.db_username
   secrets_arn                        = dependency.rds.outputs.secrets_arn
   app_image                          = dependency.ecr_repo.outputs.be_repo_url
-
 }
 

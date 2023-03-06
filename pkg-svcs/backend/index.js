@@ -2,11 +2,24 @@
 
 'use strict'
 
+const config = require('./lib/config')
+
+const { enableTracing } = require('./lib/tracing')
+
+const tracer = enableTracing(config.otlp)
+
+// custom span example
+const span = tracer.startSpan('custom-span')
+setTimeout(() => {
+  span.end()
+}, 3000)
+
 const Fastify = require('fastify')
 const closeWithGrace = require('close-with-grace')
 
 const startServer = require('./lib/server')
-const config = require('./lib/config')
+
+const { migrateFunction } = require('./migrate')
 
 // Crash on unhandledRejection
 process.on('unhandledRejection', err => {
@@ -40,6 +53,15 @@ const main = async () => {
     await server.listen(config.server)
   } catch (err) {
     server.log.error(err)
+    process.exit(1)
+  }
+
+  await server.ready()
+
+  try {
+    await migrateFunction(server)
+  } catch (error) {
+    console.log('Error when applying migrations: ', error)
     process.exit(1)
   }
 }
