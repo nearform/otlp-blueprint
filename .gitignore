@@ -15,3 +15,5 @@ node_modules
 
 **/.terragrunt-cache*
 **/.terraform.lock.hcl
+
+**/yarn.lock
