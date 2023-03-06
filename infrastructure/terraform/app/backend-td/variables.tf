@@ -39,6 +39,14 @@ variable "secrets_arn" {
   sensitive = true
 }
 
+variable "db_host" {}
+
+variable "db_port" {}
+
+variable "db_name" {}
+
+variable "db_username" {}
+
 variable "app_image" {
   description = "The container image to use"
 }

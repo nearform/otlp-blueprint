@@ -1,12 +1,16 @@
 locals {
   ecs_service_template_file = templatefile("otfp-be.json.tpl", {
-    app_image           = var.app_image
-    app_port            = var.app_port
-    fargate_cpu         = var.fargate_cpu
-    fargate_memory      = var.fargate_memory
-    aws_region          = var.deployment_region
+    app_image      = var.app_image
+    app_port       = var.app_port
+    fargate_cpu    = var.fargate_cpu
+    fargate_memory = var.fargate_memory
+    aws_region     = var.deployment_region
     otlp_log_group_name = var.otlp_log_group_name
-    deployment_env      = var.deployment_env
+    deployment_env = var.deployment_env
+    db_host        = var.db_host
+    db_port        = var.db_port
+    db_name        = var.db_name
+    db_username    = var.db_username
     database_secret_arn = var.secrets_arn
   })
 }
@@ -26,6 +30,15 @@ resource "aws_iam_role_policy" "password_db_policy" {
         "Effect": "Allow",
         "Resource": [
           "${var.secrets_arn}"
+        ]
+      },
+      {
+        "Action": [
+          "ssm:GetParameters"
+        ],
+        "Effect": "Allow",
+        "Resource": [
+          "arn:aws:ssm:us-east-1:101259067028:parameter/*"
         ]
       }
     ]
