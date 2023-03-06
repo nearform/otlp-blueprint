@@ -7,7 +7,7 @@ include "environment" {
 }
 
 
-# Dependencies 
+# Dependencies
 dependency "networking" {
   config_path = "../../common/networking"
 
@@ -25,7 +25,6 @@ dependency "rds" {
   # Mock outputs for plan to work
   mock_outputs = {
     secrets_arn  = "sfasdfasdfasdfas"
-    
   }
 }
 
@@ -61,8 +60,9 @@ dependency "ecr_repo" {
 
   # Mock outputs for plan to work
   mock_outputs = {
-    fe_repo_url = "fasdfasfasdfasdfasdf"
-    be_repo_url = "fasdfasfasdfasdfasdf"
+    fe_repo_url        = "fasdfasfasdfasdfasdf"
+    be_repo_url        = "fasdfasfasdfasdfasdf"
+    collector_repo_url = "fasdfasfasdfasdfasdf"
   }
 }
 
@@ -108,8 +108,11 @@ inputs = {
   ecs_task_execution_role_arn        = dependency.iam-roles.outputs.ecs_task_execution_role_arn
   ecs_task_execution_role_id         = dependency.iam-roles.outputs.ecs_task_execution_role_id
   otlp_log_group_name                = dependency.cloudwatch.outputs.otlp_log_group_name
+  db_host                            = dependency.rds.outputs.db_host
+  db_port                            = dependency.rds.outputs.db_port
+  db_name                            = dependency.rds.outputs.db_name
+  db_username                        = dependency.rds.outputs.db_username
   secrets_arn                        = dependency.rds.outputs.secrets_arn
   app_image                          = dependency.ecr_repo.outputs.be_repo_url
-
 }
 

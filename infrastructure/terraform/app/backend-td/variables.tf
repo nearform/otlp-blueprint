@@ -1,8 +1,8 @@
 variable "tags" {
-    type = map
+  type = map(any)
 }
 
-variable "deployment_region" {} 
+variable "deployment_region" {}
 
 variable "deployment_env" {}
 
@@ -11,11 +11,11 @@ variable "deployment_app_name" {}
 variable "vpc_id" {}
 
 variable "public_subnet_ids" {
-    type = set(string)
+  type = set(string)
 }
 
 variable "private_subnet_ids" {
-    type = set(string)
+  type = set(string)
 }
 
 variable "sg_alb_id" {}
@@ -30,7 +30,7 @@ variable "sample_nginx_app_target_group_id" {}
 variable "jaeger_app_target_group_id" {}
 
 variable "otlp_fe_app_target_group_id" {}
-    
+
 variable "otlp_be_app_target_group_id" {}
 
 variable "otlp_collector_app_target_group_id" {}
@@ -39,8 +39,16 @@ variable "secrets_arn" {
   sensitive = true
 }
 
+variable "db_host" {}
+
+variable "db_port" {}
+
+variable "db_name" {}
+
+variable "db_username" {}
+
 variable "app_image" {
-    description = "The container image to use"
+  description = "The container image to use"
 }
 
 # Below need to be fed from terragrunt config later.
@@ -66,3 +74,5 @@ variable "fargate_memory" {
 variable "ecs_cluster_id" {}
 
 variable "otlp_log_group_name" {}
+
+variable "ecs_service_discovery_namespace_id" {}

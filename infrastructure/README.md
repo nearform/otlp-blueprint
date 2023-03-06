@@ -10,10 +10,14 @@ We assumed below folder structure for our terragrunt configuration which will gu
 Notes:
    - `terragrunt.hcl` file drive the execution of terraform source config files. 
    - The name of the `terragrunt.hcl` file should not be changed in the folder where the terraform source exist. The same file can have different name in the parent folders. 
-   - We have `environment.hcl` file under `/dev` folder which should carry any environmen related variables and inputs.
+   - We have `environment.hcl` file under `/dev` folder which should carry any environment related variables and inputs.
    - We have a terragrunt config file at the root of project named `root.hcl` which need to be explicitly included in the child terragrunt config files. All globale variables and inputs will be manage here.
    - Run from terragrunt directory `terragrunt run-all plan ` to provision the infrastructure.
    - Before running terragrunt plan/apply set the aws profile. You can set the profile using the env variable AWS_PROFILE.
+   - Make sure to build and push the container images for the backend, frontend and the collector in order for the application to run in ECS.
+      - `docker buildx build --platform=linux/amd64 --build-arg APP_VERSION=1.0.0 -t <AWS account ID>.dkr.ecr.us-east-1.amazonaws.com/dev-otlp-be-img-repo:latest -f Backend.dockerfile .`
+      - `aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS account ID>.dkr.ecr.us-east-1.amazonaws.com && docker push <AWS account ID>.dkr.ecr.us-east-1.amazonaws.com/dev-otlp-be-img-repo:latest`
+      - Remember to pass the build args correctly, such as `APP_VERSION` for the backend, and `API_URL` and `OTLP_COLLECTOR_URL` to the frontend, so they get replaced in `.env.registry`
 
 # Terraform
 

@@ -6,14 +6,14 @@ receivers:
         endpoint: 0.0.0.0:4318
         cors:
           allowed_origins:
-            - http://*
-            - https://*
-
+            - http://*.otlp-blueprint.local
+            - https://*.otlp-blueprint.local
 exporters:
   jaeger:
-    endpoint: jaeger:14250
+    endpoint: "jaeger-service.otlp-blueprint.local:14250"
     tls:
       insecure: true
+
 processors:
   batch:
 
@@ -22,8 +22,8 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [jaeger]
       processors: [batch]
+      exporters: [jaeger]
 
 extensions:
   health_check:

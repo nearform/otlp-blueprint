@@ -2,6 +2,7 @@
   {
     "name": "otel-collector-app",
     "image": "${app_image}",
+    "command": ["--config=/etc/otel-collector-config.yaml"],
     "cpu": ${fargate_cpu},
     "memory": ${fargate_memory},
     "networkMode": "awsvpc",

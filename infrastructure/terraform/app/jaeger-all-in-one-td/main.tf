@@ -1,10 +1,14 @@
 locals {
-  ecs_service_template_file = templatefile("container-def.json.tpl", { 
-    app_image      = var.app_image
-    app_port       = var.app_port
-    fargate_cpu    = var.fargate_cpu
-    fargate_memory = var.fargate_memory
-    aws_region     = var.deployment_region
+  ecs_service_template_file = templatefile("container-def.json.tpl", {
+    app_image           = var.app_image
+    app_port            = var.app_port
+    frontend_app_port   = var.frontend_app_port
+    grpc_app_port       = var.grpc_app_port
+    grpc_otlp_app_port  = var.grpc_otlp_app_port
+    http_otlp_app_port  = var.http_otlp_app_port
+    fargate_cpu         = var.fargate_cpu
+    fargate_memory      = var.fargate_memory
+    aws_region          = var.deployment_region
     otlp_log_group_name = var.otlp_log_group_name
   })
 }
@@ -16,7 +20,7 @@ resource "aws_ecs_task_definition" "jaeger_app" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
-  container_definitions    =  local.ecs_service_template_file
+  container_definitions    = local.ecs_service_template_file
 }
 
 resource "aws_ecs_service" "main" {
@@ -25,6 +29,10 @@ resource "aws_ecs_service" "main" {
   task_definition = aws_ecs_task_definition.jaeger_app.arn
   desired_count   = var.app_count
   launch_type     = "FARGATE"
+
+  service_registries {
+    registry_arn = aws_service_discovery_service.main.arn
+  }
 
   network_configuration {
     security_groups  = [var.sg_ecs_id]
@@ -35,6 +43,21 @@ resource "aws_ecs_service" "main" {
   load_balancer {
     target_group_arn = var.jaeger_app_target_group_id
     container_name   = "jaeger-app" #TODO: this should come from the container def template.
-    container_port   = var.app_port
+    container_port   = var.frontend_app_port
+  }
+}
+
+resource "aws_service_discovery_service" "main" {
+  name = "jaeger-service"
+  dns_config {
+    namespace_id = var.ecs_service_discovery_namespace_id
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
   }
 }
