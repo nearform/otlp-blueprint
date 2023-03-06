@@ -15,6 +15,24 @@
     },
     "environment": [
       {
+        "name": "PG_HOST",
+        "value": "${db_host}"
+      },
+      {
+        "name": "PG_USER",
+        "value": "${db_username}"
+      },
+      {
+        "name": "PG_PORT",
+        "value": "${db_port}"
+      },
+      {
+        "name": "PG_DB",
+        "value": "${db_name}"
+      }
+    ],
+    "secrets": [
+      {
         "name": "SECRETS_PG_INFO",
         "value": "${database_secret_arn}"
       }

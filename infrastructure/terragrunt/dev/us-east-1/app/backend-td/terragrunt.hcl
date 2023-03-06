@@ -7,7 +7,7 @@ include "environment" {
 }
 
 
-# Dependencies 
+# Dependencies
 dependency "networking" {
   config_path = "../../common/networking"
 
@@ -24,8 +24,7 @@ dependency "rds" {
 
   # Mock outputs for plan to work
   mock_outputs = {
-    secrets_arn = "sfasdfasdfasdfas"
-
+    secrets_arn  = "sfasdfasdfasdfas"
   }
 }
 
@@ -101,16 +100,19 @@ inputs = {
   ecs_cluster_id     = dependency.ecs_cluster.outputs.ecs_cluster_id
   alb_id             = dependency.alb.outputs.alb_id
 
-  sample_nginx_app_target_group_id     = dependency.alb.outputs.sample_nginx_app_target_group_id
-  jaeger_app_target_group_id           = dependency.alb.outputs.jaeger_app_target_group_id
-  otlp_fe_app_target_group_id          = dependency.alb.outputs.otlp_fe_app_target_group_id
-  otlp_be_app_target_group_id          = dependency.alb.outputs.otlp_be_app_target_group_id
-  otlp_collector_app_target_group_id   = dependency.alb.outputs.otlp_collector_app_target_group_id
-  ecs_task_execution_role_arn          = dependency.iam-roles.outputs.ecs_task_execution_role_arn
-  ecs_task_execution_role_id           = dependency.iam-roles.outputs.ecs_task_execution_role_id
-  otlp_log_group_name                  = dependency.cloudwatch.outputs.otlp_log_group_name
-  secrets_arn                          = dependency.rds.outputs.secrets_arn
-  app_image                            = dependency.ecr_repo.outputs.be_repo_url
-  ecs_service_discovery_namespace_id = dependency.ecs_cluster.outputs.ecs_service_discovery_namespace_id
+  sample_nginx_app_target_group_id   = dependency.alb.outputs.sample_nginx_app_target_group_id
+  jaeger_app_target_group_id         = dependency.alb.outputs.jaeger_app_target_group_id
+  otlp_fe_app_target_group_id        = dependency.alb.outputs.otlp_fe_app_target_group_id
+  otlp_be_app_target_group_id        = dependency.alb.outputs.otlp_be_app_target_group_id
+  otlp_collector_app_target_group_id = dependency.alb.outputs.otlp_collector_app_target_group_id
+  ecs_task_execution_role_arn        = dependency.iam-roles.outputs.ecs_task_execution_role_arn
+  ecs_task_execution_role_id         = dependency.iam-roles.outputs.ecs_task_execution_role_id
+  otlp_log_group_name                = dependency.cloudwatch.outputs.otlp_log_group_name
+  db_host                            = dependency.rds.outputs.db_host
+  db_port                            = dependency.rds.outputs.db_port
+  db_name                            = dependency.rds.outputs.db_name
+  db_username                        = dependency.rds.outputs.db_username
+  secrets_arn                        = dependency.rds.outputs.secrets_arn
+  app_image                          = dependency.ecr_repo.outputs.be_repo_url
 }
 
