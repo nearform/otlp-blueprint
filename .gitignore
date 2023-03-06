@@ -1,13 +1,9 @@
 node_modules
 .eslintcache
 .env
+**/yarn.lock
 
-# JetBrains IDEs
-.idea
-# Visual Studio Code
-.vscode
 **/postgresql/data/
-.DS_Store
 **/.env
 
 .terragrunt-cache*
@@ -16,4 +12,27 @@ node_modules
 **/.terragrunt-cache*
 **/.terraform.lock.hcl
 
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+dist
+dist-ssr
+*.local
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+=======
 **/yarn.lock
