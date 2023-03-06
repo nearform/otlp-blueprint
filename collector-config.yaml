@@ -6,10 +6,8 @@ receivers:
         endpoint: 0.0.0.0:4318
         cors:
           allowed_origins:
-            - http://*
-            - https://*
-            - "*"
-
+            - http://*.otlp-blueprint.local
+            - https://*.otlp-blueprint.local
 exporters:
   jaeger:
     endpoint: "jaeger-service.otlp-blueprint.local:14250"
