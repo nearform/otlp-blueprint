@@ -4,9 +4,8 @@
 
 const path = require('path')
 
-
 async function migrateFunction(server) {
-  const {default: Postgrator} = await import('postgrator')
+  const { default: Postgrator } = await import('postgrator')
 
   const postgrator = new Postgrator({
     migrationPattern: path.join(__dirname, '/migrations/*'),
