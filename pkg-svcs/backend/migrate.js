@@ -3,9 +3,11 @@
 'use strict'
 
 const path = require('path')
-const Postgrator = require('postgrator')
+
 
 async function migrateFunction(server) {
+  const {default: Postgrator} = await import('postgrator')
+
   const postgrator = new Postgrator({
     migrationPattern: path.join(__dirname, '/migrations/*'),
     driver: 'pg',
