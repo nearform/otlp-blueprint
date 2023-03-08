@@ -25,3 +25,8 @@ variable "private_subnet_ids" {
 variable "sg_alb_id" {}
 
 variable "sg_ecs_id" {}
+
+variable "alb_dns_zone" {
+  type        = string
+  description = "The AWS Route53 Zone to use to create the ALB's DNS record."
+}

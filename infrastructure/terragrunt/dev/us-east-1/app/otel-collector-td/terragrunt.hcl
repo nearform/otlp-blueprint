@@ -57,6 +57,7 @@ dependency "alb" {
     otlp_fe_app_target_group_id        = "arn:aws:sdfasdf:us-east-1:759812819291:sdfsd/sdfsd/ae3f54373866d182"
     otlp_be_app_target_group_id        = "arn:aws:sdfasdf:us-east-1:759812819291:sdfsd/sdfsd/ae3f54373866d182"
     otlp_collector_app_target_group_id = "arn:aws:sdfasdf:us-east-1:759812819291:sdfsd/sdfsd/ae3f54373866d182"
+    otlp_collector_fqdn                = "otlp-collector-sdfsd.dev.mira-nf.com"
   }
 }
 
