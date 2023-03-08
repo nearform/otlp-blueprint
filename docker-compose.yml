@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=otlppassword
       - POSTGRES_DB=tododb
     networks:
-      - jaeger-network
+      - otlp-network
     healthcheck:
       test: ["CMD-SHELL","pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
@@ -35,7 +35,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - jaeger-network
+      - otlp-network
     depends_on:
       - postgresql
       - jaeger
@@ -55,7 +55,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - jaeger-network
+      - otlp-network
     depends_on:
       - backend
       - postgresql
@@ -79,7 +79,7 @@ services:
       - "14269:14269"
       - "9411:9411"
     networks:
-      - jaeger-network
+      - otlp-network
   
   collector:
     image: otel/opentelemetry-collector:0.56.0
@@ -97,9 +97,6 @@ services:
     depends_on:
       - jaeger
     networks:
-<<<<<<< Updated upstream
-      - jaeger-network
-=======
       - otlp-network
 
   grafana:
@@ -116,9 +113,8 @@ services:
     networks:
       - otlp-network
 
->>>>>>> Stashed changes
 volumes:
   postgresql:
     external: false
 networks:
-      jaeger-network:
+      otlp-network:

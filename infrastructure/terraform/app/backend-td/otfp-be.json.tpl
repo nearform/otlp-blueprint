@@ -34,7 +34,7 @@
     "secrets": [
       {
         "name": "SECRETS_PG_INFO",
-        "value": "${database_secret_arn}"
+        "valueFrom": "${database_secret_arn}"
       }
     ],
     "portMappings": [
