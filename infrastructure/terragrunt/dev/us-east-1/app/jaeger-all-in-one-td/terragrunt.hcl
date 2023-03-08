@@ -86,5 +86,5 @@ inputs = {
   otlp_collector_app_target_group_id   = dependency.alb.outputs.otlp_collector_app_target_group_id
   ecs_task_execution_role_arn          = dependency.iam-roles.outputs.ecs_task_execution_role_arn
   otlp_log_group_name                  = dependency.cloudwatch.outputs.otlp_log_group_name
-  ecs_service_discovery_namespace_id = dependency.ecs_cluster.outputs.ecs_service_discovery_namespace_id
+  ecs_service_discovery_namespace_id   = dependency.ecs_cluster.outputs.ecs_service_discovery_namespace_id
 }
