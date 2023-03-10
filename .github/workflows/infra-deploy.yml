@@ -1,4 +1,4 @@
-name: 'OTLP Infrastructure Validation'
+name: 'OTLP Infrastructure Deployment'
 on:
   push:
     branches:
