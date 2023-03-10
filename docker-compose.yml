@@ -109,7 +109,9 @@ services:
       - GF_AUTH_DISABLE_LOGIN_FORM=true
       - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor
     ports:
-      - "3000:3000"
+      - "3030:3000"
+    networks:
+      - otlp-network
 
 volumes:
   postgresql:

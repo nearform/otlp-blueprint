@@ -23,3 +23,7 @@ output "otlp_be_app_target_group_id" {
 output "otlp_collector_app_target_group_id" {
     value = aws_alb_target_group.otlp_collector.id
 }
+
+output "otlp_collector_fqdn" {
+  value = aws_route53_record.otlp_alb_dns.fqdn
+}

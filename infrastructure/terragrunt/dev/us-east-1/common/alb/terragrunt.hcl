@@ -39,4 +39,5 @@ inputs = {
   private_subnet_ids = dependency.networking.outputs.private_subnet_ids
   sg_ecs_id          = dependency.sg.outputs.sg_ecs_id
   sg_alb_id          = dependency.sg.outputs.sg_alb_id
+  alb_dns_zone       = "dev.mira-nf.com"
 }

@@ -166,3 +166,20 @@ resource "aws_alb_listener" "otlp_collector_app_lblistner" {
   }
 }
 
+# Route53 Record for ALB
+data "aws_route53_zone" "otlp_abl_dns" {
+  name = "${var.alb_dns_zone}."
+}
+
+resource "aws_route53_record" "otlp_alb_dns" {
+  name    = "otlp-collector.${data.aws_route53_zone.otlp_abl_dns.name}"
+  type    = "A"
+  zone_id = data.aws_route53_zone.otlp_abl_dns.zone_id
+
+  alias {
+    evaluate_target_health = false
+    name                   = aws_alb.main.dns_name
+    zone_id                = aws_alb.main.zone_id
+  }
+}
+

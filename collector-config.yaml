@@ -8,6 +8,7 @@ receivers:
           allowed_origins:
             - http://*.otlp-blueprint.local
             - https://*.otlp-blueprint.local
+            - http://localhost:8080
 exporters:
   jaeger:
     endpoint: "jaeger-service.otlp-blueprint.local:14250"
