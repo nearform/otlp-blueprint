@@ -20,7 +20,7 @@ WORKDIR /app/frontend
 ARG API_URL
 ARG OTLP_COLLECTOR_URL
 
-RUN sed -i 's/\$OTLP_COLLECTOR_URL/$COLLECTOR_URL/' .env.registry
+RUN sed -i 's/\$OTLP_COLLECTOR_URL/$OTLP_COLLECTOR_URL/' .env.registry
 RUN sed -i 's/\$API_URL/$API_URL/' .env.registry
 
 RUN mv .env.registry .env
