@@ -25,6 +25,10 @@ dependency "rds" {
   # Mock outputs for plan to work
   mock_outputs = {
     secrets_arn  = "sfasdfasdfasdfas"
+    db_host = "mock.host"
+    db_port = "mock.db_port"
+    db_name = "mock.dbname"
+    db_username = "mock.username"
   }
 }
 
@@ -52,6 +56,7 @@ dependency "ecs_cluster" {
   # Mock outputs for plan to work
   mock_outputs = {
     ecs_cluster_id = "fasdfasfasdfasdfasdf"
+    ecs_service_discovery_namespace_id = "awawfawf"
   }
 }
 

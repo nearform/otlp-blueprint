@@ -43,6 +43,7 @@ dependency "ecs_cluster" {
   # Mock outputs for plan to work
   mock_outputs = {
     ecs_cluster_id = "fasdfasfasdfasdfasdf"
+    ecs_service_discovery_namespace_id = "awawfawf"
   }
 }
 

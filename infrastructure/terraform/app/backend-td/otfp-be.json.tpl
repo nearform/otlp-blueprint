@@ -29,12 +29,10 @@
       {
         "name": "PG_DB",
         "value": "${db_name}"
-      }
-    ],
-    "secrets": [
+      },
       {
         "name": "SECRETS_PG_INFO",
-        "valueFrom": "${database_secret_arn}"
+        "value": "${database_secret_arn}"
       }
     ],
     "portMappings": [
