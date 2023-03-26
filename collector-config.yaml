@@ -9,6 +9,8 @@ receivers:
             - http://*.otlp-blueprint.local
             - https://*.otlp-blueprint.local
             - http://localhost:8080
+            - http://otlp-collector.dev.mira-nf.com:8080
+            - http://otlp-collector.dev.mira-nf.com
 exporters:
   jaeger:
     endpoint: "jaeger-service.otlp-blueprint.local:14250"

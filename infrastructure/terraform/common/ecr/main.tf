@@ -37,7 +37,7 @@ resource "aws_ecr_repository_policy" "fe-image-repo-policy" {
 
 resource "aws_ecr_repository" "otlp-be-image-repo" {
   name                 = local.be_image_repo_name
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE"
 }
 
 resource "aws_ecr_repository_policy" "be-image-repo-policy" {
