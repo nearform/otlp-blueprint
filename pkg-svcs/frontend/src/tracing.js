@@ -54,7 +54,11 @@ const enableTracing = options => {
   })
 
   registerInstrumentations({
-    instrumentations: [getWebAutoInstrumentations(), new FetchInstrumentation()],
+    instrumentations: [getWebAutoInstrumentations(), new FetchInstrumentation({
+      propagateTraceHeaderCorsUrls: [
+        /http:\/\/otlp\-collector\.dev\.mira\-nf\.com:8081\.*/,
+      ],
+    })],
     tracerProvider: provider
   })
 
