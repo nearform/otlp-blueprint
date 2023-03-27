@@ -3,6 +3,7 @@ import {
   SimpleSpanProcessor,
   BatchSpanProcessor
 } from '@opentelemetry/sdk-trace-base'
+import { FetchInstrumentation } from '@opentelemetry/instrumentation-fetch';
 import { WebTracerProvider } from '@opentelemetry/sdk-trace-web'
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web'
 import { ZoneContextManager } from '@opentelemetry/context-zone'
@@ -53,7 +54,7 @@ const enableTracing = options => {
   })
 
   registerInstrumentations({
-    instrumentations: [getWebAutoInstrumentations()],
+    instrumentations: [getWebAutoInstrumentations(), new FetchInstrumentation()],
     tracerProvider: provider
   })
 
