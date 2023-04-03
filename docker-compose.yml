@@ -65,7 +65,7 @@ services:
     command: "npm run start:container"
 
   jaeger:
-    image: jaegertracing/all-in-one:1.38.1
+    image: jaegertracing/all-in-one:1.43.0
     hostname: jaeger-service.otlp-blueprint.local
     ports:
       - "5775:5775/udp"
@@ -82,7 +82,7 @@ services:
       - otlp-network
   
   collector:
-    image: otel/opentelemetry-collector:0.56.0
+    image: otel/opentelemetry-collector:0.74.0
     hostname: collector.otlp-blueprint.local
     command: ["--config=/conf/collector-config.yaml"]
     volumes:
