@@ -45,9 +45,6 @@ const enableTracing = options => {
       new SimpleSpanProcessor(new ConsoleSpanExporter())
     )
   }
-
-  provider.register({ propagator: new OTTracePropagator() })
-
   registerInstrumentations({
     instrumentations: [getNodeAutoInstrumentations()]
   })

@@ -49,6 +49,10 @@ const main = async () => {
     done()
   })
 
+  server.addHook('onRequest', async (request) => {
+    console.log('Request headers:', request.headers);
+  })
+
   try {
     await server.listen(config.server)
   } catch (err) {
