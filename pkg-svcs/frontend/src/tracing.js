@@ -47,10 +47,7 @@ const enableTracing = options => {
   )
 
   provider.register({
-    contextManager: new ZoneContextManager(),
-    propagator: new CompositePropagator({
-      propagators: [new B3Propagator(), new W3CTraceContextPropagator()]
-    })
+    contextManager: new ZoneContextManager()
   })
 
   registerInstrumentations({
