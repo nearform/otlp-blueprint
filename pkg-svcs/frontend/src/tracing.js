@@ -57,10 +57,9 @@ const enableTracing = options => {
     instrumentations: [
       getWebAutoInstrumentations(),
       new FetchInstrumentation({
-        propagateTraceHeaderCorsUrls: [
-          /http:\/\/otlp-collector\.dev\.mira-nf\.com:808\.*/,
-          /http:\/\/127\.0\.0\.1:3000\/.*/
-        ]
+        propagateTraceHeaderCorsUrls: options.backendDns
+          ? options.backendDns.split(',').map(val => new RegExp(val))
+          : []
       })
     ],
     tracerProvider: provider

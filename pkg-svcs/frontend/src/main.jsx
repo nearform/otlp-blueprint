@@ -10,7 +10,8 @@ const tracer = enableTracing({
   collectorUrl: `${import.meta.env.VITE_OTLP_COLLECTOR_URL}/v1/traces`,
   serviceName: import.meta.env.VITE_OTLP_SERVICE_NAME,
   enableConsoleLog: import.meta.env.VITE_OTLP_ENABLE_CONSOLE_LOG,
-  environment: import.meta.env.VITE_OTLP_ENVIRONMENT
+  environment: import.meta.env.VITE_OTLP_ENVIRONMENT,
+  backendDns: import.meta.env.VITE_OTLP_BACKEND_DNS
 })
 
 // custom span example
