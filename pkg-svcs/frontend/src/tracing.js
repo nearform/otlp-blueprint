@@ -3,11 +3,11 @@ import {
   SimpleSpanProcessor,
   BatchSpanProcessor
 } from '@opentelemetry/sdk-trace-base'
-import { FetchInstrumentation } from '@opentelemetry/instrumentation-fetch';
+import { FetchInstrumentation } from '@opentelemetry/instrumentation-fetch'
 import { WebTracerProvider } from '@opentelemetry/sdk-trace-web'
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web'
 import { ZoneContextManager } from '@opentelemetry/context-zone'
-import { OTLPTraceExporter } from '@opentelemetry/exporter-otlp-http'
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http'
 import { B3Propagator } from '@opentelemetry/propagator-b3'
 import {
   CompositePropagator,
@@ -47,15 +47,22 @@ const enableTracing = options => {
   )
 
   provider.register({
-    contextManager: new ZoneContextManager()
+    contextManager: new ZoneContextManager(),
+    propagator: new CompositePropagator({
+      propagators: [new B3Propagator(), new W3CTraceContextPropagator()]
+    })
   })
 
   registerInstrumentations({
-    instrumentations: [getWebAutoInstrumentations(), new FetchInstrumentation({
-      propagateTraceHeaderCorsUrls: [
-        /http:\/\/otlp\-collector\.dev\.mira\-nf\.com:808\.*/,
-      ],
-    })],
+    instrumentations: [
+      getWebAutoInstrumentations(),
+      new FetchInstrumentation({
+        propagateTraceHeaderCorsUrls: [
+          /http:\/\/otlp-collector\.dev\.mira-nf\.com:808\.*/,
+          /http:\/\/127\.0\.0\.1:3000\/.*/
+        ]
+      })
+    ],
     tracerProvider: provider
   })
 

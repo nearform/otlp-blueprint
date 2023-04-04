@@ -5,6 +5,7 @@
 const config = require('./lib/config')
 
 const { enableTracing } = require('./lib/tracing')
+// require('./lib/tracing')
 
 const tracer = enableTracing(config.otlp)
 
@@ -49,8 +50,8 @@ const main = async () => {
     done()
   })
 
-  server.addHook('onRequest', async (request) => {
-    console.log('Request headers:', request.headers);
+  server.addHook('onRequest', async request => {
+    console.log('Request headers:', request.headers)
   })
 
   try {
