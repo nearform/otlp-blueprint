@@ -11,8 +11,3 @@ variable "oidc_audience" {
   description = "For the 'Audience'"
   type        = string
 }
-
-variable "oidc_thumbprint" {
-  description = "Thumbprint_list of the oidc provider"
-  type        = list(string)
-}

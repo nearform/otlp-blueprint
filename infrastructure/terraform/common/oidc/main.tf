@@ -9,5 +9,4 @@ module "iam_iam-assumable-role-with-oidc" {
   allow_self_assume_role = false
   role_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
   oidc_subjects_with_wildcards = ["repo:nearform/otlp-blueprint:*"]
-
 }
