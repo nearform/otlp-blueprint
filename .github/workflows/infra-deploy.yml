@@ -32,16 +32,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - name: 'Terragrunt Init'
-        uses: the-commons-project/terragrunt-github-actions@master
-        with:
-          tf_actions_version: ${{ env.tf_version }}
-          tg_actions_version: ${{ env.tg_version }}
-          tf_actions_subcommand: 'init'
-          tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_comment: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Terragrunt Plan'
         uses: the-commons-project/terragrunt-github-actions@master
         with:
@@ -52,7 +42,7 @@ jobs:
           tf_actions_comment: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: 'Terragrunt Plan'
+      - name: 'Terragrunt Apply'
         uses: the-commons-project/terragrunt-github-actions@master
         with:
           tf_actions_version: ${{ env.tf_version }}
