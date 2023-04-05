@@ -1,22 +1,18 @@
-'use strict'
-
-const {
-  ConsoleSpanExporter,
-  SimpleSpanProcessor,
-  BatchSpanProcessor
-} = require('@opentelemetry/tracing')
 const { Resource } = require('@opentelemetry/resources')
 const {
   SemanticResourceAttributes
 } = require('@opentelemetry/semantic-conventions')
+const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node')
 const { registerInstrumentations } = require('@opentelemetry/instrumentation')
+const {
+  ConsoleSpanExporter,
+  BatchSpanProcessor,
+  SimpleSpanProcessor
+} = require('@opentelemetry/sdk-trace-base')
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http')
 const {
   getNodeAutoInstrumentations
 } = require('@opentelemetry/auto-instrumentations-node')
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-http')
-const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node')
-const { OTTracePropagator } = require('@opentelemetry/propagator-ot-trace')
-
 const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api')
 
 const enableTracing = options => {
@@ -24,33 +20,34 @@ const enableTracing = options => {
     new DiagConsoleLogger(),
     options.debug ? DiagLogLevel.DEBUG : DiagLogLevel.INFO
   )
+  registerInstrumentations({
+    instrumentations: [
+      getNodeAutoInstrumentations({
+        '@opentelemetry/instrumentation-fs': { enabled: false }
+      })
+    ]
+  })
 
+  const resource = Resource.default().merge(
+    new Resource({
+      [SemanticResourceAttributes.SERVICE_NAME]: options.serviceName,
+      [SemanticResourceAttributes.SERVICE_VERSION]: '0.1.0'
+    })
+  )
+
+  const provider = new NodeTracerProvider({
+    resource: resource
+  })
   const exporter = new OTLPTraceExporter({
-    url: options.collectorUrl,
+    url: `${options.collectorUrl}/v1/traces`,
     serviceName: options.serviceName,
     concurrencyLimit: 10
   })
+  const processor = new BatchSpanProcessor(exporter)
+  provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()))
+  provider.addSpanProcessor(processor)
 
-  const provider = new NodeTracerProvider({
-    resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: options.serviceName,
-      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: options.environment
-    })
-  })
-
-  provider.addSpanProcessor(new BatchSpanProcessor(exporter))
-
-  if (options.enableConsoleLog) {
-    provider.addSpanProcessor(
-      new SimpleSpanProcessor(new ConsoleSpanExporter())
-    )
-  }
-
-  provider.register({ propagator: new OTTracePropagator() })
-
-  registerInstrumentations({
-    instrumentations: [getNodeAutoInstrumentations()]
-  })
+  provider.register()
 
   const tracer = provider.getTracer(options.serviceName)
   return tracer
