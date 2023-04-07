@@ -1,7 +1,7 @@
 name: Force ECS Deployment
 
 on:
-  workflow_dispatch:s
+  workflow_dispatch:
 
 permissions:
   id-token: write
