@@ -1,0 +1,31 @@
+name: Force ECS Deployment
+
+on:
+  workflow_dispatch:s
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+
+  build:
+
+    name: Build Images
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::101259067028:role/dev-otlp-github-actions-role
+          role-session-name: github-action-session-otlp
+          aws-region: us-east-1
+
+      - name: Force ECS Services Deployment
+        run: |
+          ./scripts/ecs-force-deployment.sh 
