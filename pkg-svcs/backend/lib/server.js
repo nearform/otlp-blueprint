@@ -4,7 +4,6 @@ const path = require('path')
 
 const autoload = require('@fastify/autoload')
 const fp = require('fastify-plugin')
-const monitoring = require('./monitoring')
 
 async function plugin(server, config) {
   server
@@ -19,7 +18,6 @@ async function plugin(server, config) {
     })
 
   server.get('/', async (_, res) => {
-    monitoring.requestCounter.add(1, { env: 'staging' })
     return 'ok'
   })
 }
