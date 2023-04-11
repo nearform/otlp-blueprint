@@ -16,6 +16,7 @@ const {
 const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api')
 
 const enableTracing = options => {
+  options.debug = DiagLogLevel.NONE
   diag.setLogger(
     new DiagConsoleLogger(),
     options.debug ? DiagLogLevel.DEBUG : DiagLogLevel.INFO

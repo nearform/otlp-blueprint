@@ -80,7 +80,20 @@ services:
       - "9411:9411"
     networks:
       - otlp-network
-  
+
+  prometheus:
+    image: prom/prometheus
+    hostname: prometheus-service.otlp-blueprint.local
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+    ports:
+    - "9090:9090"
+    restart: unless-stopped
+    volumes:
+      - ./:/etc/prometheus
+    networks:
+      - otlp-network 
+
   collector:
     image: otel/opentelemetry-collector:0.74.0
     hostname: collector.otlp-blueprint.local
@@ -96,6 +109,7 @@ services:
       - "4318:4318"
     depends_on:
       - jaeger
+      - prometheus
     networks:
       - otlp-network
 

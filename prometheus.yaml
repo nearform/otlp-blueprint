@@ -6,4 +6,4 @@ scrape_configs:
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
     static_configs:
-      - targets: ['collector:9464']
+      - targets: ['collector.otlp-blueprint.local:9464']
