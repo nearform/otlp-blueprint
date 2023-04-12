@@ -25,6 +25,8 @@ async function insert(server) {
         'UPDATE todo SET is_done=true WHERE todo_id=$1',
         [request.params.id]
       )
+      // reduce the active todo gauge metric
+      request.server.monitoring.activeTodos.add(-1)
       const { rows } = await postgresClient.query('SELECT * FROM todo')
       reply.code(200).header('Content-Type', 'application/json; charset=utf-8')
       return rows

@@ -39,6 +39,7 @@ const enableMonitoring = options => {
   // Meter definitions
   const meter = meterProvider.getMeter('metrics-collector')
 
+  // Platform metrics
   const requestCounter = meter.createCounter('http.server.requests', {
     description: 'Requests counter'
   })
@@ -54,7 +55,22 @@ const enableMonitoring = options => {
     description: 'Histogram showing the request times'
   })
 
-  return { requestCounter, activeRequests, requestTimes }
+  // Domain metrics
+  const todoCounter = meter.createCounter('domain.todos', {
+    description: 'Todos counter'
+  })
+
+  const activeTodos = meter.createUpDownCounter('domain.todos.active', {
+    description: 'Monitor the active todos'
+  })
+
+  return {
+    requestCounter,
+    activeRequests,
+    requestTimes,
+    todoCounter,
+    activeTodos
+  }
 }
 
 module.exports = { enableMonitoring }

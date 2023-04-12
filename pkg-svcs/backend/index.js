@@ -4,16 +4,6 @@
 
 const config = require('./lib/config')
 
-const { enableTracing } = require('./lib/tracing')
-
-const tracer = enableTracing(config.otlp)
-
-// custom span example
-const span = tracer.startSpan('custom-span')
-setTimeout(() => {
-  span.end()
-}, 3000)
-
 const Fastify = require('fastify')
 const closeWithGrace = require('close-with-grace')
 
