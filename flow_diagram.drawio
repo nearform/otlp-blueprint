@@ -1,0 +1,89 @@
+<mxfile host="65bd71144e">
+    <diagram id="2ry9FOFD8FNOa0GnajCR" name="Pagina-1">
+        <mxGraphModel dx="810" dy="799" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="16" style="edgeStyle=none;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="170" y="380" width="110" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="171.66" y="260" width="110" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="shape=image;imageAspect=0;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;image=https://cdn.freebiesupply.com/logos/thumbs/2x/nodejs-1-logo.png;" vertex="1" parent="1">
+                    <mxGeometry x="173.32999999999998" y="377" width="106.67" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="shape=image;imageAspect=0;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;image=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png;" vertex="1" parent="1">
+                    <mxGeometry x="203.65" y="270" width="46.35" height="40.29" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Frontend with otlp-sdk" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="178.33" y="320" width="96.67" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Backend with otlp-sdk" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="176.67000000000002" y="447" width="96.67" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" style="edgeStyle=none;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="10" target="20">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="traces" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rotation=-25;" vertex="1" connectable="0" parent="23">
+                    <mxGeometry x="0.2984" y="2" relative="1" as="geometry">
+                        <mxPoint x="-17" y="-3" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" value="" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="320" width="110" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Open telemetry collector" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="446.67" y="380" width="96.67" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="shape=image;imageAspect=0;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;rounded=1;image=https://cncf-branding.netlify.app/img/projects/opentelemetry/icon/color/opentelemetry-icon-color.png;" vertex="1" parent="1">
+                    <mxGeometry x="470.01" y="327" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="metrics" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=-10;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="402" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="traces" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=-10;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="380" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="traces" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=15;" vertex="1" parent="1">
+                    <mxGeometry x="339" y="303" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="670" y="246" width="110" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="" style="shape=image;imageAspect=0;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;rounded=1;image=https://cncf-branding.netlify.app/img/projects/jaeger/icon/color/jaeger-icon-color.png;" vertex="1" parent="1">
+                    <mxGeometry x="691.5" y="246" width="67" height="67" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="Jeager&amp;nbsp;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="683.33" y="316" width="96.67" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="25" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="metrics" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rotation=20;" vertex="1" connectable="0" parent="31">
+                    <mxGeometry x="-0.2334" relative="1" as="geometry">
+                        <mxPoint y="-9" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="25" value="" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="670" y="380" width="110" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Prometheus" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="676.6700000000001" y="450" width="96.67" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="" style="shape=image;imageAspect=0;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;rounded=1;image=https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Prometheus_software_logo.svg/2066px-Prometheus_software_logo.svg.png;" vertex="1" parent="1">
+                    <mxGeometry x="699.76" y="390" width="50.49" height="50" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
