@@ -27,32 +27,23 @@ const enableMonitoring = options => {
         exportIntervalMillis: 1000,
     }));
 
-    const meter = meterProvider.getMeter('example-exporter-collector');
+    // Meter definitions
+    const meter = meterProvider.getMeter('metrics-colector');
 
-    const requestCounter = meter.createCounter('requests', {
-        description: 'Example of a Counter',
+    const requestCounter = meter.createCounter('http.server.requests', {
+        description: 'Requests counter',
     });
 
     const activeRequests = meter.createUpDownCounter('http.server.active_requests', {
         description: 'Monitor the active requests in the server'
     })
 
-    return { requestCounter, activeRequests }
+    const requestTimes = meter.createHistogram('http.server.request.times', {
+        description: 'Histogram showing the request times'
+    })
+
+
+    return { requestCounter, activeRequests, requestTimes }
 }
 
-// const upDownCounter = meter.createUpDownCounter('test_up_down_counter', {
-//     description: 'Example of a UpDownCounter',
-// });
-
-// const histogram = meter.createHistogram('test_histogram', {
-//     description: 'Example of a Histogram',
-// });
-
-// const attributes = { pid: process.pid, environment: 'staging' };
-
 module.exports = { enableMonitoring }
-// setInterval(() => {
-//     requestCounter.add(1, attributes);
-//     upDownCounter.add(Math.random() > 0.5 ? 1 : -1, attributes);
-//     histogram.record(Math.random(), attributes);
-// }, 1000);

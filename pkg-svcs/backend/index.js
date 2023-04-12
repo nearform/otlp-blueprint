@@ -5,10 +5,8 @@
 const config = require('./lib/config')
 
 const { enableTracing } = require('./lib/tracing')
-const { enableMonitoring } = require('./lib/monitoring')
 
 const tracer = enableTracing(config.otlp)
-const monitoring = enableMonitoring(config.otlp)
 
 // custom span example
 const span = tracer.startSpan('custom-span')
@@ -31,7 +29,7 @@ process.on('unhandledRejection', err => {
 
 const main = async () => {
   const server = Fastify(config.fastify)
-  server.decorate('monitoring', monitoring)
+
   server.register(startServer, config)
 
   const closeListeners = closeWithGrace(
