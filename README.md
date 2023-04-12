@@ -166,7 +166,7 @@ There are five services defined in the docker compose
 - The file `collector-config.yaml` that has all the configurations regarding receivers, processors, and exporters is mounted as a volume inside of the container.
 
 ### jaeger service
-- The service used `jaegertracing/all-in-one:1.38.1` image which is a all in one image which is suitable for local development.
+- The service uses `jaegertracing/all-in-one:1.38.1` image which is a all in one image which is suitable for local development.
 - Exposes the UI for visualization in port 16686.
 
 ### prometheus service
