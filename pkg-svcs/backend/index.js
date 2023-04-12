@@ -29,7 +29,6 @@ process.on('unhandledRejection', err => {
 
 const main = async () => {
   const server = Fastify(config.fastify)
-
   server.register(startServer, config)
 
   const closeListeners = closeWithGrace(

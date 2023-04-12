@@ -17,7 +17,7 @@ async function plugin(server, config) {
       options: config
     })
 
-  server.get('/', async (_, res) => {
+  server.get('/', async (_req, _res) => {
     return 'ok'
   })
 }

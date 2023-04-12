@@ -9,8 +9,6 @@ receivers:
             - http://*.otlp-blueprint.local
             - https://*.otlp-blueprint.local
             - http://localhost:8080
-            - http://localhost:3000
-            - http://127.0.0.1:3000
             - http://otlp-collector.dev.mira-nf.com:8080
             - http://otlp-collector.dev.mira-nf.com
 exporters:

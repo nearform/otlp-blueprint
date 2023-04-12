@@ -28,7 +28,7 @@ const enableMonitoring = options => {
     }));
 
     // Meter definitions
-    const meter = meterProvider.getMeter('metrics-colector');
+    const meter = meterProvider.getMeter('metrics-collector');
 
     const requestCounter = meter.createCounter('http.server.requests', {
         description: 'Requests counter',
