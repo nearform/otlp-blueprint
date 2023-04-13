@@ -1,4 +1,3 @@
-const { DiagConsoleLogger, DiagLogLevel, diag } = require('@opentelemetry/api')
 const {
   OTLPMetricExporter
 } = require('@opentelemetry/exporter-metrics-otlp-http')
@@ -12,11 +11,6 @@ const {
 } = require('@opentelemetry/semantic-conventions')
 
 const enableMonitoring = options => {
-  diag.setLogger(
-    new DiagConsoleLogger(),
-    options.debug ? DiagLogLevel.DEBUG : DiagLogLevel.INFO
-  )
-
   const metricExporter = new OTLPMetricExporter({
     url: `${options.collectorUrl}/v1/metrics`,
     serviceName: options.serviceName,
