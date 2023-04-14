@@ -12,14 +12,13 @@ A 3-tier application showcasing [Open Telemetry](https://opentelemetry.io/docs/i
 - Frontend and backend with otlp sdk installed sending traces to the collector
 - Collector receives, process and exports traces to Jaeger
 - Jaeger for visualization of the traces
+- Prometheus for visualization of the metrics
 
 ![Flow Diagram](./flow_diagram.png)
 
 # Features
 
-The project implements traces. It does not implement logs and metrics as those features are still in developement (check [opentelemetry-js feature status page](https://github.com/open-telemetry/opentelemetry-js#feature-status) for more details).
-
-The work to send metrics has been started in branch [feature/add.metrics](https://github.com/nearform/otlp-blueprint/tree/feature/add.metrics).
+The project implements traces and metrics. It does not implement logs as those features are still in developement (check [opentelemetry-js feature status page](https://github.com/open-telemetry/opentelemetry-js#feature-status) for more details).
 
 # Resources
  - [Inspired by this ticket](https://github.com/nearform/bench-draft-issues/issues/81)
@@ -119,6 +118,22 @@ The container exposes the following ports:
 
 Use postman to hit the health endpoint above to check the health status.
 
+## Run prometheus docker container
+
+- Download the specific image of Prometheus by running `docker pull prom/prometheus:v2.43.0`
+- Run below docker command to spin up a local Prometheus instance
+```
+docker run -d --name prometheus \
+  -p 9090:9090 \
+  prom/prometheus:v2.43.0
+```
+You can then navigate to http://localhost:9090 to access the Prometheus UI.
+The container exposes the following ports:
+
+|Port	   | Protocol |Function|
+| :---:  |:---:  |:---:   |
+|9090   | HTTP | serve frontend
+
 # Running the application locally using docker compose
 At the root of the project a docker compose file is defined all the containers needed to run the app locally for development and test.
 
@@ -151,8 +166,13 @@ There are five services defined in the docker compose
 - The file `collector-config.yaml` that has all the configurations regarding receivers, processors, and exporters is mounted as a volume inside of the container.
 
 ### jaeger service
-- The servcice used `jaegertracing/all-in-one:1.38.1` image which is a all in one image which is suitable for local development.
+- The service uses `jaegertracing/all-in-one:1.38.1` image which is a all in one image which is suitable for local development.
 - Exposes the UI for visualization in port 16686.
+
+### prometheus service
+- The service use `prom/prometheus:v2.43.0` image. 
+- Exposes the UI in port 9090
+ 
 ## Run app in docker compose
 Run below command from CLI from the root of the project directory to run the build the container and run the app.
 

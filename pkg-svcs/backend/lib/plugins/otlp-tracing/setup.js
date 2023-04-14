@@ -15,18 +15,19 @@ const {
 } = require('@opentelemetry/auto-instrumentations-node')
 const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api')
 
+registerInstrumentations({
+  instrumentations: [
+    getNodeAutoInstrumentations({
+      '@opentelemetry/instrumentation-fs': { enabled: false }
+    })
+  ]
+})
+
 const enableTracing = options => {
   diag.setLogger(
     new DiagConsoleLogger(),
     options.debug ? DiagLogLevel.DEBUG : DiagLogLevel.INFO
   )
-  registerInstrumentations({
-    instrumentations: [
-      getNodeAutoInstrumentations({
-        '@opentelemetry/instrumentation-fs': { enabled: false }
-      })
-    ]
-  })
 
   const resource = Resource.default().merge(
     new Resource({
