@@ -39,6 +39,7 @@ const enableTracing = options => {
   const provider = new NodeTracerProvider({
     resource: resource
   })
+  console.log(`collector url: ${options.collectorUrl}/v1/traces`)
   const exporter = new OTLPTraceExporter({
     url: `${options.collectorUrl}/v1/traces`,
     serviceName: options.serviceName,

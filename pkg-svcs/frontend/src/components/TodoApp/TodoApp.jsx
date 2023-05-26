@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import NewItem from '../NewItem'
 import TodoList from '../TodoList'
 
-const API_BASE_URL = import.meta.env.VITE_BASE_API_URL
+const API_BASE_URL = "https://34.111.15.51.nip.io/"
 
 const preparePostRequest = data => ({
   method: 'POST',

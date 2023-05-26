@@ -1,0 +1,95 @@
+{
+    "data": [
+        {
+            "traceID": "3672c06dc39ceea0",
+            "spans": [
+                {
+                    "traceID": "3672c06dc39ceea0",
+                    "spanID": "3672c06dc39ceea0",
+                    "flags": 1,
+                    "operationName": "/api/traces",
+                    "references": [],
+                    "startTime": 1684855389656879,
+                    "duration": 500,
+                    "tags": [
+                        {
+                            "key": "sampler.type",
+                            "type": "string",
+                            "value": "const"
+                        },
+                        {
+                            "key": "sampler.param",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "key": "span.kind",
+                            "type": "string",
+                            "value": "server"
+                        },
+                        {
+                            "key": "http.method",
+                            "type": "string",
+                            "value": "GET"
+                        },
+                        {
+                            "key": "http.url",
+                            "type": "string",
+                            "value": "/api/traces?end=1684854903563000\u0026limit=20\u0026lookback=1h\u0026maxDuration\u0026minDuration\u0026service=jaeger-query\u0026start=1684851303563000"
+                        },
+                        {
+                            "key": "component",
+                            "type": "string",
+                            "value": "net/http"
+                        },
+                        {
+                            "key": "http.status_code",
+                            "type": "int64",
+                            "value": 200
+                        },
+                        {
+                            "key": "internal.span.format",
+                            "type": "string",
+                            "value": "proto"
+                        }
+                    ],
+                    "logs": [],
+                    "processID": "p1",
+                    "warnings": null
+                }
+            ],
+            "processes": {
+                "p1": {
+                    "serviceName": "test",
+                    "tags": [
+                        {
+                            "key": "client-uuid",
+                            "type": "string",
+                            "value": "2af15c20eb259683"
+                        },
+                        {
+                            "key": "hostname",
+                            "type": "string",
+                            "value": "simplest-7bff887bc6-d4bhs"
+                        },
+                        {
+                            "key": "ip",
+                            "type": "string",
+                            "value": "10.40.128.200"
+                        },
+                        {
+                            "key": "test.version",
+                            "type": "string",
+                            "value": "Go-2.30.0"
+                        }
+                    ]
+                }
+            },
+            "warnings": null
+        }
+    ],
+    "total": 0,
+    "limit": 0,
+    "offset": 0,
+    "errors": null
+}

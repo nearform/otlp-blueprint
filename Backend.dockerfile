@@ -7,6 +7,7 @@ FROM base as source
 RUN mkdir -p /app/backend
 WORKDIR /app/
 COPY package.json ./
+COPY pkg-svcs/backend /app/backend
 RUN npm install
 COPY pkg-svcs/backend/package.json /app/backend/
 RUN cat /app/backend/package.json

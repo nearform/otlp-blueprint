@@ -1,0 +1,211 @@
+{
+    "resourceSpans": [
+        {
+            "resource": {
+                "attributes": [
+                    {
+                        "key": "service.name",
+                        "value": {
+                            "stringValue": "apigee2"
+                        }
+                    },
+                    {
+                        "key": "telemetry.sdk.language",
+                        "value": {
+                            "stringValue": "webjs"
+                        }
+                    },
+                    {
+                        "key": "telemetry.sdk.name",
+                        "value": {
+                            "stringValue": "opentelemetry"
+                        }
+                    },
+                    {
+                        "key": "telemetry.sdk.version",
+                        "value": {
+                            "stringValue": "1.11.0"
+                        }
+                    },
+                    {
+                        "key": "deployment.environment",
+                        "value": {}
+                    }
+                ],
+                "droppedAttributesCount": 0
+            },
+            "scopeSpans": [
+                {
+                    "scope": {
+                        "name": "@opentelemetry/instrumentation-user-interaction",
+                        "version": "0.32.1"
+                    },
+                    "spans": [
+                        {
+                            "traceId": "8dacceacd62c740b880ec1fcd2afd303",
+                            "spanId": "720371ddc8bd20e9",
+                            "name": "click",
+                            "kind": 1,
+                            "startTimeUnixNano": 1685013862423000000,
+                            "endTimeUnixNano": 1685013862424000000,
+                            "attributes": [
+                                {
+                                    "key": "component",
+                                    "value": {
+                                        "stringValue": "user-interaction"
+                                    }
+                                },
+                                {
+                                    "key": "event_type",
+                                    "value": {
+                                        "stringValue": "click"
+                                    }
+                                },
+                                {
+                                    "key": "target_element",
+                                    "value": {
+                                        "stringValue": "INPUT"
+                                    }
+                                },
+                                {
+                                    "key": "target_xpath",
+                                    "value": {
+                                        "stringValue": "//html/body/div/div/div/div/div[2]/div[2]/input"
+                                    }
+                                },
+                                {
+                                    "key": "http.url",
+                                    "value": {
+                                        "stringValue": "https://34.111.15.51.nip.io/"
+                                    }
+                                },
+                                {
+                                    "key": "http.user_agent",
+                                    "value": {
+                                        "stringValue": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/113.0"
+                                    }
+                                }
+                            ],
+                            "droppedAttributesCount": 0,
+                            "events": [],
+                            "droppedEventsCount": 0,
+                            "status": {
+                                "code": 0
+                            },
+                            "links": [],
+                            "droppedLinksCount": 0
+                        },
+                        {
+                            "traceId": "1bd45769e5ebf1e843cf33afad99b2aa",
+                            "spanId": "95abbfbff4af1ece",
+                            "name": "click",
+                            "kind": 1,
+                            "startTimeUnixNano": 1685013862425000000,
+                            "endTimeUnixNano": 1685013862428000000,
+                            "attributes": [
+                                {
+                                    "key": "component",
+                                    "value": {
+                                        "stringValue": "user-interaction"
+                                    }
+                                },
+                                {
+                                    "key": "event_type",
+                                    "value": {
+                                        "stringValue": "click"
+                                    }
+                                },
+                                {
+                                    "key": "target_element",
+                                    "value": {
+                                        "stringValue": "INPUT"
+                                    }
+                                },
+                                {
+                                    "key": "target_xpath",
+                                    "value": {
+                                        "stringValue": "//html/body/div/div/div/div/div[2]/div[2]/input"
+                                    }
+                                },
+                                {
+                                    "key": "http.url",
+                                    "value": {
+                                        "stringValue": "https://34.111.15.51.nip.io/"
+                                    }
+                                },
+                                {
+                                    "key": "http.user_agent",
+                                    "value": {
+                                        "stringValue": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/113.0"
+                                    }
+                                }
+                            ],
+                            "droppedAttributesCount": 0,
+                            "events": [],
+                            "droppedEventsCount": 0,
+                            "status": {
+                                "code": 0
+                            },
+                            "links": [],
+                            "droppedLinksCount": 0
+                        },
+                        {
+                            "traceId": "2abbef2f4b6d5178dacb8ed0bb282ce3",
+                            "spanId": "818649d8fec8216c",
+                            "name": "click",
+                            "kind": 1,
+                            "startTimeUnixNano": 1685013862428000000,
+                            "endTimeUnixNano": 1685013862428000000,
+                            "attributes": [
+                                {
+                                    "key": "component",
+                                    "value": {
+                                        "stringValue": "user-interaction"
+                                    }
+                                },
+                                {
+                                    "key": "event_type",
+                                    "value": {
+                                        "stringValue": "click"
+                                    }
+                                },
+                                {
+                                    "key": "target_element",
+                                    "value": {
+                                        "stringValue": "INPUT"
+                                    }
+                                },
+                                {
+                                    "key": "target_xpath",
+                                    "value": {
+                                        "stringValue": "//html/body/div/div/div/div/div[2]/div[2]/input"
+                                    }
+                                },
+                                {
+                                    "key": "http.url",
+                                    "value": {
+                                        "stringValue": "https://34.111.15.51.nip.io/"
+                                    }
+                                },
+                                {
+                                    "key": "http.user_agent",
+                                    "value": {
+                                        "stringValue": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/113.0"
+                                    }
+                                }
+                            ],
+                            "droppedAttributesCount": 0,
+                            "events": [],
+                            "droppedEventsCount": 0,
+                            "status": {
+                                "code": 0
+                            },
+                            "links": [],
+                            "droppedLinksCount": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

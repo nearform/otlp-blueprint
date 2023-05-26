@@ -28,8 +28,8 @@ async function insert(server) {
       const { rows } = await postgresClient.query('SELECT * FROM todo')
 
       // increment metrics
-      request.server.monitoring.activeTodos.add(1)
-      request.server.monitoring.todoCounter.add(1)
+      // request.server.monitoring.activeTodos.add(1)
+      // request.server.monitoring.todoCounter.add(1)
 
       reply.code(200).header('Content-Type', 'application/json; charset=utf-8')
       return rows

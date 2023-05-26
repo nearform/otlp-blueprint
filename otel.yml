@@ -1,0 +1,199 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: collector-config
+data:
+  collector.yaml: |
+    receivers:
+      otlp:
+        protocols: 
+          grpc:
+          http:
+            endpoint: 0.0.0.0:4318
+            cors:
+              allowed_origins:
+                - https://34.111.15.51.nip.io/
+    processors:
+    exporters:
+      jaeger:
+        endpoint: "simplest-collector.default.svc.cluster.local:14250"
+        tls:
+          insecure: true
+
+    service:
+      telemetry:
+        logs:
+          level: "debug"
+      extensions: [health_check]
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: []
+          exporters: [jaeger]
+    extensions:
+      health_check: {}
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opentelemetrycollector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opentelemetrycollector
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: opentelemetrycollector
+    spec:
+      containers:
+      - name: otelcol
+        args:
+        - --config=/conf/collector.yaml
+        image: otel/opentelemetry-collector:latest
+        volumeMounts:
+        - mountPath: /conf
+          name: collector-config
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 13133
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - configMap:
+          items:
+          - key: collector.yaml
+            path: collector.yaml
+          name: collector-config
+        name: collector-config
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+  namespace: default
+  annotations:
+    cloud.google.com/backend-config: '{"default": "otel-config"}'
+spec:
+  # clusterIP: None
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: opentelemetrycollector
+  ports:
+    - name: port9464
+      protocol: TCP
+      port: 9464
+      targetPort: 9464
+    - name: port55680
+      protocol: TCP
+      port: 55680
+      targetPort: 55680
+    - name: port55681
+      protocol: TCP
+      port: 55681
+      targetPort: 55681
+    - name: port13133
+      protocol: TCP
+      port: 13133
+      targetPort: 13133
+    - name: port4317
+      protocol: TCP
+      port: 4317
+      targetPort: 4317
+    - name: port4318
+      protocol: TCP
+      port: 4318
+      targetPort: 4318
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: basic-ingress
+spec:
+  defaultBackend:
+    service:
+      name: app1
+      port:
+        number: 80
+  rules:
+  - http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: otel-collector
+            port:
+              number: 4318
+  - http:
+      paths:
+      - path: /todo/*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: app1
+            port:
+              number: 80
+  - http:
+      paths:
+      - path: /v1/*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: otel-collector
+            port:
+              number: 4318
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: otel-config
+spec:
+  healthCheck:
+    checkIntervalSec: 15
+    port: 13133
+    type: HTTP
+    requestPath: /
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector-nlb
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: opentelemetrycollector
+  ports:
+    - name: port9464
+      protocol: TCP
+      port: 9464
+      targetPort: 9464
+    - name: port55680
+      protocol: TCP
+      port: 55680
+      targetPort: 55680
+    - name: port55681
+      protocol: TCP
+      port: 55681
+      targetPort: 55681
+    - name: port13133
+      protocol: TCP
+      port: 13133
+      targetPort: 13133
+    - name: port4317
+      protocol: TCP
+      port: 4317
+      targetPort: 4317
+    - name: port4318
+      protocol: TCP
+      port: 4318
+      targetPort: 4318
+
+---
