@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: collector
+  template:
+    metadata:
+      labels:
+        app: collector
+    spec:
+      containers:
+        - name: collector
+          image: otel/opentelemetry-collector:0.74.0
+          command: ["--config=/conf/collector-config.yaml"]
+          volumeMounts:
+            - name: collector-config
+              mountPath: /conf/collector-config.yaml
+          ports:
+            - containerPort: 9464
+            - containerPort: 55680
+            - containerPort: 55681
+            - containerPort: 13133
+            - containerPort: 4317
+            - containerPort: 4318
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: collector
+spec:
+  selector:
+    app: collector
+  ports:
+    - protocol: TCP
+      port: 9464
+    - protocol: TCP
+      port: 55680
+    - protocol: TCP
+      port: 55681
+    - protocol: TCP
+      port: 13133
+    - protocol: TCP
+      port: 4317
+    - protocol: TCP
+      port: 4318
+  type: ClusterIP

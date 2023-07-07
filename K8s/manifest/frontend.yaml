@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: heiderhengstmann/otlp-blueprint:frontend_1.0
+          env:
+            - name: APP_VERSION
+              value: 1.0.0
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: frontend-volume
+              mountPath: /app/frontend
+      volumes:
+        - name: frontend-volume
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 8080
+  type: LoadBalancer
