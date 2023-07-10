@@ -14,18 +14,57 @@ spec:
     spec:
       containers:
         - name: collector
-          image: otel/opentelemetry-collector:0.74.0
-          command: ["--config=/conf/collector-config.yaml"]
+          image: heiderhengstmann/otlp-blueprint:collector_1.0
           volumeMounts:
             - name: collector-config
-              mountPath: /conf/collector-config.yaml
-          ports:
-            - containerPort: 9464
-            - containerPort: 55680
-            - containerPort: 55681
-            - containerPort: 13133
-            - containerPort: 4317
-            - containerPort: 4318
+              mountPath: /etc/collector-config.yaml
+      volumes:
+        - name: collector-config
+          configMap:
+            name: collector-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: collector-config
+  namespace: test
+data:
+  collector-config.yaml: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
+            endpoint: 0.0.0.0:4318
+            cors:
+              allowed_origins:
+                - http://*.otlp-blueprint.local
+                - https://*.otlp-blueprint.local
+                - http://localhost:8080
+                - http://otlp-collector.dev.mira-nf.com:8080
+                - http://otlp-collector.dev.mira-nf.com
+    exporters:
+      jaeger:
+        endpoint: "jaeger.test.svc.cluster.local:14250"
+        tls:
+          insecure: true
+      prometheus:
+        endpoint: "prometheus.test.svc.cluster.local:9464"
+    processors:
+      batch:
+    service:
+      extensions: [health_check]
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [jaeger]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [prometheus]
+    extensions:
+      health_check:
 ---
 apiVersion: v1
 kind: Service
@@ -35,16 +74,22 @@ spec:
   selector:
     app: collector
   ports:
-    - protocol: TCP
+    - name: port-9464
+      protocol: TCP
       port: 9464
-    - protocol: TCP
+    - name: port-55680
+      protocol: TCP
       port: 55680
-    - protocol: TCP
+    - name: port-55681
+      protocol: TCP
       port: 55681
-    - protocol: TCP
+    - name: port-13133
+      protocol: TCP
       port: 13133
-    - protocol: TCP
+    - name: port-4317
+      protocol: TCP
       port: 4317
-    - protocol: TCP
+    - name: port-4318
+      protocol: TCP
       port: 4318
-  type: ClusterIP
+  type: NodePort

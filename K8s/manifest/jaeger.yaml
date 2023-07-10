@@ -38,28 +38,37 @@ spec:
   selector:
     app: jaeger
   ports:
-    - protocol: UDP
+    - name: port-5775
+      protocol: UDP
       port: 5775
       targetPort: 5775
-    - protocol: UDP
+    - name: port-6831
+      protocol: UDP
       port: 6831
       targetPort: 6831
-    - protocol: UDP
+    - name: port-6832
+      protocol: UDP
       port: 6832
       targetPort: 6832
-    - protocol: TCP
+    - name: port-5778
+      protocol: TCP
       port: 5778
-    - protocol: TCP
+    - name: port-16685
+      protocol: TCP
       port: 16685
-    - protocol: TCP
+    - name: port-16686
+      protocol: TCP
       port: 16686
-    - protocol: TCP
+    - name: port-14250
+      protocol: TCP
       port: 14250
-    - protocol: TCP
+    - name: port-14268
+      protocol: TCP
       port: 14268
-    - protocol: TCP
+    - name: port-14269
+      protocol: TCP
       port: 14269
-    - protocol: TCP
+    - name: port-9411
+      protocol: TCP
       port: 9411
-  # Remove the following line if you want to expose the service externally
   type: LoadBalancer

@@ -20,12 +20,6 @@ spec:
               value: 1.0.0
           ports:
             - containerPort: 3000
-          volumeMounts:
-            - name: backend-volume
-              mountPath: /app/backend
-      volumes:
-        - name: backend-volume
-          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

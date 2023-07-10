@@ -1,0 +1,38 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+        endpoint: 0.0.0.0:4318
+        cors:
+          allowed_origins:
+            - http://*.otlp-blueprint.local
+            - https://*.otlp-blueprint.local
+            - http://localhost:8080
+            - http://otlp-collector.dev.mira-nf.com:8080
+            - http://otlp-collector.dev.mira-nf.com
+exporters:
+  jaeger:
+    endpoint: "jaeger-service.otlp-blueprint.local:14250"
+    tls:
+      insecure: true
+  prometheus:
+    endpoint: "0.0.0.0:9464"
+
+
+processors:
+  batch:
+
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [jaeger]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus]
+extensions:
+  health_check:
