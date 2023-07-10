@@ -42,7 +42,7 @@ data:
         # metrics_path defaults to '/metrics'
         # scheme defaults to 'http'.
         static_configs:
-          - targets: ['collector.test.svc.cluster.local:9464']
+          - targets: ['otel-collector.test.svc.cluster.local:8888']
 
 ---
 apiVersion: v1

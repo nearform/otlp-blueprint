@@ -39,12 +39,16 @@ data:
         # Memory Ballast size should be max 1/3 to 1/2 of memory.
         size_mib: 165
     service:
-      extensions: [zpages, memory_ballast]
+      extensions: [health_check]
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [memory_limiter, batch]
-          exporters: [otlp]
+          processors: [batch]
+          exporters: [jaeger]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [prometheus]
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -129,16 +133,20 @@ data:
         size_mib: 683
     exporters:
       otlp:
-        endpoint: "http://10.0.183.47:4317" # Replace with a real endpoint.
+        endpoint: "http://jaeger.test.svc.cluster.local:4317" # Replace with a real endpoint.
         tls:
           insecure: true
     service:
-      extensions: [zpages, memory_ballast]
+      extensions: [health_check]
       pipelines:
-        traces/1:
+        traces:
           receivers: [otlp]
-          processors: [memory_limiter, batch]
-          exporters: [otlp]
+          processors: [batch]
+          exporters: [jaeger]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [prometheus]
 ---
 apiVersion: v1
 kind: Service

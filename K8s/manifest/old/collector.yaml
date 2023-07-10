@@ -34,22 +34,22 @@ data:
       otlp:
         protocols:
           grpc:
+            endpoint: 0.0.0.0:4317
+        protocols:
+          grpc:
           http:
             endpoint: 0.0.0.0:4318
             cors:
               allowed_origins:
-                - http://*.otlp-blueprint.local
-                - https://*.otlp-blueprint.local
-                - http://localhost:8080
-                - http://otlp-collector.dev.mira-nf.com:8080
-                - http://otlp-collector.dev.mira-nf.com
+                - http://*.svc.cluster.local
+                - https://*.svc.cluster.local
     exporters:
       jaeger:
-        endpoint: "jaeger.test.svc.cluster.local:14250"
+        endpoint: "jaeger.test.svc.cluster.local:4317"
         tls:
           insecure: true
       prometheus:
-        endpoint: "prometheus.test.svc.cluster.local:9464"
+        endpoint: "0.0.0.0:9464"
     processors:
       batch:
     service:
@@ -92,4 +92,4 @@ spec:
     - name: port-4318
       protocol: TCP
       port: 4318
-  type: NodePort
+  type: ClusterIP
