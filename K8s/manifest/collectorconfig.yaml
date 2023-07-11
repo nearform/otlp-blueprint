@@ -12,9 +12,9 @@ data:
       otlp:
         protocols:
           grpc:
-            endpoint: ${env:MY_POD_IP}:4317
+            endpoint: 0.0.0.0:4317
           http:
-            endpoint: ${env:MY_POD_IP}:4318
+            endpoint: 0.0.0.0:4318
     exporters:
       otlp:
         endpoint: "otel-collector.default:4317"
@@ -25,6 +25,8 @@ data:
           queue_size: 100
         retry_on_failure:
           enabled: true
+      prometheus:
+        endpoint: "http://prometheus.test.svc.cluster.local:9090"
     processors:
       batch:
       memory_limiter:
@@ -39,12 +41,12 @@ data:
         # Memory Ballast size should be max 1/3 to 1/2 of memory.
         size_mib: 165
     service:
-      extensions: [health_check]
+      extensions: [zpages, memory_ballast]
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [batch]
-          exporters: [jaeger]
+          processors: [memory_limiter, batch]
+          exporters: [otlp]
         metrics:
           receivers: [otlp]
           processors: [batch]
@@ -118,6 +120,10 @@ data:
             endpoint: ${env:MY_POD_IP}:4317
           http:
             endpoint: ${env:MY_POD_IP}:4318
+            cors:
+              allowed_origins:
+                - http://*.svc.cluster.local
+                - https://*.svc.cluster.local
     processors:
       batch:
       memory_limiter:
@@ -132,16 +138,18 @@ data:
         # Memory Ballast size should be max 1/3 to 1/2 of memory.
         size_mib: 683
     exporters:
-      otlp:
-        endpoint: "http://jaeger.test.svc.cluster.local:4317" # Replace with a real endpoint.
+      jaeger:
+        endpoint: "http://jaeger.test.svc.cluster.local:14268" # Replace with a real endpoint.
         tls:
           insecure: true
+      prometheus:
+        endpoint: "http://prometheus.test.svc.cluster.local:9090"
     service:
-      extensions: [health_check]
+      extensions: [zpages, memory_ballast]
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [batch]
+          processors: [memory_limiter, batch]
           exporters: [jaeger]
         metrics:
           receivers: [otlp]
