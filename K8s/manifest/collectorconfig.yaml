@@ -12,9 +12,9 @@ data:
       otlp:
         protocols:
           grpc:
-            endpoint: 0.0.0.0:4317
+            endpoint: ${env:MY_POD_IP}:4317
           http:
-            endpoint: 0.0.0.0:4318
+            endpoint: ${env:MY_POD_IP}:4318
     exporters:
       otlp:
         endpoint: "otel-collector.default:4317"
@@ -25,8 +25,8 @@ data:
           queue_size: 100
         retry_on_failure:
           enabled: true
-      prometheus:
-        endpoint: "http://prometheus.test.svc.cluster.local:9090"
+      #prometheus:
+        #endpoint: "http://prometheus.test.svc.cluster.local:9090"
     processors:
       batch:
       memory_limiter:
@@ -47,10 +47,10 @@ data:
           receivers: [otlp]
           processors: [memory_limiter, batch]
           exporters: [otlp]
-        metrics:
-          receivers: [otlp]
-          processors: [batch]
-          exporters: [prometheus]
+        #metrics:
+          #receivers: [otlp]
+          #processors: [batch]
+          #exporters: [prometheus]
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -142,8 +142,8 @@ data:
         endpoint: "http://jaeger.test.svc.cluster.local:14268" # Replace with a real endpoint.
         tls:
           insecure: true
-      prometheus:
-        endpoint: "http://prometheus.test.svc.cluster.local:9090"
+      #prometheus:
+        #endpoint: "http://prometheus.test.svc.cluster.local:9090"
     service:
       extensions: [zpages, memory_ballast]
       pipelines:
@@ -151,10 +151,10 @@ data:
           receivers: [otlp]
           processors: [memory_limiter, batch]
           exporters: [jaeger]
-        metrics:
-          receivers: [otlp]
-          processors: [batch]
-          exporters: [prometheus]
+        #metrics:
+          #receivers: [otlp]
+          #processors: [batch]
+          #exporters: [prometheus]
 ---
 apiVersion: v1
 kind: Service
