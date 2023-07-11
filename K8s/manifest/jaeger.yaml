@@ -29,6 +29,10 @@ spec:
             - containerPort: 14268
             - containerPort: 14269
             - containerPort: 9411
+            - containerPort: 4317
+              protocol: TCP
+            - containerPort: 4318
+              protocol: TCP
 ---
 apiVersion: v1
 kind: Service
@@ -71,4 +75,8 @@ spec:
     - name: port-9411
       protocol: TCP
       port: 9411
+    - name: otlp-grpc
+      port: 4317
+    - name: otlp-http
+      port: 4318
   type: LoadBalancer

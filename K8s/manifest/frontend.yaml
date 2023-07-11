@@ -18,6 +18,8 @@ spec:
           env:
             - name: APP_VERSION
               value: 1.0.0
+            - name: VITE_OTLP_SERVICE_NAME
+              value: 'otel-collector'
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -37,4 +39,4 @@ spec:
   ports:
     - protocol: TCP
       port: 8080
-  type: ClusterIP
+  type: LoadBalancer
