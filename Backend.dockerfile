@@ -18,7 +18,7 @@ COPY pkg-svcs/backend/ /app/backend/
 
 FROM source as builder
 WORKDIR /app/backend
-RUN mv .env.registry .env
+RUN mv .env .env
 
 FROM node:lts-alpine as production
 
