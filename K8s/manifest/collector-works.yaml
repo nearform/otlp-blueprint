@@ -25,7 +25,7 @@ spec:
         size_in_percentage: 40
     exporters:
       otlp:
-        endpoint: 'http://jaeger.test.svc.cluster.local:14250'
+        endpoint: 'http://jaeger.test.svc.cluster.local:4317' #Jeager
         tls:
           insecure: true
     service:
