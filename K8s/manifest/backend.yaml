@@ -14,16 +14,16 @@ spec:
     spec:
       containers:
         - name: backend
-          image: heiderhengstmann/otlp-blueprint:backend_1.7
+          image: heiderhengstmann/otlp-blueprint:backend_1.8
           env:
             - name: APP_VERSION
               value: 1.0.0
             - name: PG_INFO
               value: '{"database": "tododb", "username": "otlpuser", "password": "otlppassword", "host": "postgresql.test.svc.cluster.local", "port": 5432}'
             - name: OTLP_COLLECTOR_URL
-              value: 'http://otel-collector.test.svc.cluster.local:4318'
+              value: 'http://main-collector.test.svc.cluster.local:4318'
             - name: OTLP_SERVICE_NAME
-              value: 'otel-collector'
+              value: 'main-collector'
           ports:
             - containerPort: 3000
 ---
