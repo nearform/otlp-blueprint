@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+  namespace: ${NAMESPACE_NAME}
 spec:
   replicas: 1
   selector:
@@ -19,9 +20,9 @@ spec:
             - name: APP_VERSION
               value: 1.0.0
             - name: PG_INFO
-              value: '{"database": "tododb", "username": "otlpuser", "password": "otlppassword", "host": "postgresql.test.svc.cluster.local", "port": 5432}'
+              value: '{"database": "tododb", "username": "otlpuser", "password": "otlppassword", "host": "postgresql.${NAMESPACE_NAME}.svc.cluster.local", "port": 5432}'
             - name: OTLP_COLLECTOR_URL
-              value: 'http://main-collector.test.svc.cluster.local:4318'
+              value: 'http://main-collector.${NAMESPACE_NAME}.svc.cluster.local:4318'
             - name: OTLP_SERVICE_NAME
               value: 'main-collector'
           ports:
@@ -31,6 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
+  namespace: ${NAMESPACE_NAME}
 spec:
   selector:
     app: backend

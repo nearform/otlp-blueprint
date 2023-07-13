@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: ${NAMESPACE_NAME}
 spec:
   replicas: 1
   selector:
@@ -33,6 +34,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: ${NAMESPACE_NAME}
 spec:
   selector:
     app: frontend
