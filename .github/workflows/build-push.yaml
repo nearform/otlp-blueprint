@@ -1,0 +1,16 @@
+name: Build and Push Docker Images
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and Push
+        run: |
+          cd k8s
+          make build-and-push-all
