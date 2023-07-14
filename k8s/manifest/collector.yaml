@@ -1,7 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${NAMESPACE_NAME}
+---
 apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: main
+  namespace: ${NAMESPACE_NAME}
 spec:
   config: |
     receivers:
@@ -29,7 +35,7 @@ spec:
         size_in_percentage: 40
     exporters:
       otlp:
-        endpoint: 'http://jaeger.test.svc.cluster.local:4317' #Jeager
+        endpoint: 'http://jaeger.${NAMESPACE_NAME}.svc.cluster.local:4317' #Jeager
         tls:
           insecure: true
     service:

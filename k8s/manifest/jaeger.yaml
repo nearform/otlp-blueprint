@@ -6,6 +6,7 @@ metadata:
     app.kubernetes.io/name: jaeger
     app.kubernetes.io/version: "1.42.0"
     app.kubernetes.io/component: all-in-one
+  namespace: ${NAMESPACE_NAME}
 spec:
   replicas: 1
   strategy:
@@ -87,6 +88,7 @@ metadata:
     app.kubernetes.io/name: jaeger
     app.kubernetes.io/version: "1.42.0"
     app.kubernetes.io/component: service-collector
+  namespace: ${NAMESPACE_NAME}
 spec:
   clusterIP: None
   ports:
@@ -107,6 +109,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jaeger-query
+  namespace: ${NAMESPACE_NAME}
   labels:
     app.kubernetes.io/name: jaeger
     app.kubernetes.io/version: "1.42.0"

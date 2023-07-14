@@ -9,8 +9,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Log in to registry
+        # This is where you will update the personal access token to GITHUB_TOKEN
+        run: echo "${{ secrets.TOKEN_GITHUB }}" | docker login ghcr.io -u $ --password-stdin
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
       - name: Build and Push
         run: |
-          cd k8s
           make build-and-push-all
