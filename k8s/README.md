@@ -1,27 +1,39 @@
 ## Kind Support
 
-TBC
+**TBC**
 
+Ensure you have kind and docker installed.
+
+* kind https://kind.sigs.k8s.io/docs/user/quick-start/#installation
+  
+Move to the kind dir
 ```shell
-
 cd ./kind
-
 ```
 
+Create a kind cluster and deploy the OLTP demo
 ```shell
-
 make
 # OR
 # make NAMESPACE=bar
-
 ```
+
+Forward the required services ports
 ```shell
 make forward
 ```
 
-* localhost:8080
-* localhost:3000
-* localhost:16686
+Access the services as following 
+* Frontend -> localhost:8080
+* Backend -> localhost:3000
+* Jaeger Query -> localhost:16686
+
+Cleanup
+
+```shell
+make clean
+```
+
 
 ### Kind Todo
 
