@@ -37,7 +37,7 @@ make clean
 
 ### Kind Todo
 
-* [] Some cors issues to be fixed 
+*[] Some cors issues to be fixed 
 
 
 
