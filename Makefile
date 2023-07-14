@@ -23,7 +23,7 @@ push-frontend:
 	docker push ghcr.io/$(GITHUB_REPO)/$(IMAGE_NAME)-frontend:latest
 	docker tag $(IMAGE_NAME)-frontend:latest ghcr.io/$(GITHUB_REPO)/$(IMAGE_NAME)-frontend:$(shell date +'%Y%m%d%H%M%S')
 	docker push ghcr.io/$(GITHUB_REPO)/$(IMAGE_NAME)-frontend:$(shell date +'%Y%m%d%H%M%S')
-
+	
 apply-collector:
 	sed 's/$${NAMESPACE_NAME}/$(NAMESPACE_NAME)/g' k8s/manifest/collector.yaml | kubectl apply -f -
 
