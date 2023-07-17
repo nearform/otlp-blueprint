@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: heiderhengstmann/otlp-blueprint:frontend_1.0
           imagePullPolicy: IfNotPresent
+          image: ghcr.io/llprojects/otlp-blueprint/otlp-blueprint-frontend:latest
           env:
             - name: APP_VERSION
               value: 1.0.0
@@ -37,7 +37,7 @@ metadata:
 spec:
   selector:
     app: frontend
+  type: NodePort
   ports:
     - protocol: TCP
       port: 8080
-  type: LoadBalancer

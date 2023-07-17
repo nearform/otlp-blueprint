@@ -48,5 +48,3 @@ open-telemetry-operator:
 
 install-apps:
 	@./scripts/install-apps.sh $(NAMESPACE)
-
-

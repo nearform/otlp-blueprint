@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: backend
-          image: heiderhengstmann/otlp-blueprint:backend_1.8
           imagePullPolicy: IfNotPresent
+          image: ghcr.io/llprojects/otlp-blueprint/otlp-blueprint-backend:latest
           env:
             - name: APP_VERSION
               value: 1.0.0

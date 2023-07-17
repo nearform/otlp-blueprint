@@ -115,14 +115,13 @@ metadata:
     app.kubernetes.io/version: "1.42.0"
     app.kubernetes.io/component: service-query
 spec:
-  type: LoadBalancer
   ports:
     - name: http-query
       port: 16686
-      targetPort: 16686
     - name: grpc-query
       port: 16685
       targetPort: 16685
+  type: LoadBalancer
   selector:
     app.kubernetes.io/name: jaeger
     app.kubernetes.io/component: all-in-one
