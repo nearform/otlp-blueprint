@@ -15,6 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
+          imagePullPolicy: IfNotPresent
           image: ghcr.io/llprojects/otlp-blueprint/otlp-blueprint-backend:latest
           env:
             - name: APP_VERSION
