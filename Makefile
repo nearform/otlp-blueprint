@@ -43,7 +43,7 @@ apply-prometheus:
 	sed 's/$${NAMESPACE_NAME}/$(NAMESPACE_NAME)/g' k8s/manifest/prometheus.yaml | kubectl apply -f -
 
 apply-ingress:
-#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
 	sed 's/$${NAMESPACE_NAME}/$(NAMESPACE_NAME)/g' k8s/manifest/ingress.yaml | kubectl apply -f -
 
 apply-all-k8s: apply-ingress apply-prometheus apply-postgresql apply-jaeger apply-frontend apply-backend apply-collector
