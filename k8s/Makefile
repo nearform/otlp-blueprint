@@ -4,6 +4,8 @@ NAMESPACE_NAME := otlp
 
 demo: build-and-push-all install-operator install-apps
 
+kind: kind-down kind-up install-operator create-namespace install-jaeger install-collector install-postgresql kind-install-local-apps
+
 build-all: build-backend build-frontend
 
 build-and-push-all: build-all push-backend push-frontend
@@ -13,6 +15,8 @@ install-apps: create-namespace install-jaeger install-collector install-postgres
 delete-all: delete-namespace
 
 forward: port-forward
+
+stop-forward: kill-forward
 
 ###############
 # BUILD AND PUSH
@@ -28,6 +32,19 @@ push-backend:
 
 push-frontend:
 	@./scripts/push-backend.sh $(REGISTRY) $(IMAGE_NAME)
+
+############
+# Kind
+############
+kind-up:
+	@./scripts/kind-cluster-up.sh
+
+kind-down: kill-forward
+	@./scripts/kind-down.sh
+
+kind-install-local-apps: build-all
+	@./scripts/kind-install-local-apps.sh $(NAMESPACE_NAME) $(IMAGE_NAME)
+
 
 ############
 # K8S
