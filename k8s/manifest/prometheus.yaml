@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
-  namespace: ${NAMESPACE_NAME}
 spec:
   replicas: 1
   selector:
@@ -35,7 +34,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: prometheus-config
-  namespace: ${NAMESPACE_NAME}
 data:
   prometheus.yaml: |
     # Place your Prometheus configuration here
@@ -54,7 +52,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
-  namespace: ${NAMESPACE_NAME}
 spec:
   selector:
     app: prometheus
