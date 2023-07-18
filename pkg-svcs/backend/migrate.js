@@ -24,7 +24,7 @@ async function migrateFunction(server) {
     )
   }
 
-  console.log('Migration done.')
+  console.log('Migration one.')
 }
 
 module.exports = {

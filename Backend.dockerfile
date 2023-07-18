@@ -19,7 +19,6 @@ COPY pkg-svcs/backend/ /app/backend/
 FROM source as builder
 WORKDIR /app/backend
 
-
 FROM node:lts-alpine as production
 
 COPY --from=builder /app/ /app/

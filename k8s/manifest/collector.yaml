@@ -40,6 +40,11 @@ spec:
           insecure: true
     service:
       extensions: [health_check]
+      telemetry:
+        logs:
+          level: "INFO"
+          development: true
+          encoding: "json"
       pipelines:
         traces:
           receivers: [otlp]
