@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-agent-config
+data:
+  otel-agent-config.yaml: |
+    receivers:
+      fluentforward:
+        endpoint: 0.0.0.0:24224
+
+    processors:
+      memory_limiter:
+        check_interval: 1s
+        limit_percentage: 75
+        spike_limit_percentage: 15
+      batch:
+        send_batch_size: 10000
+        timeout: 10s
+
+    exporters:
+      logging:
+        loglevel: debug
+      loadbalancing:
+        protocol:
+          otlp:
+            timeout: 1s
+            tls:
+              insecure: true
+        resolver:
+          static:
+            hostnames:
+              - main-collector:4317
+              - otel2-collector:4317
+
+    extensions:
+      health_check: {}
+      memory_ballast:
+        size_in_percentage: 40
+
+    service:
+      extensions: [pprof, zpages, health_check]
+      pipelines:
+        logs:
+          receivers: [fluentforward]
+          processors: [batch]
+          exporters: [loadbalancing, logging]
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otel-agent
+  template:
+    metadata:
+      labels:
+        app: otel-agent
+    spec:
+      containers:
+        - name: otel-agent
+          image: otelcontribcol:latest
+          command: ["--config=/etc/otel-agent-config.yaml"]
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/otel-agent-config.yaml
+              subPath: otel-agent-config.yaml
+          ports:
+            - containerPort: 1888
+            - containerPort: 8888
+            - containerPort: 8889
+            - containerPort: 13133
+            - containerPort: 4317
+            - containerPort: 55679
+            - containerPort: 24224
+            - containerPort: 24224/udp
+      volumes:
+        - name: config-volume
+          configMap:
+            name: otel-agent-config
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flog
+  template:
+    metadata:
+      labels:
+        app: flog
+    spec:
+      containers:
+        - name: flog
+          image: mingrammer/flog:0.4.3
+          command: ["--format=json", "--loop", "--delay=1s", "--number=1"]
+          volumeMounts:
+            - name: fluentd-config
+              mountPath: /fluentd/etc/
+      volumes:
+        - name: fluentd-config
+          emptyDir: {}

@@ -61,6 +61,13 @@ delete-namespace:
 install-collector:
 	@./scripts/install-app.sh $(NAMESPACE_NAME) collector
 
+
+install-collector2:
+	@./scripts/install-app.sh $(NAMESPACE_NAME) collector2
+
+install-lb-collector:
+	@./scripts/install-app.sh $(NAMESPACE_NAME) lb-collector
+
 install-backend:
 	@./scripts/install-app.sh $(NAMESPACE_NAME) backend
 
@@ -75,6 +82,12 @@ install-postgresql:
 
 delete-collector:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) collector
+
+delete-collector2:
+	@./scripts/delete-app.sh $(NAMESPACE_NAME) collector2
+
+delete-lb-collector:
+	@./scripts/delete-app.sh $(NAMESPACE_NAME) lb-collector
 
 delete-backend:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) backend
