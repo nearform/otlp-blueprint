@@ -21,7 +21,7 @@ spec:
               insecure: true
         resolver:
           dns:
-            hostname: main-collector.otlp.svc.cluster.local
+            hostname: main-collector.${NAMESPACE_NAME}.svc.cluster.local
 
     service:
       pipelines:

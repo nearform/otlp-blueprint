@@ -4,15 +4,15 @@ NAMESPACE_NAME := otlp
 
 demo: build-and-push-all install-operator install-apps
 
-kind: kind-down kind-up install-operator create-namespace install-jaeger install-collector install-postgresql kind-install-local-apps
+kind: kind-down kind-up install-operator create-namespace install-jaeger install-collector install-lb-collector install-postgresql kind-install-local-apps
 
 build-all: build-backend build-frontend
 
 build-and-push-all: build-all push-backend push-frontend
 
-install-apps: create-namespace install-jaeger install-collector install-postgresql install-frontend install-backend
+install-apps: create-namespace install-jaeger install-collector install-lb-collector install-postgresql install-frontend install-backend
 
-collector: install-collector install-lb-collector
+collector: install-collector install-lb-collector 
 
 delete-all: delete-namespace
 
@@ -63,10 +63,6 @@ delete-namespace:
 install-collector:
 	@./scripts/install-app.sh $(NAMESPACE_NAME) collector
 
-
-install-collector2:
-	@./scripts/install-app.sh $(NAMESPACE_NAME) collector2
-
 install-lb-collector:
 	@./scripts/install-app.sh $(NAMESPACE_NAME) lb-collector
 
@@ -84,9 +80,6 @@ install-postgresql:
 
 delete-collector:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) collector
-
-delete-collector2:
-	@./scripts/delete-app.sh $(NAMESPACE_NAME) collector2
 
 delete-lb-collector:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) lb-collector
