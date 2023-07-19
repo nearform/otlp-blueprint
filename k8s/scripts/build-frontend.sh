@@ -2,7 +2,7 @@
 
 set -e
 
-image_suffix="${1:-$image_suffix}"
+image_suffix="${1:-$IMAGE_NAME}"
 api_url="${2:-$API_URL}"
 otlp_collector_url="${3:-$OTLP_COLLECTOR_URL}"
 
