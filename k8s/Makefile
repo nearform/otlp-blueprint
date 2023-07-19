@@ -3,6 +3,8 @@ REGISTRY := ghcr.io/acregistry/otlp-blueprint
 NAMESPACE_NAME := otlp
 INSTALL_CERT_MANAGER ?= true
 INSTALL_OTEL_OPERATOR ?= true
+API_URL := http://127.0.0.1:3000
+OTLP_COLLECTOR_URL := http://127.0.0.1:4318
 
 ########################################################################################################################
 # Starting DEMO
@@ -44,24 +46,24 @@ build-and-push-all: build-all push-backend push-frontend
 
 install-front-back: install-backend install-frontend
 
-deployment-frontend: build-frontend push-frontend install-frontend
+deployment-frontend: build-frontend push-frontend delete-frontend install-frontend
 
-deployment-backend: build-backend push-backend install-backend
+deployment-backend: build-backend push-backend delete-backend install-backend
 
 #########################
 # BUILD AND PUSH Scripts
 #########################
 build-backend:
-	@./scripts/build-backend.sh $(IMAGE_NAME)
+	@./scripts/build-backend.sh $(IMAGE_NAME) 
 
 build-frontend:
-	@./scripts/build-frontend.sh $(IMAGE_NAME)
+	@./scripts/build-frontend.sh $(IMAGE_NAME) $(API_URL) $(OTLP_COLLECTOR_URL)
 
 push-backend:
 	@./scripts/push-backend.sh $(REGISTRY) $(IMAGE_NAME)
 
 push-frontend:
-	@./scripts/push-backend.sh $(REGISTRY) $(IMAGE_NAME)
+	@./scripts/push-frontend.sh $(REGISTRY) $(IMAGE_NAME)
 
 ############
 # Kind Scripts
