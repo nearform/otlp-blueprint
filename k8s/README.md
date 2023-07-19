@@ -43,7 +43,7 @@ make kind-down
 
 ## Deploy on a remote k8s cluster
 
-Ensure your kubectl current context is correct and refers to the desired target. Then run the following target:
+Ensure your kubectl current context is correct. Then run the following target:
 
 ```shell
 make demo
@@ -56,15 +56,17 @@ The target will:
 * install the required operators 
 * install the apps
 
-When the deploy id completed you can use the **forward** target for testing.
+When the deploy is completed use the **forward** target for testing.
 
 
 
 ## Configurations and Improvements
 
+The following is a list of available configurations and some TODO that will make this tool more usable and safe.
+
 ### Namespace
 
-By default a the **otlp** namespace will be used. You can use your own namespace name defining the NAMESPACE_NAME var. See the following examples.
+By default the **otlp** namespace will be used. You can use your own namespace name defining the NAMESPACE_NAME var. See the following examples.
 
 ```shell
 make kind NAMESPACE_NAME=...
