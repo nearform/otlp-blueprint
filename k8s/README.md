@@ -89,7 +89,7 @@ sleep 30
 kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 sleep 30
 ```
-In case you have already configured the cert manager or opentelemetry-operator is possible change the values to true into [Makefile](/otlp-blueprint/k8s/Makefile):
+In case you have already configured the cert manager or opentelemetry-operator is possible change the values to true into [Makefile](./Makefile):
 ```shell
 INSTALL_CERT_MANAGER ?= false
 INSTALL_OTEL_OPERATOR ?= false
@@ -127,22 +127,22 @@ make demo API_URL=... OTLP_COLLECTOR_URL=...
 
 The **demo** target invokes the **build-and-push-all** that takes care of building and pushing a new version of the FE and BE apps. 
 
+- **install just resources related collector (collector and collector lb)**
 ```
 make install-collector
-````
-  - install just resources related collector (collector and collector lb)
+```
 
+- **install just resources related frontend and backend in case changing anything in manifest**
 ```
 make install-front-back
 ```
-  - install just resources related frontend and backend in case changing anything in manifest
 
+- **build-push-install frontend**
 ````
 make deployment-frontend
 ````
-  - build-push-install frontend
 
+- **build-push-install backend**
 ```
 make deployment-backend
 ```
-  - build-push-install backend
