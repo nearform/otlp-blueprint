@@ -1,28 +1,56 @@
 IMAGE_NAME := otlp-blueprint
 REGISTRY := ghcr.io/acregistry/otlp-blueprint
 NAMESPACE_NAME := otlp
+INSTALL_CERT_MANAGER ?= false
+INSTALL_OTEL_OPERATOR ?= true
 
+########################################################################################################################
+# Starting DEMO
+# In case you want to start in your own enviroment and do not need cert-manager and opentelemetry-operator 
+#  change the flag INSTALL_OPERATOR to false otherwise use as true
+# In case you do not have any cluster first use make kind before make demo
+########################################################################################################################
 demo: build-and-push-all install-operator install-apps
-
-kind: kind-down kind-up install-operator create-namespace install-jaeger install-collector install-lb-collector install-postgresql kind-install-local-apps
-
-build-all: build-backend build-frontend
-
-build-and-push-all: build-all push-backend push-frontend
-
 install-apps: create-namespace install-jaeger install-collector install-lb-collector install-postgresql install-frontend install-backend
 
-collector: install-collector install-lb-collector 
+test: install-operator install-apps
+########################################################################################################################
+# Starting Creating kind
+# In case you do not have any cluster first use make kind before make demo
+########################################################################################################################
+kind: kind-down kind-up install-operator create-namespace install-jaeger install-collector install-lb-collector install-postgresql kind-install-local-apps
 
-delete-all: delete-namespace
+########################################################################################################################
+# Installing foundation related collector
+########################################################################################################################
+install-collector: install-collector install-lb-collector 
 
 forward: port-forward
 
 stop-forward: kill-forward
 
-###############
+########################################################################################################################
+# deleting environment
+########################################################################################################################
+delete-all: delete-namespace
+delete-collector: delete-collector delete-lb-collector 
+
+#################
 # BUILD AND PUSH
-###############
+#################
+build-all: build-backend build-frontend
+
+build-and-push-all: build-all push-backend push-frontend
+
+install-front-back: install-backend install-frontend
+
+deployment-frontend: build-frontend push-frontend install-frontend
+
+deployment-backend: build-backend push-backend install-backend
+
+#########################
+# BUILD AND PUSH Scripts
+#########################
 build-backend:
 	@./scripts/build-backend.sh $(IMAGE_NAME)
 
@@ -36,7 +64,7 @@ push-frontend:
 	@./scripts/push-backend.sh $(REGISTRY) $(IMAGE_NAME)
 
 ############
-# Kind
+# Kind Scripts
 ############
 kind-up:
 	@./scripts/kind-cluster-up.sh
@@ -49,10 +77,10 @@ kind-install-local-apps: build-all
 
 
 ############
-# K8S
+# K8S Scripts
 ###########
 install-operator:
-	@./scripts/otel-operator.sh
+	@./scripts/otel-operator.sh $(INSTALL_CERT_MANAGER) $(INSTALL_OTEL_OPERATOR) $(NAMESPACE_NAME)
 
 create-namespace:
 	@sed 's/$${NAMESPACE_NAME}/$(NAMESPACE_NAME)/g' ./manifest/namespace.yaml | kubectl apply -f - || true

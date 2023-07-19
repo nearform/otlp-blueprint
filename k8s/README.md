@@ -1,87 +1,148 @@
-## Kind Support
+## K8s Support
 
-**TBC**
+## Local test using kind
 
-Ensure you have kind and docker installed.
+#### Requirements
 
-* kind https://kind.sigs.k8s.io/docs/user/quick-start/#installation
-  
-Move to the kind dir
+* Install kind https://kind.sigs.k8s.io/docs/user/quick-start/#installation
+
+Use the following command to create the cluster, configure it and deploy the demo on a kind cluster:
+
 ```shell
-cd ./kind
+make kind
 ```
+**Notes**
 
-Create a kind cluster and deploy the OLTP demo
-```shell
-make
-# OR
-# make NAMESPACE=bar
-```
+* The **kind** target does not rely on the public docker registry. The frontend and backend apps are built on local and directly loaded into the kind control plane.
+* Before creating the new cluster the target attempts to delete an existing one
 
-Forward the required services ports
+**Usage**
+Once the deployment is completed use the following command to forward the services ports required for the demo to work correctly.
+
 ```shell
 make forward
 ```
+This target will forward the following ports:
 
-Access the services as following 
 * Frontend -> localhost:8080
 * Backend -> localhost:3000
 * Jaeger Query -> localhost:16686
+* Collector -> localhost:4318
 
-Cleanup
-
-```shell
-make clean
-```
-
-
-### Kind Todo
-
-*[] Some cors issues to be fixed 
-
-
-
-### Notes
-
-The operator must be installed before creating the blueprint resources.
+To stop the forwarding you can use the following utility target (requires pkill)
 
 ```shell
-$ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.yaml
-$ kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
+make stop-forward
 ```
 
-### Build and push
+To completely delete the cluster:
 
-pre-requisit:
-- docker
-- Personal access tokens (classic)
-
-Here goes commands could be executed using make:
-
-```bash
-make build-all
+```shell
+make kind-down
 ```
 
-```bash
-make build-backend
+## Deploy on a remote k8s cluster
+
+Ensure your kubectl current context is correct. Then run the following target:
+
+```shell
+make demo
 ```
 
-```bash
-make build-frontend
+The target will: 
+
+* build the backend and the frontend apps
+* push the new images to the public docker registry
+* install the required operators 
+* install the apps
+
+When the deploy is completed use the **forward** target for testing.
+
+
+
+## Configurations and Improvements
+
+The following is a list of available configurations and some TODO that will make this tool more usable and safe.
+
+### Namespace
+
+By default the **otlp** namespace will be used. You can use your own namespace name defining the NAMESPACE_NAME var. See the following examples.
+
+```shell
+make kind NAMESPACE_NAME=...
+# or
+NAMESPACE_NAME=... make kind 
 ```
 
-```bash
-make build-and-push-all
+### Otel K8s Operator
+
+Before deploying the collector we need to install the K8s Otel Operator. The Otel Operator requires that **cert manager** is present and ready on the cluster.
+We do this invoking by default the **install-operator** target.
+This specific target requires some extra work:
+
+```shell
+et -e
+
+# Remove the sleeps checking that the resources are ready before proceeding
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.yaml
+sleep 30
+kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
+sleep 30
+```
+In case you have already configured the cert manager or opentelemetry-operator is possible change the values to true into [Makefile](/otlp-blueprint/k8s/Makefile):
+```shell
+INSTALL_CERT_MANAGER ?= false
+INSTALL_OTEL_OPERATOR ?= false
+```
+**TODO:**
+* remove the sleep from the script. This was a fast and convenient way to workaround but is not safe at all. Replace this with some logic that check that the resources are ready and we can go on
+
+### Frontend Build
+
+The frontend app must be aware of the backend api url and of the collector url at compile time. Both the url will need to be reachable from the FE app once loaded in the browser.
+The configuration is done passing build-arg to the docker build cmd.
+
+```shell
+# ./scripts/build-frontend.sh
+
+et -e
+
+image_suffix="${1:-"otlp-blueprint"}"
+
+pushd ../
+  docker build --build-arg="API_URL=http://127.0.0.1:3000"  --build-arg="OTLP_COLLECTOR_URL=http://127.0.0.1:4318" -t "$image_suffix"-frontend -f Frontend.dockerfile .
+popd
+
+```
+**TODO**
+
+* the hardcoded values should be passed as arguments to the above scripts and defined as env vars in the makefile. Ideally we should be able to override them invoking the target. Using 127.0.0.1 as default 
+seem a reasonable choice.
+
+```shell
+make demo API_URL=... OTLP_COLLECTOR_URL=...
 ```
 
-```bash
-push-backend
+### Optional Build
+
+The **demo** target invokes the **build-and-push-all** that takes care of building and pushing a new version of the FE and BE apps. 
+
 ```
+make install-collector
+````
+  - install just resources related collector (collector and collector lb)
 
-```bash
-push-frontend
 ```
+make install-front-back
+```
+  - install just resources related frontend and backend in case changing anything in manifest
 
-Via Github Actions
+````
+make deployment-frontend
+````
+  - build-push-install frontend
 
-In case running via workflow will be execute ```bash make build-and-push-all```
+```
+make deployment-backend
+```
+  - build-push-install backend
