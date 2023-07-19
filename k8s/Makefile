@@ -1,6 +1,8 @@
 IMAGE_NAME := otlp-blueprint
 REGISTRY := ghcr.io/acregistry/otlp-blueprint
-NAMESPACE_NAME := otlp
+NAMESPACE_NAME?=otlp
+
+.PHONY: demo kind build-all build-and-push-all install-apps delete-all forward stop-forward
 
 demo: build-and-push-all install-operator install-apps
 
