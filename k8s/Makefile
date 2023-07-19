@@ -1,5 +1,5 @@
 IMAGE_NAME := otlp-blueprint
-REGISTRY := ghcr.io/heidermassu/otlp-blueprint
+REGISTRY := ghcr.io/acregistry/otlp-blueprint
 NAMESPACE_NAME := otlp
 
 demo: build-and-push-all install-operator install-apps
