@@ -1,7 +1,7 @@
 IMAGE_NAME := otlp-blueprint
 REGISTRY := ghcr.io/acregistry/otlp-blueprint
 NAMESPACE_NAME := otlp
-INSTALL_CERT_MANAGER ?= false
+INSTALL_CERT_MANAGER ?= true
 INSTALL_OTEL_OPERATOR ?= true
 
 ########################################################################################################################
