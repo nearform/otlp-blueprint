@@ -1,5 +1,5 @@
 IMAGE_NAME := otlp-blueprint
-REGISTRY := ghcr.io/acregistry/otlp-blueprint
+REGISTRY := ghcr.io/heidermassu/otlp-blueprint
 NAMESPACE_NAME := otlp
 
 demo: build-and-push-all install-operator install-apps
@@ -11,6 +11,8 @@ build-all: build-backend build-frontend
 build-and-push-all: build-all push-backend push-frontend
 
 install-apps: create-namespace install-jaeger install-collector install-postgresql install-frontend install-backend
+
+collector: install-collector install-collector2 install-lb-collector
 
 delete-all: delete-namespace
 
