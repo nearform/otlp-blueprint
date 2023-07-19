@@ -12,7 +12,7 @@ build-and-push-all: build-all push-backend push-frontend
 
 install-apps: create-namespace install-jaeger install-collector install-postgresql install-frontend install-backend
 
-collector: install-collector install-collector2 install-lb-collector
+collector: install-collector install-lb-collector
 
 delete-all: delete-namespace
 

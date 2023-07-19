@@ -3,89 +3,29 @@ kind: OpenTelemetryCollector
 metadata:
   name: main-lb
 spec:
+  image:  ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.81.0
   config: |
     receivers:
-      otlp/loadbalancer:
+      otlp:
         protocols:
           grpc:
-            endpoint: localhost:4317
-      otlp/main-collector:
-        protocols:
-          grpc:
-            endpoint: main-collector:4317
-      otlp/otel2-collector:
-        protocols:
-          grpc:
-            endpoint: otel2-collector:4317
+          http:
+
     processors:
-      memory_limiter:
-        check_interval: 1s
-        limit_percentage: 75
-        spike_limit_percentage: 15
-      batch:
-        send_batch_size: 10000
-        timeout: 10s
-    extensions:
-      health_check: {}
-      memory_ballast:
-        size_in_percentage: 40
+
     exporters:
-      logging:
       loadbalancing:
         protocol:
           otlp:
-            timeout: 1s
             tls:
               insecure: true
         resolver:
-          static:
-            hostnames:
-            - main-collector:4317
-            - otel2-collector:4317
+          dns:
+            hostname: main-collector.otlp.svc.cluster.local
+
     service:
-      extensions: [health_check]
-      telemetry:
-        logs:
-          level: "INFO"
-          development: true
-          encoding: "json"
       pipelines:
-        traces/loadbalancer:
-          receivers:
-            - otlp/loadbalancer
+        traces:
+          receivers: [otlp]
           processors: []
-          exporters:
-            - loadbalancing
-
-        traces/main-collector:
-          receivers:
-            - otlp/main-collector
-          processors: []
-          exporters:
-            - logging
-
-        traces/otel2-collector:
-          receivers:
-            - otlp/otel2-collector
-          processors: []
-          exporters:
-            - logging
-
-        logs/loadbalancer:
-          receivers:
-            - otlp/loadbalancer
-          processors: []
-          exporters:
-            - loadbalancing
-        logs/main-collector:
-          receivers:
-            - otlp/main-collector
-          processors: []
-          exporters:
-            - logging
-        logs/otel2-collector:
-          receivers:
-            - otlp/otel2-collector
-          processors: []
-          exporters:
-            - logging
+          exporters: [loadbalancing]

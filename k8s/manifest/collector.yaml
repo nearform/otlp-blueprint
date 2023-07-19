@@ -3,6 +3,7 @@ kind: OpenTelemetryCollector
 metadata:
   name: main
 spec:
+  replicas: 5
   config: |
     receivers:
       otlp:
