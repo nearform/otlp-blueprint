@@ -1,6 +1,6 @@
 ## K8s Support
 
-### Local test using kind
+## Local test using kind
 
 #### Requirements
 
@@ -41,7 +41,7 @@ To completely delete the cluster:
 make kind-down
 ```
 
-### Deploy on a remote k8s cluster
+## Deploy on a remote k8s cluster
 
 Ensure your kubectl current context is correct and refers to the desired target. Then run the following target:
 
