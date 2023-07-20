@@ -12,10 +12,13 @@ OTLP_COLLECTOR_URL := http://127.0.0.1:4318
 #  change the flag INSTALL_OPERATOR to false otherwise use as true
 # In case you do not have any cluster first use make kind before make demo
 ########################################################################################################################
+
+.PHONY: demo kind build-all build-and-push-all install-apps delete-all forward stop-forward
+
 demo: build-and-push-all install-operator install-apps
 install-apps: create-namespace install-jaeger install-collector install-lb-collector install-postgresql install-frontend install-backend
 
-test: install-operator install-apps
+
 ########################################################################################################################
 # Starting Creating kind
 # In case you do not have any cluster first use make kind before make demo
