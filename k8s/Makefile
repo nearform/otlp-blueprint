@@ -13,7 +13,7 @@ OTLP_COLLECTOR_URL ?= http://127.0.0.1:4318
 # In case you do not have any cluster first use make kind before make demo
 ########################################################################################################################
 .DEFAULT_GOAL := all 
-all: kind build-and-push-all install-apps install-operator forward
+all: permissions kind build-and-push-all install-apps install-operator forward
 delete-all: delete-collector delete-namespace kind-down stop-forward
 
 .PHONY: kind demo build-all build-and-push-all install-apps delete-all forward stop-forward
