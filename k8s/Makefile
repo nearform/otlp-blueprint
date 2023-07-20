@@ -1,10 +1,10 @@
-IMAGE_NAME := otlp-blueprint
+IMAGE_NAME ?= otlp-blueprint
 REGISTRY := ghcr.io/acregistry/otlp-blueprint
-NAMESPACE_NAME := otlp
+NAMESPACE_NAME ?= otlp
 INSTALL_CERT_MANAGER ?= true
 INSTALL_OTEL_OPERATOR ?= true
-API_URL := http://127.0.0.1:3000
-OTLP_COLLECTOR_URL := http://127.0.0.1:4318
+API_URL ?= http://127.0.0.1:3000
+OTLP_COLLECTOR_URL ?= http://127.0.0.1:4318
 
 ########################################################################################################################
 # Starting DEMO
@@ -12,11 +12,14 @@ OTLP_COLLECTOR_URL := http://127.0.0.1:4318
 #  change the flag INSTALL_OPERATOR to false otherwise use as true
 # In case you do not have any cluster first use make kind before make demo
 ########################################################################################################################
+.DEFAULT_GOAL := all 
+all: kind build-and-push-all install-apps install-operator forward
+delete-all: delete-collector delete-namespace kind-down stop-forward
 
-.PHONY: demo kind build-all build-and-push-all install-apps delete-all forward stop-forward
+.PHONY: kind demo build-all build-and-push-all install-apps delete-all forward stop-forward
 
-demo: build-and-push-all install-operator install-apps
-install-apps: create-namespace install-jaeger install-collector install-lb-collector install-postgresql install-frontend install-backend
+
+install-apps: create-namespace install-jaeger install-collector install-lb-collector install-postgresql install-backend install-frontend
 
 
 ########################################################################################################################
@@ -37,7 +40,7 @@ stop-forward: kill-forward
 ########################################################################################################################
 # deleting environment
 ########################################################################################################################
-delete-all: delete-namespace
+
 delete-collector: delete-collector delete-lb-collector 
 
 #################
@@ -119,7 +122,7 @@ delete-lb-collector:
 
 delete-backend:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) backend
-
+ 
 delete-frontend:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) frontend
 
@@ -134,6 +137,10 @@ port-forward:
 
 kill-forward:
 	@./scripts/kill-forward.sh
+
+permissions:
+	chmod -R +x ./
+
 
 #apply-prometheus:
 #	@sed 's/$${NAMESPACE_NAME}/$(NAMESPACE_NAME)/g' k8s/manifest/prometheus.yaml | kubectl apply -f -
