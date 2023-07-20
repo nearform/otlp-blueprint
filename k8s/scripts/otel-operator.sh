@@ -6,7 +6,7 @@ otel_operator="${2:-$INSTALL_OTEL_OPERATOR}"
 
 # Function to check if a Kubernetes resource is ready
 function check_operator {
-  local timeout="${2:-30}" # Default timeout: 30 seconds
+  local timeout="${3:-60}" # Default timeout: 60 seconds
 
   local start_time=$(date +%s)
   while true; do
@@ -28,20 +28,16 @@ function check_operator {
 }
 
 function check_cert_manager {
-  local timeout="${2:-30}" # Default timeout: 30 seconds
+  local namespace="${1:-cert-manager}"
+  local timeout="${2:-60}" # Default timeout: 30 seconds
 
   local start_time=$(date +%s)
   while true; do
-    if kubectl get deployment.apps/cert-manager -n cert-manager -o json | jq '.status.conditions[] | select(.type == "Available") | .status' | grep -q "True"; then
-      echo "cert-manager is ready."
-      break
-    fi
-    if kubectl get deployment.apps/cert-manager-cainjector -n cert-manager -o json | jq '.status.conditions[] | select(.type == "Available") | .status' | grep -q "True"; then
-      echo "cert-manager-cainjector is ready."
-      break
-    fi
-    if kubectl get deployment.apps/cert-manager-webhook -n cert-manager -o json | jq '.status.conditions[] | select(.type == "Available") | .status' | grep -q "True"; then
-      echo "cert-manager-webhook is ready."
+    local ready_count=$(kubectl get deployment.apps -n "$namespace" -o json | jq '.items | map(select(.status.conditions[] | select(.type == "Available") | .status == "True")) | length')
+    local total_count=$(kubectl get deployment.apps -n "$namespace" -o json | jq '.items | length')
+    
+    if [ "$ready_count" -eq "$total_count" ]; then
+      echo "All cert-manager resources are ready."
       break
     fi
 
@@ -52,16 +48,17 @@ function check_cert_manager {
       exit 1
     fi
 
-    echo "Waiting for cert-manager-system to become ready..."
+    echo "Waiting for cert-manager resources to become ready..."
     sleep 5
   done
 }
 
+# ... Rest of the script ...
 
 if [ "$cert_manager" = true ]; then
   # Install cert-manager
   kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.yaml
-  check_cert_manager
+  check_cert_manager "cert-manager"
 else
   echo "Skipping cert-manager installation."
 fi
