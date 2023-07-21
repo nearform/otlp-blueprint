@@ -3,6 +3,7 @@ kind: OpenTelemetryCollector
 metadata:
   name: main
 spec:
+  replicas: 5
   config: |
     receivers:
       otlp:
@@ -13,6 +14,7 @@ spec:
             endpoint: 0.0.0.0:4318
             cors:
               allowed_origins:
+                - http://localhost:3000
                 - http://localhost:8080
                 - http://*.${NAMESPACE_NAME}.svc.cluster.local
                 - https://*.${NAMESPACE_NAME}.svc.cluster.local

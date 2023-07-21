@@ -18,6 +18,7 @@ COPY pkg-svcs/backend/ /app/backend/
 
 FROM source as builder
 WORKDIR /app/backend
+RUN mv .env.sample .env
 
 FROM node:lts-alpine as production
 

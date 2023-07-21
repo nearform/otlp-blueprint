@@ -1,42 +1,78 @@
-IMAGE_NAME := otlp-blueprint
+IMAGE_NAME ?= otlp-blueprint
 REGISTRY := ghcr.io/acregistry/otlp-blueprint
-NAMESPACE_NAME?=otlp
+NAMESPACE_NAME ?= otlp
+INSTALL_CERT_MANAGER ?= true
+INSTALL_OTEL_OPERATOR ?= true
+API_URL ?= http://127.0.0.1:3000
+OTLP_COLLECTOR_URL ?= http://127.0.0.1:4318
 
-.PHONY: demo kind build-all build-and-push-all install-apps delete-all forward stop-forward
+########################################################################################################################
+# Starting DEMO
+# In case you want to start in your own enviroment and do not need cert-manager and opentelemetry-operator
+#  change the flag INSTALL_OPERATOR to false otherwise use as true
+# In case you do not have any cluster first use make kind before make demo
+########################################################################################################################
+.DEFAULT_GOAL := all
+all: kind build-and-push-all install-apps install-operator
+delete-all: delete-collector delete-namespace kind-down stop-forward
 
-demo: build-and-push-all install-operator install-apps
+.PHONY: kind demo build-all build-and-push-all install-apps delete-all forward stop-forward
 
-kind: kind-down kind-up install-operator create-namespace install-jaeger install-collector install-postgresql kind-install-local-apps
 
-build-all: build-backend build-frontend
+install-apps: create-namespace install-jaeger install-collector install-lb-collector install-postgresql install-backend install-frontend
 
-build-and-push-all: build-all push-backend push-frontend
 
-install-apps: create-namespace install-jaeger install-collector install-postgresql install-frontend install-backend
+########################################################################################################################
+# Starting Creating kind
+# In case you do not have any cluster first use make kind before make demo
+########################################################################################################################
+kind: kind-down kind-up install-operator create-namespace install-jaeger install-collector install-lb-collector install-postgresql kind-install-local-apps
 
-delete-all: delete-namespace
+########################################################################################################################
+# Installing foundation related collector
+########################################################################################################################
+install-collector: install-collector install-lb-collector
 
 forward: port-forward
 
 stop-forward: kill-forward
 
-###############
+########################################################################################################################
+# deleting environment
+########################################################################################################################
+
+delete-collector: delete-collector delete-lb-collector
+
+#################
 # BUILD AND PUSH
-###############
+#################
+build-all: build-backend build-frontend
+
+build-and-push-all: build-all push-backend push-frontend
+
+install-front-back: install-backend install-frontend
+
+deployment-frontend: build-frontend push-frontend delete-frontend install-frontend
+
+deployment-backend: build-backend push-backend delete-backend install-backend
+
+#########################
+# BUILD AND PUSH Scripts
+#########################
 build-backend:
 	@./scripts/build-backend.sh $(IMAGE_NAME)
 
 build-frontend:
-	@./scripts/build-frontend.sh $(IMAGE_NAME)
+	@./scripts/build-frontend.sh $(IMAGE_NAME) $(API_URL) $(OTLP_COLLECTOR_URL)
 
 push-backend:
 	@./scripts/push-backend.sh $(REGISTRY) $(IMAGE_NAME)
 
 push-frontend:
-	@./scripts/push-backend.sh $(REGISTRY) $(IMAGE_NAME)
+	@./scripts/push-frontend.sh $(REGISTRY) $(IMAGE_NAME)
 
 ############
-# Kind
+# Kind Scripts
 ############
 kind-up:
 	@./scripts/kind-cluster-up.sh
@@ -49,10 +85,10 @@ kind-install-local-apps: build-all
 
 
 ############
-# K8S
+# K8S Scripts
 ###########
 install-operator:
-	@./scripts/otel-operator.sh
+	@./scripts/otel-operator.sh $(INSTALL_CERT_MANAGER) $(INSTALL_OTEL_OPERATOR) $(NAMESPACE_NAME)
 
 create-namespace:
 	@sed 's/$${NAMESPACE_NAME}/$(NAMESPACE_NAME)/g' ./manifest/namespace.yaml | kubectl apply -f - || true
@@ -62,6 +98,9 @@ delete-namespace:
 
 install-collector:
 	@./scripts/install-app.sh $(NAMESPACE_NAME) collector
+
+install-lb-collector:
+	@./scripts/install-app.sh $(NAMESPACE_NAME) lb-collector
 
 install-backend:
 	@./scripts/install-app.sh $(NAMESPACE_NAME) backend
@@ -77,6 +116,9 @@ install-postgresql:
 
 delete-collector:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) collector
+
+delete-lb-collector:
+	@./scripts/delete-app.sh $(NAMESPACE_NAME) lb-collector
 
 delete-backend:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) backend
@@ -95,6 +137,7 @@ port-forward:
 
 kill-forward:
 	@./scripts/kill-forward.sh
+
 
 #apply-prometheus:
 #	@sed 's/$${NAMESPACE_NAME}/$(NAMESPACE_NAME)/g' k8s/manifest/prometheus.yaml | kubectl apply -f -
