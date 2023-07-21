@@ -8,12 +8,12 @@ OTLP_COLLECTOR_URL ?= http://127.0.0.1:4318
 
 ########################################################################################################################
 # Starting DEMO
-# In case you want to start in your own enviroment and do not need cert-manager and opentelemetry-operator 
+# In case you want to start in your own enviroment and do not need cert-manager and opentelemetry-operator
 #  change the flag INSTALL_OPERATOR to false otherwise use as true
 # In case you do not have any cluster first use make kind before make demo
 ########################################################################################################################
-.DEFAULT_GOAL := all 
-all: permissions kind build-and-push-all install-apps install-operator
+.DEFAULT_GOAL := all
+all: kind build-and-push-all install-apps install-operator
 delete-all: delete-collector delete-namespace kind-down stop-forward
 
 .PHONY: kind demo build-all build-and-push-all install-apps delete-all forward stop-forward
@@ -31,7 +31,7 @@ kind: kind-down kind-up install-operator create-namespace install-jaeger install
 ########################################################################################################################
 # Installing foundation related collector
 ########################################################################################################################
-install-collector: install-collector install-lb-collector 
+install-collector: install-collector install-lb-collector
 
 forward: port-forward
 
@@ -41,7 +41,7 @@ stop-forward: kill-forward
 # deleting environment
 ########################################################################################################################
 
-delete-collector: delete-collector delete-lb-collector 
+delete-collector: delete-collector delete-lb-collector
 
 #################
 # BUILD AND PUSH
@@ -60,7 +60,7 @@ deployment-backend: build-backend push-backend delete-backend install-backend
 # BUILD AND PUSH Scripts
 #########################
 build-backend:
-	@./scripts/build-backend.sh $(IMAGE_NAME) 
+	@./scripts/build-backend.sh $(IMAGE_NAME)
 
 build-frontend:
 	@./scripts/build-frontend.sh $(IMAGE_NAME) $(API_URL) $(OTLP_COLLECTOR_URL)
@@ -122,7 +122,7 @@ delete-lb-collector:
 
 delete-backend:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) backend
- 
+
 delete-frontend:
 	@./scripts/delete-app.sh $(NAMESPACE_NAME) frontend
 
@@ -137,9 +137,6 @@ port-forward:
 
 kill-forward:
 	@./scripts/kill-forward.sh
-
-permissions:
-	chmod -R +x ./
 
 
 #apply-prometheus:
