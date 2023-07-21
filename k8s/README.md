@@ -1,7 +1,15 @@
 ## K8s Support
-#### pre-requisit
+#### Prerequisites
 - [JQ](https://pkgs.org/download/jq) installed
-- GitHub PAT & autorization in the [github registry](https://github.com/acregistry)
+- GitHub PAT (Personal Access Token) & Autorization in the [github registry](https://github.com/acregistry)
+
+You need to be invited to the Github Organization https://github.com/acregistry. Ask the project maintainers to add you there.
+
+Generate `Personal access tokens (classic)` in `Settings -> Developer Settings`. Activate the permission `write:packages`.
+
+After you're added to the repository and you have your access token execute this command to login to the registry:
+`docker login ghcr.io/acregistry/otlp-blueprint`
+Username is your github username. Password is your Github personal access token.
 ## Local test using kind
 
 Creating your demo using kind:
@@ -62,11 +70,11 @@ Ensure your kubectl current context is correct. Then run the following target:
 make k8s
 ```
 
-The target will: 
+The target will:
 
 * build the backend and the frontend apps
 * push the new images to the public docker registry
-* install the required operators 
+* install the required operators
 * install the apps
 
 When the deploy is completed use the **forward** target for testing.
@@ -82,7 +90,7 @@ By default the **otlp** namespace will be used. You can use your own namespace n
 ```shell
 make kind NAMESPACE_NAME=...
 # or
-NAMESPACE_NAME=... make kind 
+NAMESPACE_NAME=... make kind
 ```
 
 ### Otel K8s Operator
@@ -113,7 +121,7 @@ make deployment-frontend API_URL=... OTLP_COLLECTOR_URL=...
 
 ### Optional Build
 
-The **demo** target invokes the **build-and-push-all** that takes care of building and pushing a new version of the FE and BE apps. 
+The **demo** target invokes the **build-and-push-all** that takes care of building and pushing a new version of the FE and BE apps.
 
 - **install just resources related collector (collector and collector lb)**
 ```
