@@ -30,7 +30,7 @@ The project implements traces and metrics. It does not implement logs as those f
 ## Pre-requisites
 
 ## Install npm packages
-- Pull the source code to a local development machine and run `npm install` from the root of the projct directory
+- Pull the source code to a local development machine and run `npm install` from the root of the project directory
 - Change directory to /pkg-svcs/frontend/ and run `npm install`
 - Change directory to /pkg-svcs/backend/ and run `npm install`
 
@@ -38,6 +38,7 @@ The project implements traces and metrics. It does not implement logs as those f
 - From directory /pkg-svcs/frontend/ and run `npm run dev`
 
 ## Run backend end
+- Change directory to /pkg-svcs/backend/ and copy the content of .env.sample to .env by running `cp .env.sample .env`
 - From directory /pkg-svcs/backend/ and run `npm run start`
 
 Note that at this point in time we dont have db connectivity from the backend.
