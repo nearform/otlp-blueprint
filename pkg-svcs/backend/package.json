@@ -32,12 +32,12 @@
     "fastify-secrets-env": "2.0.0",
     "fastify-secrets-gcp": "2.0.0",
     "fluent-json-schema": "4.1.0",
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.1.12",
     "pg": "^8.7.3",
     "pg-range": "^1.1.1",
-    "postgrator": "7.1.1"
+    "postgrator": "8.0.0"
   },
   "devDependencies": {
-    "pino-pretty": "9.4.0"
+    "pino-pretty": "13.1.3"
   }
 }
