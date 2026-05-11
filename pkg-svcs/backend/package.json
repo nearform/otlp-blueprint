@@ -18,7 +18,7 @@
     "@opentelemetry/propagator-ot-trace": "0.26.2",
     "@opentelemetry/resources": "^1.0.0",
     "@opentelemetry/sdk-metrics-base": "^0.31.0",
-    "@opentelemetry/sdk-node": "^0.37.0",
+    "@opentelemetry/sdk-node": "^0.217.0",
     "@opentelemetry/sdk-trace-base": "^1.11.0",
     "@opentelemetry/sdk-trace-node": "^1.0.0",
     "@opentelemetry/semantic-conventions": "^1.0.0",
