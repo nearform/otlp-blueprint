@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/nearform/bench-template#readme",
   "devDependencies": {
-    "@commitlint/cli": "^21.2.3",
+    "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^10.1.8",
