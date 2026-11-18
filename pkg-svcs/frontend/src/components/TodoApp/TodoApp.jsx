@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import NewItem from '../NewItem'
 import TodoList from '../TodoList'
 
