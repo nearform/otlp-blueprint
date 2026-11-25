@@ -30,6 +30,16 @@ export default [
         ...eslintReact.configs.recommended.settings['react-x'],
         version: '18.3'
       }
+    },
+    rules: {
+      ...eslintReact.configs.recommended.rules,
+      // Restore coverage the old `plugin:react/recommended` had but the
+      // @eslint-react recommended preset leaves off: `react/no-unknown-property`
+      // and `react/display-name`. (`react/prop-types` and
+      // `react/no-unescaped-entities` have no @eslint-react equivalent.)
+      '@eslint-react/dom-no-unknown-property': 'error',
+      '@eslint-react/no-missing-component-display-name': 'error',
+      '@eslint-react/no-missing-context-display-name': 'error'
     }
   },
   prettierRecommended
