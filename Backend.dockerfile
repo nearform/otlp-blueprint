@@ -6,8 +6,7 @@ FROM base as source
 
 RUN mkdir -p /app/backend
 WORKDIR /app/
-COPY package.json ./
-RUN npm install
+# Root package.json is dev-only tooling, not needed at runtime; don't install it here.
 COPY pkg-svcs/backend/package.json /app/backend/
 RUN cat /app/backend/package.json
 WORKDIR /app/backend
